@@ -1,0 +1,13 @@
+credentials.json
+token.json
+.env
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+data/
+*.plist
+migrate_events_to_tasks.py
+fix_duplicate_tasks.py
+.streamlit/secrets.toml
+.DS_Store

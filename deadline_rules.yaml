@@ -1,0 +1,22 @@
+# 予定タイトルに match_title_contains が含まれるとき、
+# その予定開始の before_event_hours 時間前を「締切」として Google カレンダーに入れます（通知付き）。
+# 同名の Google タスクをスマホで完了にすると、【締切】予定は自動で消えます。
+#
+# 編集後:  source .venv/bin/activate && python -m secretary deadline-sync
+
+defaults:
+  # 締切予定のポップアップ（分前）。例: 1440=1日前, 180=3時間前, 0=開始時刻
+  reminder_minutes_before: [1440, 180, 0]
+
+rules:
+  - match_title_contains: "【撮影】"
+    task_title: "撮影の事前準備"
+    before_event_hours: 24
+
+  - match_title_contains: "【会議】MUSUBI"
+    task_title: "MUSUBI定例の準備"
+    before_event_hours: 48
+
+  - match_title_contains: "【企画会議】"
+    task_title: "企画会議の事前準備"
+    before_event_hours: 24
