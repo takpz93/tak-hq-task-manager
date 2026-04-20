@@ -6,62 +6,81 @@
     cd "/Users/takmiura/Desktop/Tak HQ/secretary"
     .venv/bin/python start_public.py
 
-ngrok の無料アカウント（authtoken）を設定すると URL が固定される:
-    .venv/bin/python -c "from pyngrok import ngrok; ngrok.set_auth_token('YOUR_TOKEN')"
+──────────────────────────────────────────
+URLは起動のたびに変わります（無料・登録不要）。
+固定URLにしたい場合は ngrok の有料プランをご利用ください。
 """
+import re
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
 DIR = Path(__file__).resolve().parent
+PORT = 8501
 
 
-def main():
-    print("=" * 50)
-    print("📱 タスク管理アプリ 公開起動スクリプト")
-    print("=" * 50)
-
-    # Streamlit を起動
-    print("\n[1/2] Streamlit を起動中...")
-    proc = subprocess.Popen(
+def start_streamlit():
+    subprocess.Popen(
         [str(DIR / ".venv/bin/streamlit"), "run", str(DIR / "app.py"),
-         "--server.port", "8501",
+         "--server.port", str(PORT),
          "--server.headless", "true",
          "--server.address", "0.0.0.0"],
         cwd=str(DIR),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
-    time.sleep(3)
 
-    # ngrok トンネルを開く
-    print("[2/2] ngrok トンネルを開いています...")
-    try:
-        from pyngrok import ngrok, conf
-        tunnel = ngrok.connect(8501, "http")
-        public_url = tunnel.public_url
-        # http → https に変換
-        if public_url.startswith("http://"):
-            public_url = "https://" + public_url[7:]
 
-        print("\n" + "=" * 50)
+def main():
+    print("=" * 52)
+    print("📱 タスク管理アプリ 公開起動スクリプト")
+    print("=" * 52)
+
+    # ── Streamlit 起動 ────────────────────────────────
+    print("\n[1/2] Streamlit を起動中...")
+    start_streamlit()
+    time.sleep(4)
+
+    # ── serveo.net で SSH トンネル ────────────────────
+    print("[2/2] 公開URLを取得中（serveo.net）...")
+    proc = subprocess.Popen(
+        ["ssh",
+         "-o", "StrictHostKeyChecking=no",
+         "-o", "ServerAliveInterval=60",
+         "-o", "ExitOnForwardFailure=yes",
+         "-R", f"80:localhost:{PORT}",
+         "serveo.net"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+
+    url = None
+    for line in proc.stdout:
+        m = re.search(r"https?://\S+", line)
+        if m:
+            url = m.group(0)
+            break
+
+    if url:
+        print("\n" + "=" * 52)
         print("✅ 起動完了！スマホで以下のURLを開いてください")
         print()
-        print(f"  🌐 {public_url}")
+        print(f"   🌐  {url}")
         print()
-        print("=" * 50)
-        print("（Ctrl+C で停止）\n")
-
-    except Exception as e:
-        print(f"ngrok 接続エラー: {e}")
-        print("ローカルURL: http://localhost:8501")
+        print("=" * 52)
+        print("（このウィンドウを閉じると停止します）\n")
+    else:
+        print("⚠️  公開URL取得に失敗しました。")
+        print(f"ローカルURL: http://localhost:{PORT}")
 
     try:
         proc.wait()
     except KeyboardInterrupt:
         print("\n停止します...")
         proc.terminate()
-        from pyngrok import ngrok
-        ngrok.kill()
 
 
 if __name__ == "__main__":
