@@ -31,6 +31,39 @@ PRIORITY = {
 }
 PRIORITY_KEYS = list(PRIORITY.keys())
 
+# ── 動画制作ボード ───────────────────────────────────────────────
+# 既定のスプレッドシートID（環境変数 VIDEO_SHEET_ID / st.secrets で上書き可）
+DEFAULT_VIDEO_SHEET_ID = "1jwJZt8fqMjErtnFrTjKk9kBnBNe0n0m76HqbpvS5LTU"
+
+# ワークフローの各ステージの色（序盤＝赤系で要対応、完了に近づくほど緑系）
+STAGE_COLORS = {
+    "企画":   "#8E24AA",
+    "撮影":   "#E53935",
+    "共有":   "#F4511E",
+    "台本":   "#FB8C00",
+    "アフレコ": "#FDD835",
+    "初稿":   "#FBC02D",
+    "FB":     "#7CB342",
+    "修正":   "#F9A825",
+    "完成":   "#43A047",
+    "提出":   "#1E88E5",
+    "投稿":   "#3949AB",
+    "クローズ": "#9E9E9E",
+}
+
+def stage_color(stage: str) -> str:
+    return STAGE_COLORS.get(stage, "#8a7f72")
+
+def video_sheet_id() -> str:
+    """設定済みのスプレッドシートIDを返す（secrets > 環境変数 > 既定）。"""
+    try:
+        sid = st.secrets.get("video_sheet_id")  # type: ignore[attr-defined]
+        if sid:
+            return str(sid)
+    except Exception:
+        pass
+    return os.environ.get("VIDEO_SHEET_ID", DEFAULT_VIDEO_SHEET_ID)
+
 # ── ページ設定 ────────────────────────────────────────────────────
 st.set_page_config(page_title="タスク管理", page_icon="📋",
                    layout="wide", initial_sidebar_state="expanded")
@@ -715,7 +748,9 @@ if "delete_ev_id" in st.session_state:
 
 
 # ── タブ ──────────────────────────────────────────────────────────
-tab_cal, tab_tasks = st.tabs(["📅 カレンダー", "📋 タスク一覧"])
+tab_cal, tab_tasks, tab_video = st.tabs(
+    ["📅 カレンダー", "📋 タスク一覧", "🎬 動画制作"]
+)
 
 # ════════════════════════════════════════════════════════════════
 # タブ①：カレンダー
@@ -1023,3 +1058,174 @@ with tab_tasks:
                     st.session_state["delete_ev_id"]    = t["ev_id"]
                     st.session_state["delete_ev_title"] = t["title"]
                     st.rerun()
+
+
+# ════════════════════════════════════════════════════════════════
+# タブ③：動画制作ボード
+# ════════════════════════════════════════════════════════════════
+@st.cache_data(ttl=120, show_spinner=False)
+def _load_video(sheet_id: str, nonce: int):
+    """スプレッドシートを読み込み（120秒キャッシュ / 更新ボタンで nonce 変更）。"""
+    from secretary import sheets_ops
+    recs = sheets_ops.load_video_records(sheet_id)
+    today = datetime.now(TZ).date()
+    summ = sheets_ops.summarize(recs, today=today)
+    return recs, summ
+
+
+def _deadline_chip(rec, today) -> str:
+    """DL期限を色付きチップ文字列に。"""
+    if rec.deadline_date is None:
+        return (f'<span class="card-sub">DL期限：{rec.dl_deadline or "—"}</span>'
+                if rec.dl_deadline else '<span class="card-sub">DL期限：—</span>')
+    d = rec.deadline_date
+    days = (d - today).days
+    label = d.strftime("%-m/%-d")
+    if days < 0:
+        return (f'<span class="badge" style="background:#E53935">期限切れ {label} '
+                f'({-days}日経過)</span>')
+    if days == 0:
+        return '<span class="badge" style="background:#FB8C00">本日締切</span>'
+    if days <= 7:
+        return (f'<span class="badge" style="background:#F9A825">あと{days}日 '
+                f'{label}</span>')
+    return f'<span class="card-sub">DL期限：{label}</span>'
+
+
+def _video_card(rec, today):
+    color = stage_color(rec.stage)
+    stage_label = rec.stage_raw or "（ステージ未設定）"
+    title = (rec.title or "(無題)").replace("<", "&lt;").replace(">", "&gt;")
+    client = (rec.client or "").replace("<", "&lt;").replace(">", "&gt;")
+    assignee = (rec.assignee or "未割当").replace("<", "&lt;").replace(">", "&gt;")
+    no = f"No.{rec.no}" if rec.no else ""
+    is_ov = rec.deadline_date is not None and rec.deadline_date < today
+
+    links = []
+    if rec.source_url.startswith("http"):
+        links.append(f'<a href="{rec.source_url}" target="_blank">元素材</a>')
+    if rec.share_url.startswith("http"):
+        links.append(f'<a href="{rec.share_url}" target="_blank">共有</a>')
+    if rec.video_dl.startswith("http"):
+        links.append(f'<a href="{rec.video_dl}" target="_blank">動画DL</a>')
+    links_html = (f'<div class="card-sub" style="margin-top:4px">🔗 '
+                  f'{" / ".join(links)}</div>') if links else ""
+
+    st.markdown(
+        f'<div class="card" style="border-left:4px solid {color};'
+        f'{"background:#fff8f8;" if is_ov else ""}">'
+        f'<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;'
+        f'flex-wrap:wrap">'
+        f'<span class="badge" style="background:{color}">{stage_label}</span>'
+        f'<span class="card-title" style="margin:0">{title}</span>'
+        f'</div>'
+        f'<div class="card-sub">🏢 {client}　｜　👤 {assignee}　{no}</div>'
+        f'<div style="margin-top:5px">{_deadline_chip(rec, today)}</div>'
+        f'{links_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+
+with tab_video:
+    sheet_id = video_sheet_id()
+
+    head_l, head_r = st.columns([4, 1])
+    with head_l:
+        st.markdown("### 🎬 動画制作ボード")
+    with head_r:
+        if st.button("🔄 更新", use_container_width=True, key="video_refresh"):
+            st.session_state["video_nonce"] = st.session_state.get("video_nonce", 0) + 1
+            st.rerun()
+
+    with st.expander("⚙️ 接続するスプレッドシート", expanded=False):
+        st.caption("シートのURL内の長いID部分。空欄で既定値を使用します。")
+        sid_in = st.text_input("スプレッドシートID", value=sheet_id,
+                               label_visibility="collapsed")
+        if sid_in.strip():
+            sheet_id = sid_in.strip()
+        st.caption("※ 初回はスプレッドシート読み取りの再認証が必要です "
+                   "（token.json を削除して再起動）。")
+
+    nonce = st.session_state.get("video_nonce", 0)
+    try:
+        records, summ = _load_video(sheet_id, nonce)
+    except Exception as e:
+        st.error("スプレッドシートを読み込めませんでした。")
+        msg = str(e)
+        if "insufficient" in msg.lower() or "scope" in msg.lower() or "403" in msg:
+            st.warning("スプレッドシート読み取りの権限が不足しています。"
+                       "`token.json` を削除してアプリを再起動し、再認証してください。")
+        st.caption(f"詳細: {msg}")
+        st.stop()
+
+    today = datetime.now(TZ).date()
+    active = summ["active"]
+
+    if not records:
+        st.info("制作リストを検出できませんでした。シートの先頭にヘッダ"
+                "（投稿／担当／クライアント／企画／待ち状態 …）がある表を読み込みます。")
+        st.stop()
+
+    # ── KPI ───────────────────────────────────────────────────────
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("進行中", len(active))
+    k2.metric("⚠️ 期限切れ", len(summ["overdue"]))
+    k3.metric("今週締切", len(summ["due_soon"]))
+    k4.metric("完了", len(summ["done"]))
+
+    # ── 絞り込み ───────────────────────────────────────────────────
+    clients = sorted({r.client for r in records if r.client})
+    assignees = sorted({r.assignee for r in records if r.assignee})
+    fc1, fc2 = st.columns(2)
+    with fc1:
+        sel_clients = st.multiselect("クライアント", clients, key="vf_client")
+    with fc2:
+        sel_assignees = st.multiselect("担当", assignees, key="vf_assignee")
+
+    def _match(r) -> bool:
+        if sel_clients and r.client not in sel_clients:
+            return False
+        if sel_assignees and r.assignee not in sel_assignees:
+            return False
+        return True
+
+    active_f = [r for r in active if _match(r)]
+
+    # ── 今やるべき（期限切れ → 締切順 → ステージ序盤順）────────────
+    st.markdown('<div class="sec-lbl">🔥 今やるべき案件</div>', unsafe_allow_html=True)
+
+    FAR = date(2099, 12, 31)
+
+    def _sort_key(r):
+        return (
+            0 if (r.deadline_date and r.deadline_date < today) else 1,  # 期限切れ最優先
+            r.deadline_date or FAR,                                     # 締切が近い順
+            r.stage_index if r.stage_index >= 0 else 99,               # 序盤ステージ順
+        )
+
+    todo = sorted(active_f, key=_sort_key)
+    if not todo:
+        st.markdown('<div class="alert-ok">対象の進行中案件はありません 🎉</div>',
+                    unsafe_allow_html=True)
+    else:
+        for r in todo:
+            _video_card(r, today)
+
+    # ── ステージ別パイプライン ─────────────────────────────────────
+    st.divider()
+    st.markdown('<div class="sec-lbl">📊 ステージ別パイプライン（進行中）</div>',
+                unsafe_allow_html=True)
+    from secretary.sheets_ops import STAGE_ORDER
+
+    stages_present = [s for s in STAGE_ORDER if any(r.stage == s for r in active_f)]
+    extra = sorted({(r.stage or "（未設定）") for r in active_f
+                    if r.stage not in STAGE_ORDER})
+    for s in stages_present + extra:
+        items = [r for r in active_f
+                 if (r.stage or "（未設定）") == s]
+        if not items:
+            continue
+        with st.expander(f"{s}　（{len(items)}件）"):
+            for r in sorted(items, key=_sort_key):
+                _video_card(r, today)
