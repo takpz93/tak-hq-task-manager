@@ -327,10 +327,18 @@ POP        = エンリョなく楽しもう。頑張らなくていい。ゆる�
 
 ---
 
-## ✍️ 発信の型：文体ガイド（← 次セッションでの最優先タスク）
+## ✍️ 発信の型：文体ガイド（✅ 2026-06-10 一次完成）
 
 > **目的**: note朝日記の毎日投稿にかかる執筆時間を最小化しつつ「Takらしさ（文体・書き癖）」を保つ。
 > 既存記事を読み込んで文体を分析し、再利用できる仕組みに落とす。
+
+### 📂 成果物（2026-06-10 作成・要Takさん検証）
+- 📖 [`writing-style.md`](writing-style.md) … 文体ガイド本体（一人称/語尾/口癖/構成/たとえ話/NG/AIプロンプト/チェックリスト）
+- 📝 [`templates/asagikki-template.md`](templates/asagikki-template.md) … 朝日記の穴埋めテンプレ＋見本5本（実記事4＋AI生成1）
+- 🎙️ [`templates/voice-to-article-workflow.md`](templates/voice-to-article-workflow.md) … 音声入力→AI下書き→手直しの手順＋プロンプト
+- 📦 [`note-archive/`](note-archive/) … 分析元の実記事18本（約3万字）を自動取得・保存
+
+> **次アクション**: [`asagikki-template.md` 見本5（AI生成サンプル）](templates/asagikki-template.md) を読み、語尾・リズム・たとえ話が実記事と一致するかTakさんが確認 → ズレを `writing-style.md` に反映。
 
 ### 状況メモ（引き継ぎ）
 - note(@mink_freelife) の自動取得は、**環境のネットワークポリシーで note.com が許可されている前提**で実行する。
@@ -355,7 +363,7 @@ POP        = エンリョなく楽しもう。頑張らなくていい。ゆる�
 ---
 
 ## 📌 次にやること候補
-- [ ] **note自動取得 → 文体ガイド `writing-style.md` ＋ 朝日記テンプレ作成（最優先・上記参照）**
+- [x] **note自動取得 → 文体ガイド `writing-style.md` ＋ 朝日記テンプレ作成（✅ 2026-06-10 一次完成・要Takさん検証）**
 - [ ] コミュニティの具体的な中身（部屋構成・月の流れ・恒例イベント）を設計
 - [ ] 価格と階段の設計
 - [ ] Vlog第1本（自己紹介＋宣言回）の構成台本
