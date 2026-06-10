@@ -3,8 +3,8 @@
 [`writing-style.md`](../writing-style.md) を作るために、note [@mink_freelife](https://note.com/mink_freelife)
 「30代パパフリーランスの朝日記」の実記事を自動取得・プレーンテキスト化したアーカイブ。
 
-- [`note-corpus.txt`](note-corpus.txt) … 取得した直近**100本**の本文（計約18万字）。文体分析の元データ。
-- [`all-note-keys.json`](all-note-keys.json) … アカウント全**381本**の (key, タイトル, 公開日) 一覧（2023-06〜2026-05）。さらに遡って取得したい時の元リスト。
+- [`note-corpus.txt`](note-corpus.txt) … **全381本**の本文（計約55万字 / 2023-06〜2026-05）。文体分析の元データ。
+- [`all-note-keys.json`](all-note-keys.json) … アカウント全**381本**の (key, タイトル, 公開日) 一覧。再取得用インデックス。
 
 ## 取得方法（再取得したい時）
 
@@ -20,6 +20,4 @@ curl -s -A "$UA" "https://note.com/api/v2/creators/mink_freelife/contents?kind=n
 curl -s -A "$UA" "https://note.com/api/v3/notes/<key>"
 ```
 
-`all-note-keys.json` の key を使えば残り281本も同手順で取得可能（必要なら全381本まで拡張）。
-
-取得日: 2026-06-10 / 取得本数: 100本（全381本中・直近）
+取得日: 2026-06-10 / 取得本数: **全381本**（2023-06〜2026-05）

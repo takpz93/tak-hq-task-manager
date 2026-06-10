@@ -337,7 +337,7 @@ POP        = エンリョなく楽しもう。頑張らなくていい。ゆる�
 - 📝 [`templates/asagikki-template.md`](templates/asagikki-template.md) … 朝日記の穴埋めテンプレ＋見本5本（実記事4＋AI生成1）
 - 🎙️ [`templates/voice-to-article-workflow.md`](templates/voice-to-article-workflow.md) … 音声入力→AI下書き→手直しの手順＋プロンプト
 - 📄 [`templates/asagikki-drafts.md`](templates/asagikki-drafts.md) … 「YouTube開設の舞台裏」連載用の朝日記ドラフト3本（1ヶ月目に直結・要手直し）
-- 📦 [`note-archive/`](note-archive/) … 分析元の実記事**100本**（約18万字）を自動取得・保存（全381本のkey一覧も同梱）
+- 📦 [`note-archive/`](note-archive/) … 分析元の**全381本**（約55万字 / 2023-06〜2026-05）を自動取得・保存
 
 > **次アクション**: [`asagikki-template.md` 見本5（AI生成サンプル）](templates/asagikki-template.md) を読み、語尾・リズム・たとえ話が実記事と一致するかTakさんが確認 → ズレを `writing-style.md` に反映。
 
