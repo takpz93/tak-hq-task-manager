@@ -132,7 +132,7 @@ POP        = エンリョなく楽しもう。頑張らなくていい。ゆる�
 
 ### 1ヶ月目: noteで「YouTube始めました」を物語にする
 - [ ] Vlog第1本を撮る（自己紹介＋なぜ浪人として生きるか）※完璧じゃなくていい
-- [ ] noteの朝日記で"YouTube開設の舞台裏"を連載化（失敗も全部コンテンツ）
+- [ ] noteの朝日記で"YouTube開設の舞台裏"を連載化（失敗も全部コンテンツ）※下書き3本 → [`templates/asagikki-drafts.md`](templates/asagikki-drafts.md)
 - [ ] 全note記事の末尾に YouTube リンクを固定
 - 🎯 YouTube 5人 → 30〜50人
 
@@ -336,6 +336,7 @@ POP        = エンリョなく楽しもう。頑張らなくていい。ゆる�
 - 📖 [`writing-style.md`](writing-style.md) … 文体ガイド本体（一人称/語尾/口癖/構成/たとえ話/NG/AIプロンプト/チェックリスト）
 - 📝 [`templates/asagikki-template.md`](templates/asagikki-template.md) … 朝日記の穴埋めテンプレ＋見本5本（実記事4＋AI生成1）
 - 🎙️ [`templates/voice-to-article-workflow.md`](templates/voice-to-article-workflow.md) … 音声入力→AI下書き→手直しの手順＋プロンプト
+- 📄 [`templates/asagikki-drafts.md`](templates/asagikki-drafts.md) … 「YouTube開設の舞台裏」連載用の朝日記ドラフト3本（1ヶ月目に直結・要手直し）
 - 📦 [`note-archive/`](note-archive/) … 分析元の実記事18本（約3万字）を自動取得・保存
 
 > **次アクション**: [`asagikki-template.md` 見本5（AI生成サンプル）](templates/asagikki-template.md) を読み、語尾・リズム・たとえ話が実記事と一致するかTakさんが確認 → ズレを `writing-style.md` に反映。
