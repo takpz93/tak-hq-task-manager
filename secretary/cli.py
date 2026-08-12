@@ -8,11 +8,13 @@ from pathlib import Path
 
 from dateutil import parser as date_parser
 
-from secretary import calendar_ops, tasks_ops
-from secretary.deadline_sync import default_rules_path, run as deadline_run
+# Google API 系（calendar_ops / tasks_ops / deadline_sync）は重い依存を引くため、
+# 各コマンド内で遅延 import する。これにより note/x 系コマンドは Google 依存なしで動く。
 
 
 def _cmd_cal_list(args: argparse.Namespace) -> None:
+    from secretary import calendar_ops
+
     items = calendar_ops.list_events(days=args.days, max_results=args.max)
     for ev in items:
         start = ev.get("start", {})
@@ -21,6 +23,8 @@ def _cmd_cal_list(args: argparse.Namespace) -> None:
 
 
 def _cmd_cal_add(args: argparse.Namespace) -> None:
+    from secretary import calendar_ops
+
     start = date_parser.parse(args.start)
     end = date_parser.parse(args.end) if args.end else None
     ev = calendar_ops.create_event(
@@ -34,11 +38,15 @@ def _cmd_cal_add(args: argparse.Namespace) -> None:
 
 
 def _cmd_cal_delete(args: argparse.Namespace) -> None:
+    from secretary import calendar_ops
+
     calendar_ops.delete_event(args.event_id)
     print("deleted")
 
 
 def _cmd_tasks_list(args: argparse.Namespace) -> None:
+    from secretary import tasks_ops
+
     items = tasks_ops.list_tasks(show_completed=args.completed)
     for t in items:
         status = t.get("status", "")
@@ -46,21 +54,29 @@ def _cmd_tasks_list(args: argparse.Namespace) -> None:
 
 
 def _cmd_tasks_add(args: argparse.Namespace) -> None:
+    from secretary import tasks_ops
+
     t = tasks_ops.add_task(args.title, notes=args.notes)
     print(json.dumps({"id": t.get("id")}, ensure_ascii=False))
 
 
 def _cmd_tasks_done(args: argparse.Namespace) -> None:
+    from secretary import tasks_ops
+
     tasks_ops.complete_task(args.task_id)
     print("completed")
 
 
 def _cmd_tasks_delete(args: argparse.Namespace) -> None:
+    from secretary import tasks_ops
+
     tasks_ops.delete_task(args.task_id)
     print("deleted")
 
 
 def _cmd_tasklists(args: argparse.Namespace) -> None:
+    from secretary import tasks_ops
+
     for tl in tasks_ops.list_tasklists():
         print(f"{tl.get('title', '')}\tid={tl.get('id')}")
 
@@ -133,7 +149,58 @@ def _cmd_goal_complete(args: argparse.Namespace) -> None:
     print(f"記録しました（見積: {estimated}分 / 実績: {actual}分）")
 
 
+def _cmd_note_schedule(args: argparse.Namespace) -> None:
+    from secretary.note_ops import NoteBrowser, PostConfig
+
+    cfg = PostConfig.load(args.config)
+    errors = cfg.validate()
+    if errors:
+        print("予約を中止しました（要修正）:", file=sys.stderr)
+        for e in errors:
+            print(f"  - {e}", file=sys.stderr)
+        raise SystemExit(2)
+
+    if args.dry_run:
+        print(json.dumps({
+            "status": "ok",
+            "title": cfg.title,
+            "hashtags": cfg.hashtags,
+            "magazine": cfg.magazine,
+            "thumbnail": str(cfg.thumbnail),
+            "publish_at": cfg.publish_at.isoformat() if cfg.publish_at else None,
+            "links": {k: v.url for k, v in cfg.links.items()},
+        }, ensure_ascii=False, indent=2))
+        print("\n検証OK。--dry-run のため予約は実行していません。")
+        return
+
+    browser = NoteBrowser(headless=not args.show, slow_mo=args.slow_mo)
+    result = browser.schedule(cfg)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+    if args.x_stock and cfg.x_announcement:
+        from secretary import x_stock
+        path = x_stock.add_from_config(cfg, note_url=result.get("url"))
+        print(f"X告知をストックに追加: {path}")
+
+
+def _cmd_note_login(args: argparse.Namespace) -> None:
+    from secretary.note_ops import login_and_save
+
+    login_and_save(headless=False)
+
+
+def _cmd_x_stock(args: argparse.Namespace) -> None:
+    from secretary import x_stock
+    from secretary.note_ops import PostConfig
+
+    cfg = PostConfig.load(args.config)
+    path = x_stock.add_from_config(cfg, note_url=args.note_url)
+    print(f"X告知をストックに追加: {path}")
+
+
 def _cmd_deadline_sync(args: argparse.Namespace) -> None:
+    from secretary.deadline_sync import default_rules_path, run as deadline_run
+
     cfg = Path(args.config) if args.config else default_rules_path()
     stats = deadline_run(
         config_path=cfg,
@@ -203,6 +270,22 @@ def main(argv: list[str] | None = None) -> int:
     ds.add_argument("--days", type=int, default=45, help="先の予定を何日分見るか")
     ds.add_argument("--dry-run", action="store_true", help="書き込みせず件数のみ")
     ds.set_defaults(func=_cmd_deadline_sync)
+
+    ns = sub.add_parser("note-schedule", help="note 記事を予約投稿（設定YAMLから）")
+    ns.add_argument("--config", "-c", required=True, help="投稿設定 YAML のパス")
+    ns.add_argument("--dry-run", action="store_true", help="検証のみ（ブラウザ操作なし）")
+    ns.add_argument("--show", action="store_true", help="ブラウザを表示（既定はヘッドレス）")
+    ns.add_argument("--slow-mo", type=int, default=0, help="各操作のディレイ(ms)")
+    ns.add_argument("--x-stock", action="store_true", help="予約後に X 告知をストックへ追加")
+    ns.set_defaults(func=_cmd_note_schedule)
+
+    nl = sub.add_parser("note-login", help="note に手動ログインして Cookie を保存")
+    nl.set_defaults(func=_cmd_note_login)
+
+    xs = sub.add_parser("x-stock", help="X 告知文を手貼り用ストックへ追加")
+    xs.add_argument("--config", "-c", required=True, help="投稿設定 YAML のパス")
+    xs.add_argument("--note-url", default=None, help="[記事URL] を置換する記事URL")
+    xs.set_defaults(func=_cmd_x_stock)
 
     args = p.parse_args(argv)
     try:

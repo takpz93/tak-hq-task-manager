@@ -11,3 +11,7 @@ migrate_events_to_tasks.py
 fix_duplicate_tasks.py
 .streamlit/secrets.toml
 .DS_Store
+note_cookies.json
+note_posts/assets/*.jpg
+note_posts/assets/*.jpeg
+note_posts/assets/*.png
