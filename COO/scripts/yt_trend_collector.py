@@ -11,7 +11,7 @@ YouTube横断「伸びた動画」収集ツール（カレー／スパイス／�
 使い方:
   python3 COO/scripts/yt_trend_collector.py [--cache DIR] [--out DIR]
 """
-import argparse, json, os, re, sys, time, unicodedata, subprocess
+import argparse, hashlib, json, os, re, sys, time, unicodedata
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
@@ -52,7 +52,9 @@ def log(*a):
 class Cache:
     def __init__(self, d):
         self.d = d; os.makedirs(d, exist_ok=True)
-    def path(self, k): return os.path.join(self.d, re.sub(r'[^A-Za-z0-9_.-]', '_', k) + ".json")
+    def path(self, k):
+        # 日本語キーは潰れて衝突するのでハッシュを付与する
+        return os.path.join(self.d, re.sub(r'[^A-Za-z0-9_.-]', '_', k)[:60] + "_" + hashlib.md5(k.encode("utf-8")).hexdigest()[:10] + ".json")
     def get(self, k):
         p = self.path(k)
         if os.path.exists(p):
@@ -163,36 +165,59 @@ def search_videos(query, params, pages, cache):
         d = it_post("search", {"continuation": tok}, cache, f"search_{query}_{params}_p{page+1}")
     return out
 
+MONTHS = {m: i for i, m in enumerate(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], 1)}
+
+def parse_en_num(s):
+    """'334K subscribers' / '1.2M' / '17,569 views' -> int"""
+    if not s: return None
+    m = re.search(r"([\d,.]+)\s*([KMB])?", s)
+    if not m: return None
+    n = float(m.group(1).replace(",", ""))
+    n *= {"K": 1e3, "M": 1e6, "B": 1e9}.get(m.group(2) or "", 1)
+    return int(n)
+
+def parse_en_date(s):
+    """'Sep 29, 2023' / 'Premiered Sep 29, 2023' / 'Streamed live on Sep 29, 2023' -> 'YYYY-MM-DD'"""
+    if not s: return None
+    m = re.search(r"([A-Z][a-z]{2})\s+(\d{1,2}),\s+(\d{4})", s)
+    if not m: return None
+    return f"{int(m.group(3)):04d}-{MONTHS.get(m.group(1), 0):02d}-{int(m.group(2)):02d}"
+
 def video_details(vid, cache):
-    d = it_post("player", {"videoId": vid}, cache, f"player_{vid}")
+    """next エンドポイント (hl=en) から 原題・再生数・公開日・登録者数・チャンネル名/ハンドル を取得。
+    hl=en の title は、日本語オリジナルなら日本語のまま、海外動画なら原題(英語等)になるため言語判定に使う。"""
+    body = {"videoId": vid, "context": {"client": {"clientName": "WEB", "clientVersion": "2.20250101.00.00", "hl": "en", "gl": "US"}}}
+    d = it_post("next", body, cache, f"nexten_{vid}")
     if not d: return None
-    vd = d.get("videoDetails") or {}
-    mf = (d.get("microformat") or {}).get("playerMicroformatRenderer") or {}
-    if not vd.get("videoId"): return None
+    prim = next(walk(d, "videoPrimaryInfoRenderer"), None)
+    sec = next(walk(d, "videoSecondaryInfoRenderer"), None)
+    if not prim: return None
+    own = ((sec or {}).get("owner") or {}).get("videoOwnerRenderer") or {}
+    vc = next(walk(prim, "videoViewCountRenderer"), {}) or {}
+    handle = None
+    for r in (own.get("title") or {}).get("runs", []):
+        handle = r.get("navigationEndpoint", {}).get("browseEndpoint", {}).get("canonicalBaseUrl")
+    dt = text(prim.get("dateText"))
     return {
-        "title": vd.get("title"), "lengthSeconds": int(vd.get("lengthSeconds") or 0),
-        "viewCount": int(vd.get("viewCount") or 0), "author": vd.get("author"),
-        "channelId": vd.get("channelId"), "publishDate": (mf.get("publishDate") or mf.get("uploadDate") or "")[:10],
-        "category": mf.get("category"), "isLive": bool(vd.get("isLiveContent")),
-        "keywords": vd.get("keywords") or [],
+        "title_en": text(prim.get("title")),
+        "viewCount": parse_en_num(text(vc.get("viewCount"))),
+        "publishDate": parse_en_date(dt),
+        "isLive": "Streamed" in dt or "live" in dt.lower(),
+        "subs": parse_en_num(text(own.get("subscriberCountText"))),
+        "subsHidden": not text(own.get("subscriberCountText")),
+        "channel_en": text(own.get("title")), "handle": handle,
+        "channelId": (own.get("navigationEndpoint") or {}).get("browseEndpoint", {}).get("browseId"),
     }
 
-def channel_subs(vid, cache):
-    d = it_post("next", {"videoId": vid}, cache, f"next_{vid}")
-    if not d: return None, None
-    subs = None; handle = None
-    for o in walk(d, "videoOwnerRenderer"):
-        subs = parse_subs(text(o.get("subscriberCountText")))
-        for r in (o.get("title") or {}).get("runs", []):
-            handle = r.get("navigationEndpoint", {}).get("browseEndpoint", {}).get("canonicalBaseUrl")
-        break
-    return subs, handle
-
 # ---------- 判定 ----------
-def lang_of(*texts):
-    s = "".join(t or "" for t in texts)
-    if re.search(r"[぀-ヿ]", s): return "ja"
-    if re.search(r"[一-鿿]", s): return "zh"
+def has_kana(s): return bool(re.search(r"[぀-ヿ]", s or ""))
+def has_cjk(s): return bool(re.search(r"[一-鿿]", s or ""))
+
+def lang_of(title_ja, title_en, channel_ja):
+    """hl=en で取得した題名に仮名が残る → 日本語オリジナル。英語題名になる → 海外(自動翻訳)動画。"""
+    if has_kana(title_en) or has_kana(channel_ja): return "ja"
+    if has_cjk(title_en): return "zh"
+    if not title_en and has_kana(title_ja): return "ja"
     return "en"
 
 def threshold(subs):
@@ -303,49 +328,35 @@ def main():
     detailed = []
     for i, vid in enumerate(pre):
         v = cands[vid]
+        if v["durationSec_s"] is None: continue
         d = video_details(vid, cache)
-        if d is None:
-            # player が取れない場合は検索結果の値で近似
-            if v["durationSec_s"] is None or v["views_s"] is None or v["relDays_s"] is None: continue
-            d = {"title": v["title"], "lengthSeconds": v["durationSec_s"], "viewCount": v["views_s"],
-                 "author": v["channel"], "channelId": v["channelId"],
-                 "publishDate": (today - timedelta(days=v["relDays_s"])).isoformat() + "(approx)",
-                 "category": None, "isLive": False, "keywords": []}
-        if d["lengthSeconds"] < MIN_DURATION or d["viewCount"] < MIN_VIEWS or not d["publishDate"]: continue
-        try:
-            age = (today - datetime.strptime(d["publishDate"][:10], "%Y-%m-%d").date()).days
-        except Exception:
-            continue
+        if d is None or not d["publishDate"]: continue
+        if d["viewCount"] is None: d["viewCount"] = v["views_s"]
+        if d["viewCount"] is None or d["viewCount"] < MIN_VIEWS: continue
+        age = (today - datetime.strptime(d["publishDate"], "%Y-%m-%d").date()).days
         if age > MAX_AGE_DAYS: continue
-        v.update(d); v["ageDays"] = age
+        v.update(d); v["ageDays"] = age; v["lengthSeconds"] = v["durationSec_s"]
+        if v["lengthSeconds"] < MIN_DURATION: continue
         detailed.append(v)
         if (i + 1) % 50 == 0: log(f"[details] {i+1}/{len(pre)}")
-    log(f"[details] kept {len(detailed)}")
-
-    # 3) 登録者数（チャンネル単位でキャッシュ）
-    subs_by_ch = {}
-    for v in detailed:
-        ch = v.get("channelId") or v["channel"]
-        if ch not in subs_by_ch:
-            s, handle = channel_subs(v["videoId"], cache)
-            subs_by_ch[ch] = (s, handle)
-        v["subs"], v["handle"] = subs_by_ch[ch]
-    log(f"[subs] channels: {len(subs_by_ch)}")
+    log(f"[details] kept {len(detailed)}; channels {len(set(v.get('channelId') or v['channel'] for v in detailed))}")
 
     # 4) 倍率判定・整形
     rows = []; hidden = []
     for v in detailed:
-        title = v.get("title") or cands[v["videoId"]]["title"]
-        channel = v.get("author") or v["channel"]
+        title_ja = v["title"]; title_en = v.get("title_en") or ""
+        channel = v["channel"] or v.get("channel_en") or ""
+        lang = lang_of(title_ja, title_en, channel)
+        title = title_ja if lang == "ja" else (title_en or title_ja)
         rec = {
             "videoId": v["videoId"], "title": title, "url": f"https://www.youtube.com/watch?v={v['videoId']}",
             "channel": channel, "channelId": v.get("channelId"), "handle": v.get("handle") or v.get("channelUrl"),
             "subs": v["subs"], "views": v["viewCount"], "publishDate": v["publishDate"][:10],
-            "durationSec": v["lengthSeconds"], "ageDays": v["ageDays"], "category": v.get("category"),
+            "durationSec": v["lengthSeconds"], "ageDays": v["ageDays"], "title_ja": title_ja, "title_en": title_en,
             "thumb": f"https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg",
-            "lang": lang_of(title, channel), "axis": v["axis"], "isRef": v["isRef"],
+            "lang": lang, "axis": v["axis"], "isRef": v["isRef"],
             "keywordsHit": " / ".join(sorted(hits[v["videoId"]])),
-            "type": classify(title, channel, v.get("category"), v.get("keywords") or []),
+            "type": classify(title, channel, None, []),
         }
         if rec["subs"] is None or rec["subs"] == 0:
             hidden.append(rec); continue
@@ -422,15 +433,15 @@ def main():
     # md
     L = []
     L.append(f"# YouTube横断「伸びた動画」収集レポート（カレー／スパイス／血糖値・腸活）\n")
-    L.append(f"生成日: {today.isoformat()}　｜　データ源: YouTube InnerTube（検索・動画詳細・チャンネル情報）\n")
+    L.append(f"生成日: {today.isoformat()}　｜　データ源: YouTube InnerTube（search / next エンドポイント。APIキー不要）\n")
     L.append("## 抽出条件\n")
     L.append(f"- 検索キーワード: 13語（カレー軸6／スパイス軸4／血糖値・腸活軸3）× 5パターン（1年以内×関連順・再生順・新着順、期間指定なし×関連順・再生順）＋続きページ\n"
              f"- 公開1年以内を主枠。1年以内の該当が{FEW_HITS}本未満のキーワードは1〜2年前まで補完（「1〜2年(補完)」と表示）\n"
-             f"- 180秒以下（ショート）は除外。ライブ配信アーカイブは含む\n"
+             f"- 180秒以下（ショート）は除外。尺は検索結果の表示時間から取得\n"
              f"- 倍率 = 再生数 ÷ チャンネル登録者数。規模帯別基準: 10万人以上≧1倍／1万〜10万人≧2倍／1万人未満≧3倍\n"
              f"- ノイズ除去のため再生数{MIN_VIEWS:,}回未満は除外（追加の前提。極小チャンネルの数十回再生で倍率が跳ねるのを防ぐ）\n"
              f"- 登録者数非公開のチャンネルは倍率が算出できないため別掲\n"
-             f"- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（タイトル・CH名の文字種で判定）\n")
+             f"- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
     L.append("## 収集サマリー\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏） | {len(foreign)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
     L.append("### キーワード別 主枠ヒット数（1年以内）\n")
