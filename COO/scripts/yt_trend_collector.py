@@ -218,28 +218,60 @@ def lang_of(title_ja, title_en, channel_ja):
     if has_kana(title_en) or has_kana(channel_ja): return "ja"
     if has_cjk(title_en): return "zh"
     if not title_en and has_kana(title_ja): return "ja"
+    # ラテン文字・数字・記号以外（デーヴァナーガリー、マラヤーラム、タイ文字等）が主体なら「その他」
+    letters = re.findall(r"[^\W\d_]", title_en or "")
+    if letters and sum(1 for c in letters if ord(c) > 0x2FF) > len(letters) * 0.5: return "other"
     return "en"
+
+LANG_LABEL = {"ja": "日本語", "en": "英語", "zh": "中国語", "other": "その他"}
+
+# キーワードのトピック語（これを含まない動画は関連性が低いとみなし別掲）
+TOPIC_RE = re.compile(r"カレー|スパイス|粉|パウダー|食材|スーパーフード|香辛料|ターメリック|ウコン|クミン|シナモン|クローブ|カルダモン|コリアンダー|パクチー|唐辛子|生姜|ジンジャー|ガーリック|にんにく|ニンニク|胡椒|コショウ|血糖|HbA1c|糖尿|インスリン|糖質|炭水化物|腸活|腸内|便秘|便|発酵|食物繊維|乳酸菌|白米|玄米|ご飯|ごはん|米|ライス|麦|curry|spice|turmeric|curcumin|cumin|cinnamon|clove|cardamom|ginger|garlic|pepper|blood sugar|glucose|insulin|diabet|carb|gut|bowel|microbiome|probiotic|fiber|ferment|rice|grain|masala", re.I)
 
 def threshold(subs):
     if subs >= 100000: return 1.0
     if subs >= 10000: return 2.0
     return 3.0
 
+RECIPE_STRONG = ["レシピ", "作り方", "常備菜", "作り置き", "混ぜるだけ", "切って", "漬け", "副菜", "大量消費", "献立", "材料", "煮込", "炒め", "焼くだけ", "レンチン", "蒸し", "recipe", "how to make", "homemade", "cook"]
+DISH_RE = re.compile(r"カレー|丼|サラダ|スープ|パン|ポテト|おかず|チキン|ハンバーグ|パスタ|うどん|そば|炒め|煮|焼き|漬け|ごはん|ご飯|弁当|おやつ|デザート|ケーキ|クッキー|ドリンク|スムージー|ヨーグルト|きのこ|野菜")
 RECIPE_KW = ["レシピ", "作り方", "作る", "作れ", "作っ", "料理", "簡単", "材料", "献立", "ごはん", "ご飯", "晩", "弁当", "炊", "煮込", "焼", "炒", "手作り", "本格", "時短", "混ぜ", "丼", "スープ", "おかず", "ランチ", "ディナー", "recipe", "cook", "how to make", "homemade", "美味", "おいしい", "うまい", "絶品", "食べる", "作り置き", "キッチン", "kitchen", "chef", "シェフ", "食堂", "飯"]
 EXPERT_KW = ["医師", "医者", "医学", "内科", "専門医", "教授", "博士", "薬剤師", "管理栄養士", "栄養士", "栄養学", "解説", "研究", "論文", "効果", "効能", "血糖値", "腸内", "健康", "寿命", "病", "予防", "危険", "リスク", "科学", "メカニズム", "理由", "真実", "衝撃", "実は", "doctor", "dr.", "dr ", "md", "science", "study", "research", "benefit", "health", "nutrition", "dietitian", "physician", "professor", "がん", "癌", "糖尿", "ダイエット", "痩せ", "老化", "認知症", "免疫", "炎症", "アンチエイジング", "栄養", "成分", "比較", "選び方", "ランキング", "レビュー"]
 
-def classify(title, channel, category, keywords):
-    t = (title or "").lower(); c = (channel or "").lower(); k = " ".join(keywords).lower()
-    r = sum(2 for w in RECIPE_KW if w in t) + sum(1 for w in RECIPE_KW if w in c) + sum(0.5 for w in RECIPE_KW if w in k)
-    e = sum(2 for w in EXPERT_KW if w in t) + sum(1 for w in EXPERT_KW if w in c) + sum(0.5 for w in EXPERT_KW if w in k)
-    if category == "Howto & Style": r += 1.5
-    if category in ("Education", "Science & Technology"): e += 1.5
+CHANNEL_COOK_RE = re.compile(r"キッチン|kitchen|料理|レシピ|クッキング|cooking|飯|ごはん|ご飯|食卓|シェフ|chef|cook|調理師|常備菜|弁当")
+CHANNEL_EXPERT_RE = re.compile(r"医師|医|クリニック|内科|専門|先生|栄養士|薬剤師|研究|大学|doctor|dr\.|md|health|clinic|nutrition")
+
+def classify(title, channel, category=None, keywords=()):
+    """タイトル・CH名のキーワードで「専門家の解説型」「レシピ・料理型」に二分する"""
+    t = (title or "").lower(); c = (channel or "").lower()
+    r = sum(3 for w in RECIPE_STRONG if w in t) + sum(1 for w in RECIPE_KW if w in t and w not in RECIPE_STRONG)
+    e = sum(2 for w in EXPERT_KW if w in t)
+    if CHANNEL_COOK_RE.search(c): r += 3
+    if CHANNEL_EXPERT_RE.search(c): e += 3
+    # 料理名だけのタイトル（解説語なし）は料理型
+    if e == 0 and DISH_RE.search(t): r += 3
     if r > e: return "レシピ・料理型"
     if e > r: return "専門家の解説型"
-    return "レシピ・料理型" if category == "Howto & Style" else "専門家の解説型"
+    return "レシピ・料理型" if DISH_RE.search(t) else "専門家の解説型"
 
 # ---------- 集計 ----------
-STOP = set("こと もの ため さん ここ これ それ あれ さ 方 的 化 用 中 人 私 僕 今 分 年 月 日 回 本 つ 個 位 時 上 下 前 後 目 気 何 系 全 超 感 的 内 外 話 版 編 件 種 等 みんな みたい よう そう ない".split())
+STOP = set("TOP top BEST ベスト こと もの ため さん ここ これ それ あれ さ 方 的 化 用 中 人 私 僕 今 分 年 月 日 回 本 つ 個 位 時 上 下 前 後 目 気 何 系 全 超 感 的 内 外 話 版 編 件 種 等 みんな みたい よう そう ない".split())
+
+# 分かち書きで割れやすいドメイン複合語（最長一致で先に切り出す）
+COMPOUNDS = sorted(["血糖値スパイク", "血糖値", "HbA1c", "糖尿病", "腸内環境", "腸内細菌", "生活習慣病", "内臓脂肪", "管理栄養士", "食物繊維", "健康雑学", "専門医", "専門クリニック", "現役医師", "内科医", "カレー粉", "カレールー", "スパイスカレー", "レトルトカレー", "インドカレー", "チキンカレー", "健康効果", "抗酸化", "老化防止", "認知症", "脂肪肝", "血圧", "作り置き", "常備菜", "食べ方", "作り方", "食べ物", "乳酸菌", "発酵食品", "便秘", "宿便", "業務スーパー", "無印良品", "トップバリュ", "ダイエット", "アンチエイジング", "若返り", "白髪", "視力", "免疫", "炎症", "糖質", "炭水化物", "ターメリック", "クミン", "シナモン", "クローブ", "ウコン", "ヨーグルト", "ブルーベリー", "コーヒー", "きな粉", "納豆", "ゆで卵", "スパイス", "カレー", "腸活", "白米", "玄米", "もち麦", "健康寿命", "中高年", "高齢者", "シニア", "医師", "医学"], key=len, reverse=True)
+COMPOUND_RE = re.compile("|".join(re.escape(c) for c in COMPOUNDS))
+
+NUM_PATTERNS = [
+    r"(?:TOP|BEST|ベスト|トップ|ワースト)\s*\d+",                       # TOP5
+    r"[-−▲]\s*\d+(?:\.\d+)?\s*(?:kg|㎏|cm|%)",                        # -8kg
+    r"\d+(?:\.\d+)?\s*(?:kg|㎏)\s*→\s*\d+(?:\.\d+)?\s*(?:kg|㎏)?",   # 68kg→58kg
+    r"\d+\s*→\s*\d+",                                                 # 200→98
+    r"\d+(?:[.,]\d+)?\s*(?:kcal|kg|㎏|mg|g|ml|cc|km|cm|mm|L|l|%|％)",     # 単位付き
+    r"\d+(?:\.\d+)?\s*(?:万|千|億)?\s*(?:分|秒|時間|日間|日|週間|か月|ヶ月|ヵ月|年間|年|歳|代|円|倍|種|種類|選|個|本|杯|食|人|回|割|位|つ|品|粒|袋|缶|色|項目|ステップ|歩|滴|周|段階|世代|問|坪|玉|枚|株|束|切れ)",
+    r"\d+\s*/\s*\d+",                                                 # 1/8
+    r"[一二三四五六七八九十]+\s*(?:つ|選|種|品|割|倍|分|日|週間|か月|年|個|本|粒)",
+]
+NUM_RE = re.compile("|".join(NUM_PATTERNS), re.I)
 
 def word_stats(items):
     from janome.tokenizer import Tokenizer
@@ -250,19 +282,20 @@ def word_stats(items):
         # 【】内
         bs = set(b.strip() for b in re.findall(r"【([^】]*)】", title) if b.strip())
         for b in bs: brackets[b] += 1
-        # 数字表現
-        ns = set(m.strip() for m in re.findall(r"\d+(?:[.,]\d+)?\s*(?:kcal|kg|mg|g|ml|cc|分|秒|時間|日間|日|週間|か月|ヶ月|年間|年|歳|代|円|倍|%|種|選|個|本|杯|食|人|回|割|位|つ|品|kcal|km|cm|mm|g|L|l|万|千|億|割減|kg減|周年|時|号|等分|の|つ|項目|ステップ|STEP|step)?", title, flags=re.I))
-        ns = set(n for n in ns if re.search(r"\d", n))
+        # 数字表現（単位・接頭辞つきのみ。HbA1c や TOP5 の素の数字は拾わない）
+        ns = set(re.sub(r"\s+", "", m.group(0)) for m in NUM_RE.finditer(title))
         for n in ns: nums[n] += 1
-        # 名詞
-        seen = set()
-        for w in tk.tokenize(re.sub(r"【[^】]*】", " ", title)):
+        # 名詞: ドメイン複合語を最長一致で切り出し → 残りを janome で名詞抽出
+        body = re.sub(r"【[^】]*】", " ", title)
+        seen = set(COMPOUND_RE.findall(body))
+        rest = COMPOUND_RE.sub(" ", body)
+        for w in tk.tokenize(rest):
             pos = w.part_of_speech.split(",")
             if pos[0] != "名詞" or pos[1] in ("数", "非自立", "接尾", "代名詞"): continue
-            s = w.surface
-            if len(s) < 2 or s in STOP or re.fullmatch(r"[\d\W_]+", s): continue
-            seen.add(s)
-        for s in seen: nouns[s] += 1
+            t = w.surface
+            if len(t) < 2 or t in STOP or re.fullmatch(r"[\d\W_]+", t): continue
+            seen.add(t)
+        for t in seen: nouns[t] += 1
     return nouns, nums, brackets
 
 def fmt_n(n):
@@ -277,12 +310,13 @@ def safe_name(s, n=30):
     s = re.sub(r'[\\/:*?"<>|\s]+', "_", s or "")
     return s[:n].strip("_") or "ch"
 
-def md_table(rows):
-    h = "| # | タイトル | CH名 | 登録者数 | 再生数 | 倍率 | 公開日 | 尺 | 型 | KW | サムネ |\n|---|---|---|---|---|---|---|---|---|---|---|\n"
+def md_table(rows, lang_col=False):
+    h = "| # | タイトル | CH名 | 登録者数 | 再生数 | 倍率 | 公開日 | 尺 | 型 | KW |" + (" 言語 |" if lang_col else "") + " サムネ |\n|---|---|---|---|---|---|---|---|---|---|" + ("---|" if lang_col else "") + "---|\n"
     out = []
     for i, r in enumerate(rows, 1):
         t = r["title"].replace("|", "｜")
-        out.append(f"| {i} | [{t}]({r['url']}) | {r['channel'].replace('|','｜')} | {fmt_subs(r['subs'])} | {fmt_n(r['views'])} | **{r['ratio']:.1f}x** | {r['publishDate']} | {r['durationSec']//60}:{r['durationSec']%60:02d} | {r['type']} | {r['keywordsHit']} | [img]({r['thumb']}) |")
+        lc = f" {LANG_LABEL.get(r['lang'], r['lang'])} |" if lang_col else ""
+        out.append(f"| {i} | [{t}]({r['url']}) | {r['channel'].replace('|','｜')} | {fmt_subs(r['subs'])} | {fmt_n(r['views'])} | **{r['ratio']:.1f}x** | {r['publishDate']} | {r['durationSec']//60}:{r['durationSec']%60:02d} | {r['type']} | {r['keywordsHit']} |{lc} [img]({r['thumb']}) |")
     return h + "\n".join(out) + "\n"
 
 def counter_table(cnt, label, top=30):
@@ -356,7 +390,8 @@ def main():
             "thumb": f"https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg",
             "lang": lang, "axis": v["axis"], "isRef": v["isRef"],
             "keywordsHit": " / ".join(sorted(hits[v["videoId"]])),
-            "type": classify(title, channel, None, []),
+            "type": classify(title, channel),
+            "onTopic": bool(TOPIC_RE.search(title_ja) or TOPIC_RE.search(title_en)),
         }
         if rec["subs"] is None or rec["subs"] == 0:
             hidden.append(rec); continue
@@ -367,9 +402,11 @@ def main():
     rows.sort(key=lambda r: -r["ratio"])
     log(f"[select] passed {len(rows)}, hidden-subs {len(hidden)}")
 
-    ja_1y = [r for r in rows if r["lang"] == "ja" and r["ageDays"] <= PRIMARY_AGE_DAYS]
-    ja_2y = [r for r in rows if r["lang"] == "ja" and r["ageDays"] > PRIMARY_AGE_DAYS]
-    foreign = [r for r in rows if r["lang"] != "ja"]
+    offtopic = [r for r in rows if not r["onTopic"]]
+    rows_on = [r for r in rows if r["onTopic"]]
+    ja_1y = [r for r in rows_on if r["lang"] == "ja" and r["ageDays"] <= PRIMARY_AGE_DAYS]
+    ja_2y = [r for r in rows_on if r["lang"] == "ja" and r["ageDays"] > PRIMARY_AGE_DAYS]
+    foreign = [r for r in rows_on if r["lang"] != "ja"]
 
     # 1年以内の該当が少ないキーワードは2年まで補完
     kw_1y = Counter(); [kw_1y.update(r["keywordsHit"].split(" / ")) for r in ja_1y]
@@ -420,7 +457,7 @@ def main():
     log(f"[thumbs] ok {ok}, fail {fail}")
 
     # 7) 出力
-    json.dump({"generated": today.isoformat(), "main": main_rows, "foreign": foreign, "hidden_subs": hidden,
+    json.dump({"generated": today.isoformat(), "main": main_rows, "foreign": foreign, "hidden_subs": hidden, "offtopic": offtopic,
                "candidates": len(cands), "prefiltered": len(pre), "detailed": len(detailed)},
               open(os.path.join(a.out, "youtube_curry_spice_trend.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     import csv
@@ -441,9 +478,9 @@ def main():
              f"- 倍率 = 再生数 ÷ チャンネル登録者数。規模帯別基準: 10万人以上≧1倍／1万〜10万人≧2倍／1万人未満≧3倍\n"
              f"- ノイズ除去のため再生数{MIN_VIEWS:,}回未満は除外（追加の前提。極小チャンネルの数十回再生で倍率が跳ねるのを防ぐ）\n"
              f"- 登録者数非公開のチャンネルは倍率が算出できないため別掲\n"
-             f"- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
+             f"- タイトルにトピック語（カレー／スパイス／ターメリック／血糖値／腸活／白米 等）を含まないものは関連性低として別掲\n- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
     L.append("## 収集サマリー\n")
-    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏） | {len(foreign)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
+    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏・その他言語） | {len(foreign)} |\n| トピック語なし（別掲・参考） | {len(offtopic)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
     L.append("### キーワード別 主枠ヒット数（1年以内）\n")
     L.append("| 軸 | キーワード | 1年以内 | 補完(1〜2年) |\n|---|---|---|---|\n")
     kw_supp = Counter(); [kw_supp.update(r["keywordsHit"].split(" / ")) for r in ja_supp]
@@ -460,7 +497,11 @@ def main():
         L.append(md_table(ja_supp))
 
     L.append("\n## 参考枠：英語・中国語圏チャンネル（倍率順）\n")
-    L.append(md_table(foreign) if foreign else "該当なし\n")
+    L.append(md_table(foreign, lang_col=True) if foreign else "該当なし\n")
+    if offtopic:
+        L.append("\n## 別掲：倍率基準はクリアしたがタイトルにトピック語を含まない動画（関連性低・参考）\n")
+        L.append("検索キーワードでヒットしたものの、タイトルにカレー／スパイス／血糖値／腸活などの語が無いもの（健康雑学系など）。企画フォーマットの参考用。\n\n")
+        L.append(md_table(offtopic, lang_col=True))
 
     L.append("\n## 追加集計：タイトル頻出ワード（主枠 全{}本）\n".format(len(main_rows)))
     L.append("### 名詞（上位30）\n"); L.append(counter_table(nouns, "名詞", 30))
@@ -473,7 +514,7 @@ def main():
         s = type_stats.get(t)
         if s: L.append(f"| {t} | {s['n']} | {s['views']:,} | {s['ratio_med']:.1f}x | {s['ratio_avg']:.1f}x |\n")
         else: L.append(f"| {t} | 0 | - | - | - |\n")
-    L.append("\n（判定はタイトル・CH名・動画カテゴリのキーワードによる自動分類。レシピ／作り方／料理／簡単／材料 等→料理型、医師／管理栄養士／解説／研究／効果／血糖値 等→解説型）\n")
+    L.append("\n（判定はタイトル・CH名のキーワードによる自動分類。レシピ／作り方／常備菜／混ぜるだけ／料理名のみのタイトル／料理系CH名→料理型、医師／管理栄養士／解説／研究／効果／血糖値／クリニック系CH名→解説型）\n")
     for t in ["専門家の解説型", "レシピ・料理型"]:
         s = type_stats.get(t)
         if not s: continue
@@ -485,7 +526,7 @@ def main():
 
     L.append("\n## 倍率上位30本 サムネ画像\n")
     L.append(f"保存先: `COO/output/thumbs_curry/`　ファイル名: `{{倍率}}_{{チャンネル名}}_{{動画ID}}.jpg`\n\n")
-    if fail and not ok:
+    if ok == 0:
         L.append(f"> ⚠️ この実行環境からは画像ホスト（i.ytimg.com）への接続が遮断されており、画像本体は保存できませんでした。`COO/output/thumbs_curry/download_thumbs.sh` を手元で実行すると同じファイル名で保存されます（URL一覧は `thumb_urls.txt`）。\n\n")
     L.append("| # | ファイル名 | サムネURL |\n|---|---|---|\n")
     for i, (fn, u) in enumerate(thumb_list, 1): L.append(f"| {i} | {fn} | {u} |\n")
