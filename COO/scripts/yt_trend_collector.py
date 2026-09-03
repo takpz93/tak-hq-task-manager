@@ -378,8 +378,9 @@ def main():
     # 4) 倍率判定・整形
     rows = []; hidden = []
     for v in detailed:
-        title_ja = v["title"]; title_en = v.get("title_en") or ""
-        channel = v["channel"] or v.get("channel_en") or ""
+        clean = lambda x: re.sub(r"\s+", " ", x or "").strip()
+        title_ja = clean(v["title"]); title_en = clean(v.get("title_en"))
+        channel = clean(v["channel"] or v.get("channel_en"))
         lang = lang_of(title_ja, title_en, channel)
         title = title_ja if lang == "ja" else (title_en or title_ja)
         rec = {
