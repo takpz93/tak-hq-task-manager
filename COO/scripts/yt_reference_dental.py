@@ -18,6 +18,8 @@ KEYWORDS = ["銀歯 デメリット", "銀歯 白くする", "詰め物 セラ�
 MIN_VIEWS = 1000
 OWN_CHANNEL_ID = "UCqGpNSBrcuKv_qTLeiD7hvg"
 TARGET_TITLE_KEY = "CAD/CAM冠の闇"; TARGET_CHANNEL_KEY = "前岡"
+# タイトルに歯科関連語を含まない動画（ドラマ・寝具など検索のノイズ）は除外
+DENTAL_RE = re.compile(r"歯|銀|詰め物|被せ物|かぶせ|セラミック|CAD|CAM|インレー|クラウン|ブリッジ|ジルコニア|レジン|むし|虫|口臭|口腔|dental|dentist|tooth|teeth|filling|crown", re.I)
 
 def log(*a): print(*a, file=sys.stderr, flush=True)
 
@@ -125,12 +127,15 @@ def main():
     pre = [v for v in cands.values() if v["durationSec_s"] and v["durationSec_s"] > 180
            and (v["relDays_s"] is None or v["relDays_s"] <= MAX_AGE_DAYS) and (v["views_s"] is None or v["views_s"] >= MIN_VIEWS)]
     log(f"[A prefilter] {len(pre)}/{len(cands)}")
-    rows = []; hidden = []
+    rows = []; hidden = []; offtopic = []
     for i, v in enumerate(pre):
         v = enrich(v, cache, today)
         if not v or v["ageDays"] > MAX_AGE_DAYS or v["viewCount"] is None or v["viewCount"] < MIN_VIEWS: continue
         v["keywordsHit"] = " / ".join(sorted(hits[v["videoId"]]))
-        v["lang"] = "ja" if (has_kana(v.get("title_en")) or has_kana(v["channel"])) else "other"
+        if not DENTAL_RE.search(v["title"]) and not DENTAL_RE.search(v.get("title_en") or ""):
+            offtopic.append(v); continue
+        # 英語UIの原題に仮名が残る／CH名に仮名／日本語題名かつCH名が漢字 → 日本語チャンネル
+        v["lang"] = "ja" if (has_kana(v.get("title_en")) or has_kana(v["channel"]) or (has_kana(v["title"]) and re.search(r"[一-鿿]", v["channel"]))) else "other"
         if v["subs"] is None or v["subs"] == 0: hidden.append(v); continue
         v["ratio"] = v["viewCount"] / v["subs"]; v["threshold"] = threshold(v["subs"])
         if v["ratio"] >= v["threshold"]: rows.append(v)
@@ -175,8 +180,8 @@ def main():
     L.append("## 【A】YouTube横断 参考動画（倍率順）\n\n")
     L.append(f"検索KW: {' / '.join(KEYWORDS)}（各KW 関連順・再生順・新着順×1年以内＋期間なし関連順・再生順、続きページ込み）\n\n")
     L.append("抽出条件: 公開1年以内（主表）／180秒超／倍率 = 再生数÷登録者数 が 大規模(10万人以上)1.0倍・中規模(1万〜10万人)2.0倍・小規模(1万人未満)3.0倍 以上／サムネURLは検索結果にHD版(hq720)がある動画は maxresdefault、無い動画は hqdefault。\n")
-    L.append(f"補足: 再生数{MIN_VIEWS:,}回未満は除外（追加の前提）。縦型判定はショート枠(ショート専用レンダラー・180秒以下)の除外によるもので、180秒超の縦型長尺は検索データから判別不可。\n\n")
-    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 倍率基準クリア・1年以内 | {len(a_1y)} |\n| 倍率基準クリア・1〜2年（拡張枠） | {len(a_2y)} |\n| 登録者非公開で判定不可 | {len(hidden)} |\n\n")
+    L.append(f"補足: 再生数{MIN_VIEWS:,}回未満、タイトルに歯科関連語を含まない検索ノイズ（ドラマ・寝具等）は除外（追加の前提）。縦型判定はショート枠(ショート専用レンダラー・180秒以下)の除外によるもので、180秒超の縦型長尺は検索データから判別不可。\n\n")
+    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 倍率基準クリア・1年以内 | {len(a_1y)} |\n| 倍率基準クリア・1〜2年（拡張枠） | {len(a_2y)} |\n| 登録者非公開で判定不可 | {len(hidden)} |\n| 歯科関連語なしで除外 | {len(offtopic)} |\n\n")
     L.append(f"### A-1 公開1年以内（{len(a_1y)}本）\n\n" + (a_table(a_1y) if a_1y else "該当なし\n"))
     L.append(f"\n### A-2 公開1〜2年（拡張枠、{len(a_2y)}本）\n\n" + (a_table(a_2y) if a_2y else "該当なし\n"))
     if a_foreign: L.append(f"\n### A-3 日本語以外（{len(a_foreign)}本）\n\n" + a_table(a_foreign))
