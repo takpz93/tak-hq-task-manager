@@ -47,6 +47,7 @@ def main():
     cache = Cache(a.cache); today = datetime.now(timezone.utc).date()
     min_views = cfg.get("min_views", 1000); min_hits = cfg.get("min_hits", 20)
     topic_re = re.compile(cfg["topic_regex"], re.I) if cfg.get("topic_regex") else None
+    excl_re = re.compile(cfg["exclude_regex"], re.I) if cfg.get("exclude_regex") else None
 
     cands = {}; hits = {}
     for kw in cfg["keywords"]:
@@ -63,7 +64,7 @@ def main():
         v = enrich(v, cache, today)
         if not v or v["ageDays"] > MAX_AGE_DAYS or v["viewCount"] is None or v["viewCount"] < min_views: continue
         v["keywordsHit"] = " / ".join(sorted(hits[v["videoId"]]))
-        if topic_re and not topic_re.search(v["title"]) and not topic_re.search(v.get("title_en") or ""):
+        if (topic_re and not topic_re.search(v["title"]) and not topic_re.search(v.get("title_en") or "")) or (excl_re and excl_re.search(v["title"])):
             offtopic.append(v); continue
         ja = has_kana(v.get("title_en")) or has_kana(v["channel"]) or (has_kana(v["title"]) and re.search(r"[一-鿿]", v["channel"]))
         if not ja: foreign.append(v); continue
@@ -91,7 +92,7 @@ def main():
     L.append(f"- 公開期間: 直近1年以内{'。1年以内が' + str(min_hits) + '本未満のため最大2年まで拡張（公開日で判別可）' if extended else '（1年以内で' + str(min_hits) + '本以上のため拡張なし。1〜2年前の該当は参考として別掲）'}\n")
     L.append("- 動画長180秒超のみ（ショート専用枠は除外。180秒超の縦動画は検索データから判別不可）／日本語チャンネルのみ\n")
     L.append("- 倍率 = 再生数 ÷ 登録者数。大規模(10万人以上)1倍以上／中規模(1万〜10万人)2倍以上／小規模(1万人未満)3倍以上\n")
-    L.append(f"- 追加の前提: 再生数{min_views:,}回未満は除外。タイトルにテーマ語（{cfg.get('topic_regex','')[:60]}…）を含まない検索ノイズは別掲。登録者非公開は判定不可として別掲\n")
+    L.append(f"- 追加の前提: 再生数{min_views:,}回未満は除外。タイトルにテーマ語（{cfg.get('topic_regex','')[:60]}…）を含まない検索ノイズ、および除外語（{cfg.get('exclude_regex','なし')}）を含むドラマ等は別掲。登録者非公開は判定不可として別掲\n")
     L.append("- サムネURL: 検索結果にHD版(hq720)がある動画は maxresdefault、無い動画は hqdefault(high) を記載。実体の取得確認はこの環境からは不可\n\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
     L.append(f"## 抽出結果（倍率順、{len(final)}本）\n\n" + (table(final) if final else "該当なし\n"))
