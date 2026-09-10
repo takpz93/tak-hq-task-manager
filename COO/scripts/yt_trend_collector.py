@@ -30,6 +30,15 @@ KEYWORDS = {
 # 参考枠（英語圏）: 日本語検索に混ざる海外動画に加え、少量の英語クエリで補完
 KEYWORDS_REF = {"参考枠(英語)": ["turmeric benefits", "curry health benefits", "spices gut health", "blood sugar rice"]}
 
+# 出力・分類の設定（--config の JSON で上書き可能）
+CFG = {
+    "title": "カレー／スパイス／血糖値・腸活", "out_prefix": "youtube_curry_spice_trend", "thumb_dir": "thumbs_curry",
+    "topic_desc": "カレー／スパイス／ターメリック／血糖値／腸活／白米 等",
+    "type_labels": ["専門家の解説型", "レシピ・料理型"],
+    "type_desc": "レシピ／作り方／常備菜／混ぜるだけ／料理名のみのタイトル／料理系CH名→料理型、医師／管理栄養士／解説／研究／効果／血糖値／クリニック系CH名→解説型",
+    "types": None,   # 汎用分類 [{"label","strong_kw","title_kw","channel_regex"}, {...}] を与えると既定の分類器の代わりに使う
+}
+
 # 検索フィルタ (sp パラメータ)
 PARAMS = [
     ("1年以内/関連順", "EgIIBQ%3D%3D", 3),
@@ -241,8 +250,19 @@ EXPERT_KW = ["医師", "医者", "医学", "内科", "専門医", "教授", "博
 CHANNEL_COOK_RE = re.compile(r"キッチン|kitchen|料理|レシピ|クッキング|cooking|飯|ごはん|ご飯|食卓|シェフ|chef|cook|調理師|常備菜|弁当")
 CHANNEL_EXPERT_RE = re.compile(r"医師|医|クリニック|内科|専門|先生|栄養士|薬剤師|研究|大学|doctor|dr\.|md|health|clinic|nutrition")
 
+def classify_generic(title, channel):
+    """CFG["types"] の2分類: strong_kw=3点, title_kw=1点, channel_regex=3点。同点は先頭の型"""
+    t = (title or "").lower(); c = (channel or "").lower(); scores = []
+    for ty in CFG["types"]:
+        sc = sum(3 for w in ty.get("strong_kw", []) if w.lower() in t) + sum(1 for w in ty.get("title_kw", []) if w.lower() in t)
+        if ty.get("channel_regex") and re.search(ty["channel_regex"], c, re.I): sc += 3
+        scores.append(sc)
+    best = max(range(len(scores)), key=lambda i: (scores[i], -i))
+    return CFG["types"][best]["label"]
+
 def classify(title, channel, category=None, keywords=()):
-    """タイトル・CH名のキーワードで「専門家の解説型」「レシピ・料理型」に二分する"""
+    """タイトル・CH名のキーワードで二分する（既定: 「専門家の解説型」「レシピ・料理型」）"""
+    if CFG.get("types"): return classify_generic(title, channel)
     t = (title or "").lower(); c = (channel or "").lower()
     r = sum(3 for w in RECIPE_STRONG if w in t) + sum(1 for w in RECIPE_KW if w in t and w not in RECIPE_STRONG)
     e = sum(2 for w in EXPERT_KW if w in t)
@@ -324,15 +344,32 @@ def counter_table(cnt, label, top=30):
     return h + "\n".join(f"| {i} | {w} | {c} |" for i, (w, c) in enumerate(cnt.most_common(top), 1)) + "\n"
 
 # ---------- main ----------
+def load_config(path):
+    global KEYWORDS, KEYWORDS_REF, TOPIC_RE, COMPOUNDS, COMPOUND_RE, MIN_VIEWS, FEW_HITS
+    c = json.load(open(path, encoding="utf-8"))
+    if "keywords" in c: KEYWORDS = c["keywords"]
+    if "keywords_ref" in c: KEYWORDS_REF = c["keywords_ref"]
+    if "topic_regex" in c: TOPIC_RE = re.compile(c["topic_regex"], re.I)
+    if "compounds" in c:
+        COMPOUNDS = sorted(set(COMPOUNDS) | set(c["compounds"]), key=len, reverse=True)
+        COMPOUND_RE = re.compile("|".join(re.escape(x) for x in COMPOUNDS))
+    if "min_views" in c: MIN_VIEWS = c["min_views"]
+    if "few_hits" in c: FEW_HITS = c["few_hits"]
+    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types"):
+        if k in c: CFG[k] = c[k]
+    if c.get("types"): CFG["type_labels"] = [t["label"] for t in c["types"]]
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", default=os.path.join(os.path.dirname(__file__), "..", ".cache_yt"))
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "output"))
     ap.add_argument("--no-thumbs", action="store_true")
+    ap.add_argument("--config", help="キーワード・分類・出力名を上書きする JSON")
     a = ap.parse_args()
+    if a.config: load_config(a.config)
     cache = Cache(a.cache)
     os.makedirs(a.out, exist_ok=True)
-    thumb_dir = os.path.join(a.out, "thumbs_curry"); os.makedirs(thumb_dir, exist_ok=True)
+    thumb_dir = os.path.join(a.out, CFG["thumb_dir"]); os.makedirs(thumb_dir, exist_ok=True)
     today = datetime.now(timezone.utc).date()
 
     # 1) 検索
@@ -460,9 +497,9 @@ def main():
     # 7) 出力
     json.dump({"generated": today.isoformat(), "main": main_rows, "foreign": foreign, "hidden_subs": hidden, "offtopic": offtopic,
                "candidates": len(cands), "prefiltered": len(pre), "detailed": len(detailed)},
-              open(os.path.join(a.out, "youtube_curry_spice_trend.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+              open(os.path.join(a.out, CFG["out_prefix"] + ".json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     import csv
-    with open(os.path.join(a.out, "youtube_curry_spice_trend.csv"), "w", encoding="utf-8-sig", newline="") as f:
+    with open(os.path.join(a.out, CFG["out_prefix"] + ".csv"), "w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
         w.writerow(["区分", "タイトル", "URL", "CH名", "登録者数", "再生数", "倍率", "公開日", "尺(秒)", "型", "ヒットKW", "軸", "期間", "言語", "サムネURL"])
         for r in main_rows + foreign:
@@ -470,16 +507,17 @@ def main():
 
     # md
     L = []
-    L.append(f"# YouTube横断「伸びた動画」収集レポート（カレー／スパイス／血糖値・腸活）\n")
+    L.append(f"# YouTube横断「伸びた動画」収集レポート（{CFG['title']}）\n")
     L.append(f"生成日: {today.isoformat()}　｜　データ源: YouTube InnerTube（search / next エンドポイント。APIキー不要）\n")
     L.append("## 抽出条件\n")
-    L.append(f"- 検索キーワード: 13語（カレー軸6／スパイス軸4／血糖値・腸活軸3）× 5パターン（1年以内×関連順・再生順・新着順、期間指定なし×関連順・再生順）＋続きページ\n"
+    kw_desc = f"{sum(len(v) for v in KEYWORDS.values())}語（" + "／".join(f"{k}{len(v)}" for k, v in KEYWORDS.items()) + "）"
+    L.append(f"- 検索キーワード: {kw_desc}× 5パターン（1年以内×関連順・再生順・新着順、期間指定なし×関連順・再生順）＋続きページ\n"
              f"- 公開1年以内を主枠。1年以内の該当が{FEW_HITS}本未満のキーワードは1〜2年前まで補完（「1〜2年(補完)」と表示）\n"
              f"- 180秒以下（ショート）は除外。尺は検索結果の表示時間から取得\n"
              f"- 倍率 = 再生数 ÷ チャンネル登録者数。規模帯別基準: 10万人以上≧1倍／1万〜10万人≧2倍／1万人未満≧3倍\n"
              f"- ノイズ除去のため再生数{MIN_VIEWS:,}回未満は除外（追加の前提。極小チャンネルの数十回再生で倍率が跳ねるのを防ぐ）\n"
              f"- 登録者数非公開のチャンネルは倍率が算出できないため別掲\n"
-             f"- タイトルにトピック語（カレー／スパイス／ターメリック／血糖値／腸活／白米 等）を含まないものは関連性低として別掲\n- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
+             f"- タイトルにトピック語（{CFG['topic_desc']}）を含まないものは関連性低として別掲\n- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
     L.append("## 収集サマリー\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏・その他言語） | {len(foreign)} |\n| トピック語なし（別掲・参考） | {len(offtopic)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
     L.append("### キーワード別 主枠ヒット数（1年以内）\n")
@@ -501,7 +539,7 @@ def main():
     L.append(md_table(foreign, lang_col=True) if foreign else "該当なし\n")
     if offtopic:
         L.append("\n## 別掲：倍率基準はクリアしたがタイトルにトピック語を含まない動画（関連性低・参考）\n")
-        L.append("検索キーワードでヒットしたものの、タイトルにカレー／スパイス／血糖値／腸活などの語が無いもの（健康雑学系など）。企画フォーマットの参考用。\n\n")
+        L.append(f"検索キーワードでヒットしたものの、タイトルにトピック語（{CFG['topic_desc']}）が無いもの。企画フォーマットの参考用。\n\n")
         L.append(md_table(offtopic, lang_col=True))
 
     L.append("\n## 追加集計：タイトル頻出ワード（主枠 全{}本）\n".format(len(main_rows)))
@@ -509,14 +547,15 @@ def main():
     L.append("\n### 数字表現（上位20）\n"); L.append(counter_table(nums, "数字表現", 20))
     L.append("\n### 【】内ワード（上位20）\n"); L.append(counter_table(brackets, "【】内", 20))
 
-    L.append("\n## 追加集計：「専門家の解説型」vs「レシピ・料理型」\n")
+    TL = CFG["type_labels"]
+    L.append(f"\n## 追加集計：「{TL[0]}」vs「{TL[1]}」\n")
     L.append("| 型 | 本数 | 合計再生数 | 倍率中央値 | 倍率平均 |\n|---|---|---|---|---|\n")
-    for t in ["専門家の解説型", "レシピ・料理型"]:
+    for t in TL:
         s = type_stats.get(t)
         if s: L.append(f"| {t} | {s['n']} | {s['views']:,} | {s['ratio_med']:.1f}x | {s['ratio_avg']:.1f}x |\n")
         else: L.append(f"| {t} | 0 | - | - | - |\n")
-    L.append("\n（判定はタイトル・CH名のキーワードによる自動分類。レシピ／作り方／常備菜／混ぜるだけ／料理名のみのタイトル／料理系CH名→料理型、医師／管理栄養士／解説／研究／効果／血糖値／クリニック系CH名→解説型）\n")
-    for t in ["専門家の解説型", "レシピ・料理型"]:
+    L.append(f"\n（判定はタイトル・CH名のキーワードによる自動分類。{CFG['type_desc']}）\n")
+    for t in TL:
         s = type_stats.get(t)
         if not s: continue
         L.append(f"\n### {t}（{s['n']}本）の頻出ワード\n")
@@ -526,9 +565,9 @@ def main():
         L.append(f"\n**{t} 一覧（倍率順）**\n\n" + md_table(by_type[t]))
 
     L.append("\n## 倍率上位30本 サムネ画像\n")
-    L.append(f"保存先: `COO/output/thumbs_curry/`　ファイル名: `{{倍率}}_{{チャンネル名}}_{{動画ID}}.jpg`\n\n")
+    L.append(f"保存先: `COO/output/{CFG['thumb_dir']}/`　ファイル名: `{{倍率}}_{{チャンネル名}}_{{動画ID}}.jpg`\n\n")
     if ok == 0:
-        L.append(f"> ⚠️ この実行環境からは画像ホスト（i.ytimg.com）への接続が遮断されており、画像本体は保存できませんでした。`COO/output/thumbs_curry/download_thumbs.sh` を手元で実行すると同じファイル名で保存されます（URL一覧は `thumb_urls.txt`）。\n\n")
+        L.append(f"> ⚠️ この実行環境からは画像ホスト（i.ytimg.com）への接続が遮断されており、画像本体は保存できませんでした。`COO/output/{CFG['thumb_dir']}/download_thumbs.sh` を手元で実行すると同じファイル名で保存されます（URL一覧は `thumb_urls.txt`）。\n\n")
     L.append("| # | ファイル名 | サムネURL |\n|---|---|---|\n")
     for i, (fn, u) in enumerate(thumb_list, 1): L.append(f"| {i} | {fn} | {u} |\n")
 
@@ -539,8 +578,8 @@ def main():
         for i, r in enumerate(hidden[:30], 1):
             L.append(f"| {i} | [{r['title'].replace('|','｜')}]({r['url']}) | {r['channel']} | {r['views']:,} | {r['publishDate']} | {r['durationSec']//60}:{r['durationSec']%60:02d} |\n")
 
-    L.append("\n---\n付随ファイル: `youtube_curry_spice_trend.csv`（全行）, `youtube_curry_spice_trend.json`（生データ）, `COO/scripts/yt_trend_collector.py`（再実行用）\n")
-    with open(os.path.join(a.out, "youtube_curry_spice_trend.md"), "w", encoding="utf-8") as f: f.write("".join(L))
+    L.append(f"\n---\n付随ファイル: `{CFG['out_prefix']}.csv`（全行）, `{CFG['out_prefix']}.json`（生データ）, `COO/scripts/yt_trend_collector.py`（再実行用）\n")
+    with open(os.path.join(a.out, CFG["out_prefix"] + ".md"), "w", encoding="utf-8") as f: f.write("".join(L))
     log("[done]")
 
 if __name__ == "__main__":
