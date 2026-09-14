@@ -17,7 +17,7 @@ TOPIC_RE = re.compile(r"歯|神経|根管|抜髄|根尖|歯髄|虫歯|むし歯|
 EXCL_RE = re.compile(r"ドラマ|ヤクザ|一目惚れ|社長", re.I)
 MIN_VIEWS = 1000
 C_CHANNELS = ["歯科医の暴露チャンネル【前岡遼馬】", "ザ・ホワイトデンタルクリニック", "稲葉院長のあのネェ", "君のための歯医者さん", "歯医者のさくら先生", "木村先生には歯が立たない!!"]
-C_RE = re.compile(r"神経|根管|抜髄|根尖|歯髄|根の治療|根っこ|膿|フィステル|マイクロスコープ|ラバーダム")
+C_RE = re.compile(r"神経|根管|抜髄|根尖|歯髄|根の治療|根っこ|膿|フィステル")
 C_MAX_AGE = 730
 
 def log(*a): print(*a, file=sys.stderr, flush=True)
@@ -61,6 +61,25 @@ def channel_videos(cid, cache, max_age):
         d = it_post("browse", {"continuation": tok}, cache, f"browse_{cid}_videos_p{page}")
     return name, subs, vids
 
+def channel_shorts(cid, cache, max_pages=40):
+    """ショートタブを新着順に取得（日付なし。videoId/タイトル/再生数のみ）"""
+    d = it_post("browse", {"browseId": cid, "params": "EgZzaG9ydHPyBgUKA5oBAA%3D%3D".replace("%3D", "=")}, cache, f"browse_{cid}_shorts_p1")
+    out = []; page = 1
+    while d:
+        for lk in walk(d, "shortsLockupViewModel"):
+            vid = next((e.get("videoId") for e in walk(lk, "reelWatchEndpoint")), None)
+            acc = lk.get("accessibilityText", "")
+            m = re.match(r"(.*), ([\d.,]+(?:万|億)?回視聴) - ", acc)
+            out.append({"videoId": vid, "title": m.group(1) if m else acc, "views_s": parse_views(m.group(2)) if m else None,
+                        "relDays_s": None, "durationSec_s": None, "thumbKind": None})
+        tok = None
+        for c in walk(d, "continuationItemRenderer"):
+            tok = (c.get("continuationEndpoint") or {}).get("continuationCommand", {}).get("token"); break
+        if not tok or page >= max_pages: break
+        page += 1
+        d = it_post("browse", {"continuation": tok}, cache, f"browse_{cid}_shorts_p{page}")
+    return out
+
 def a_table(rs):
     h = "| # | チャンネル名 | 登録者数 | 規模帯 | タイトル | 再生数 | 倍率 | 公開日 | 動画URL | サムネ画像URL |\n|---|---|---|---|---|---|---|---|---|---|\n"
     for i, r in enumerate(rs, 1):
@@ -94,9 +113,11 @@ def main():
         if (not TOPIC_RE.search(v["title"]) and not TOPIC_RE.search(v.get("title_en") or "")) or EXCL_RE.search(v["title"]):
             offtopic.append(v); continue
         ja = has_kana(v.get("title_en")) or has_kana(v["channel"]) or (has_kana(v["title"]) and re.search(r"[一-鿿]", v["channel"]))
-        if not ja: foreign.append(v); continue
         if not v["subs"]: hidden.append(v); continue
         v["ratio"] = v["viewCount"] / v["subs"]
+        if not ja:
+            if v["ratio"] >= threshold(v["subs"]): foreign.append(v)
+            continue
         if v["ratio"] >= threshold(v["subs"]): rows.append(v)
         if (i + 1) % 50 == 0: log(f"[A details] {i+1}/{len(pre)}")
     rows.sort(key=lambda r: -r["ratio"])
@@ -116,11 +137,11 @@ def main():
     log(f"[B] {ch_name} subs={ch_subs} videos={len(vids)}")
 
     # ---- C ----
-    c_rows = []; c_info = []
+    c_rows = []; c_info = []; c_shorts = []
     for name in C_CHANNELS:
         cid, found, _ = resolve_channel(name, cache)
         if not cid:
-            c_info.append((name, None, None, 0, 0)); log(f"[C] {name}: channel NOT FOUND"); continue
+            c_info.append((name, None, None, 0, 0, 0)); log(f"[C] {name}: channel NOT FOUND"); continue
         cname, csubs, cv = channel_videos(cid, cache, C_MAX_AGE)
         cv = [v for v in cv if v["videoId"] and (v["relDays_s"] is None or v["relDays_s"] <= C_MAX_AGE + 60)]
         hitv = [v for v in cv if C_RE.search(v["title"])]
@@ -132,9 +153,19 @@ def main():
             e["subs"] = e["subs"] or csubs; e["ratio"] = (e["viewCount"] / e["subs"]) if e["subs"] else 0
             kept.append(e)
         c_rows += kept
-        c_info.append((name, cname or found, csubs, len(cv), len(kept)))
-        log(f"[C] {name} -> {cname} ({cid}) subs={csubs} videos<=2y={len(cv)} hits={len(kept)}")
-    c_rows.sort(key=lambda r: -r["viewCount"])
+        # ショート（参考）
+        sh = [v for v in channel_shorts(cid, cache) if v["videoId"] and C_RE.search(v["title"])]
+        skept = []
+        for v in sh:
+            v["channel"] = cname or found; v["channelId"] = cid
+            e = enrich(v, cache, today)
+            if not e or e["ageDays"] > C_MAX_AGE: continue
+            e["subs"] = e["subs"] or csubs; e["ratio"] = (e["viewCount"] / e["subs"]) if e["subs"] else 0
+            skept.append(e)
+        c_shorts += skept
+        c_info.append((name, cname or found, csubs, len(cv), len(kept), len(skept)))
+        log(f"[C] {name} -> {cname} ({cid}) subs={csubs} videos<=2y={len(cv)} hits={len(kept)} shorts_hits={len(skept)}")
+    c_rows.sort(key=lambda r: -r["viewCount"]); c_shorts.sort(key=lambda r: -r["viewCount"])
 
     # ---- 出力 ----
     L = [f"# 千勝会「歯の神経治療（根管治療）」回 サムネ・タイトル参考材料\n\n生成日: {today.isoformat()}　データ源: YouTube InnerTube（search / next / browse）\n\n"]
@@ -151,13 +182,14 @@ def main():
     for i, v in enumerate(top5, 1):
         L.append(f"| {i} | {clean(v['title'])} | {v['viewCount']:,} | {v['publishDate']} | {v['url']} | https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg |\n")
     L.append(f"\n## 【C】指名6チャンネル内「神経・根管治療・抜髄」関連動画（2年以内・全件・再生数順、{len(c_rows)}本）\n\n")
-    L.append("抽出: 各チャンネルの動画タブ（本編）を2年分取得し、タイトルに 神経／根管／抜髄／根尖／歯髄／根の治療／根っこ／膿／フィステル／マイクロスコープ／ラバーダム を含むもの。倍率基準は適用せず（倍率は参考表示）。\n\n")
-    L.append("| チャンネル（指定名） | 解決したチャンネル | 登録者数 | 2年以内の本編 | 関連動画 |\n|---|---|---|---|---|\n")
-    for name, cname, csubs, n, k in c_info: L.append(f"| {name} | {cname or '未特定'} | {fmt_subs(csubs)} | {n} | {k} |\n")
-    L.append("\n" + (a_table(c_rows) if c_rows else "該当なし\n"))
+    L.append("抽出: 各チャンネルの動画タブ（本編）を2年分取得し、タイトルに 神経／根管／抜髄／根尖／歯髄／根の治療／根っこ／膿／フィステル を含むもの。倍率基準は適用せず（倍率は参考表示）。\n\n")
+    L.append("| チャンネル（指定名） | 解決したチャンネル | 登録者数 | 2年以内の本編 | 関連動画（本編） | 関連ショート |\n|---|---|---|---|---|---|\n")
+    for name, cname, csubs, n, k, sk in c_info: L.append(f"| {name} | {cname or '未特定'} | {fmt_subs(csubs)} | {n} | {k} | {sk} |\n")
+    L.append(f"\n### C-1 本編（{len(c_rows)}本、再生数順）\n\n" + (a_table(c_rows) if c_rows else "該当なし\n"))
+    L.append(f"\n### C-2 ショート（参考・縦型、{len(c_shorts)}本、再生数順）\n\n各チャンネルのショートタブ（最新順・最大40ページ）から同じ語で抽出。稲葉院長・ザ・ホワイトデンタルは本編が少なくショート中心のため参考として掲載。\n\n" + (a_table(c_shorts) if c_shorts else "該当なし\n"))
     L.append("\n---\n注記: サムネURLの maxresdefault/hqdefault の有無は検索結果のサムネ種別（hq720=HD版あり）から判定（Cはチャンネル一覧由来のため全て maxresdefault 表記。実体はこの環境から確認不可）。\n")
     with open(os.path.join(a.out, "root_canal_reference.md"), "w", encoding="utf-8") as f: f.write("".join(L))
-    json.dump({"A_1y": a_1y, "A_2y": a_2y, "A_foreign": a_foreign if False else foreign, "B": top5, "C": c_rows, "C_info": c_info},
+    json.dump({"A_1y": a_1y, "A_2y": a_2y, "A_foreign": a_foreign if False else foreign, "B": top5, "C": c_rows, "C_shorts": c_shorts, "C_info": c_info},
               open(os.path.join(a.out, "root_canal_reference.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=list)
     log("[done]")
 
