@@ -97,17 +97,17 @@ def main():
         return "その他"
     def table(rs):
         gcol = " ジャンル |" if genres else ""
-        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 |" + gcol + " 動画長(秒) | サムネイル画像URL | サムネURL(hq720) |\n|---|---|---|---|---|---|---|---|---|" + ("---|" if genres else "") + "---|---|---|\n"
+        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 |" + gcol + " 動画長(秒) | サムネイル画像URL | サムネURL(hq720) | ヒット検索語 |\n|---|---|---|---|---|---|---|---|---|" + ("---|" if genres else "") + "---|---|---|---|\n"
         for i, r in enumerate(rs, 1):
             th = r["thumb"] + ("" if "maxres" in r["thumb"] else "（maxres無し→high）")
             hq = f"https://i.ytimg.com/vi/{r['videoId']}/hq720.jpg"
             gv = f" {genre_of(r)} |" if genres else ""
-            h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} |{gv} {r['durationSec_s']} | {th} | {hq} |\n"
+            h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} |{gv} {r['durationSec_s']} | {th} | {hq} | {r.get('keywordsHit','')} |\n"
         return h
     freq = word_freq([r["title"] for r in main_rows], cfg.get("compounds", []))
     L = [f"# {cfg['title']}\n\n取得日: {today.isoformat()}　データ源: YouTube InnerTube（search / next）※YouTube Data APIと同じ公開データ。APIキー不要のため代替使用\n\n"]
     L.append("## 検索・抽出条件\n\n")
-    L.append(f"- 検索キーワード（{len(cfg['keywords'])}語、結果をマージ・重複排除）: {' ／ '.join(cfg['keywords'])}\n")
+    L.append(f"- 検索キーワード（{len(cfg['keywords'])}語、結果をマージ・重複排除）: {' ／ '.join(cfg['keywords'])}\n" + (f"- {cfg['keywords_note']}\n" if cfg.get("keywords_note") else ""))
     L.append("- 各語につき 関連順・再生順・新着順×1年以内 ＋ 期間指定なし×関連順・再生順、続きページ込み\n")
     L.append(f"- 公開期間: 直近1年以内{'。1年以内が' + str(min_hits) + '本未満のため最大2年まで拡張（公開日で判別可）' if extended else '（1年以内で' + str(min_hits) + '本以上のため拡張なし。1〜2年前の該当は参考として別掲）'}\n")
     L.append("- 動画長180秒超のみ（ショート専用枠は除外。180秒超の縦動画は検索データから判別不可）／日本語チャンネルのみ\n")
