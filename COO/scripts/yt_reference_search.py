@@ -90,10 +90,11 @@ def main():
     log(f"[select] 1y {len(r1)}, 1-2y {len(r2)}, extended={extended}, hidden {len(hidden)}, offtopic {len(offtopic)}, foreign {len(foreign)}")
 
     def table(rs):
-        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 | 動画長(秒) | サムネイル画像URL |\n|---|---|---|---|---|---|---|---|---|---|---|\n"
+        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 | 動画長(秒) | サムネイル画像URL | サムネURL(hq720) |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n"
         for i, r in enumerate(rs, 1):
             th = r["thumb"] + ("" if "maxres" in r["thumb"] else "（maxres無し→high）")
-            h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} | {r['durationSec_s']} | {th} |\n"
+            hq = f"https://i.ytimg.com/vi/{r['videoId']}/hq720.jpg"
+            h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} | {r['durationSec_s']} | {th} | {hq} |\n"
         return h
     freq = word_freq([r["title"] for r in main_rows], cfg.get("compounds", []))
     L = [f"# {cfg['title']}\n\n取得日: {today.isoformat()}　データ源: YouTube InnerTube（search / next）※YouTube Data APIと同じ公開データ。APIキー不要のため代替使用\n\n"]
@@ -104,7 +105,7 @@ def main():
     L.append("- 動画長180秒超のみ（ショート専用枠は除外。180秒超の縦動画は検索データから判別不可）／日本語チャンネルのみ\n")
     L.append("- 倍率 = 再生数 ÷ 登録者数。大規模(10万人以上)1倍以上／中規模(1万〜10万人)2倍以上／小規模(1万人未満)3倍以上\n")
     L.append(f"- 追加の前提: 再生数{min_views:,}回未満は除外。タイトルにテーマ語（{cfg.get('topic_regex','')[:60]}…）を含まない検索ノイズ、および除外語（{cfg.get('exclude_regex','なし')}）を含むドラマ等は別掲。登録者非公開は判定不可として別掲\n")
-    L.append("- サムネURL: 検索結果にHD版(hq720)がある動画は maxresdefault、無い動画は hqdefault(high) を記載。実体の取得確認はこの環境からは不可\n\n")
+    L.append("- サムネURL: 検索結果にHD版(hq720)がある動画は maxresdefault、無い動画は hqdefault(high) を記載。併記の hq720.jpg は同じ1280x720で、HD版がある動画なら確実に取得できる。実体の取得確認はこの環境からは不可\n\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
     if buckets:
         L.append(f"| 本表（テーマ該当） | {len(main_rows)} |\n" + "".join(f"| 別枠: {b['label']} | {len(bucket_rows[b['label']])} |\n" for b in buckets) + "\n")
