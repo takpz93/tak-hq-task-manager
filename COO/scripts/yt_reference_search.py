@@ -89,12 +89,20 @@ def main():
     bucket_rows = {b["label"]: [r for r in final if r["bucket"] == b["label"]] for b in buckets}
     log(f"[select] 1y {len(r1)}, 1-2y {len(r2)}, extended={extended}, hidden {len(hidden)}, offtopic {len(offtopic)}, foreign {len(foreign)}")
 
+    genres = cfg.get("genres") or []
+    def genre_of(r):
+        t = r["title"] + " " + r.get("keywordsHit", "")
+        for g in genres:
+            if re.search(g["regex"], t, re.I): return g["label"]
+        return "その他"
     def table(rs):
-        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 | 動画長(秒) | サムネイル画像URL | サムネURL(hq720) |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n"
+        gcol = " ジャンル |" if genres else ""
+        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 |" + gcol + " 動画長(秒) | サムネイル画像URL | サムネURL(hq720) |\n|---|---|---|---|---|---|---|---|---|" + ("---|" if genres else "") + "---|---|---|\n"
         for i, r in enumerate(rs, 1):
             th = r["thumb"] + ("" if "maxres" in r["thumb"] else "（maxres無し→high）")
             hq = f"https://i.ytimg.com/vi/{r['videoId']}/hq720.jpg"
-            h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} | {r['durationSec_s']} | {th} | {hq} |\n"
+            gv = f" {genre_of(r)} |" if genres else ""
+            h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} |{gv} {r['durationSec_s']} | {th} | {hq} |\n"
         return h
     freq = word_freq([r["title"] for r in main_rows], cfg.get("compounds", []))
     L = [f"# {cfg['title']}\n\n取得日: {today.isoformat()}　データ源: YouTube InnerTube（search / next）※YouTube Data APIと同じ公開データ。APIキー不要のため代替使用\n\n"]
