@@ -76,6 +76,17 @@ def main():
     r1 = [r for r in rows if r["ageDays"] <= PRIMARY_AGE_DAYS]; r2 = [r for r in rows if r["ageDays"] > PRIMARY_AGE_DAYS]
     extended = len(r1) < min_hits
     final = r1 + r2 if extended else r1
+    # 振り分け（config "buckets": [{"label","regex","unless_regex"}] を順に適用。どれにも当たらない行が本表）
+    buckets = cfg.get("buckets") or []
+    def bucket_of(r):
+        t = r["title"]
+        for b in buckets:
+            if re.search(b["regex"], t, re.I) and not (b.get("unless_regex") and re.search(b["unless_regex"], t, re.I)):
+                return b["label"]
+        return None
+    for r in final + r2: r["bucket"] = bucket_of(r)
+    main_rows = [r for r in final if not r["bucket"]]
+    bucket_rows = {b["label"]: [r for r in final if r["bucket"] == b["label"]] for b in buckets}
     log(f"[select] 1y {len(r1)}, 1-2y {len(r2)}, extended={extended}, hidden {len(hidden)}, offtopic {len(offtopic)}, foreign {len(foreign)}")
 
     def table(rs):
@@ -84,7 +95,7 @@ def main():
             th = r["thumb"] + ("" if "maxres" in r["thumb"] else "（maxres無し→high）")
             h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} | {r['durationSec_s']} | {th} |\n"
         return h
-    freq = word_freq([r["title"] for r in final], cfg.get("compounds", []))
+    freq = word_freq([r["title"] for r in main_rows], cfg.get("compounds", []))
     L = [f"# {cfg['title']}\n\n取得日: {today.isoformat()}　データ源: YouTube InnerTube（search / next）※YouTube Data APIと同じ公開データ。APIキー不要のため代替使用\n\n"]
     L.append("## 検索・抽出条件\n\n")
     L.append(f"- 検索キーワード（{len(cfg['keywords'])}語、結果をマージ・重複排除）: {' ／ '.join(cfg['keywords'])}\n")
@@ -95,10 +106,20 @@ def main():
     L.append(f"- 追加の前提: 再生数{min_views:,}回未満は除外。タイトルにテーマ語（{cfg.get('topic_regex','')[:60]}…）を含まない検索ノイズ、および除外語（{cfg.get('exclude_regex','なし')}）を含むドラマ等は別掲。登録者非公開は判定不可として別掲\n")
     L.append("- サムネURL: 検索結果にHD版(hq720)がある動画は maxresdefault、無い動画は hqdefault(high) を記載。実体の取得確認はこの環境からは不可\n\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
-    L.append(f"## 抽出結果（倍率順、{len(final)}本）\n\n" + (table(final) if final else "該当なし\n"))
+    if buckets:
+        L.append(f"| 本表（テーマ該当） | {len(main_rows)} |\n" + "".join(f"| 別枠: {b['label']} | {len(bucket_rows[b['label']])} |\n" for b in buckets) + "\n")
+        L.append("振り分けルール（タイトルの語で機械的に判定）:\n" + "".join(f"- {b['label']}: `{b['regex']}`" + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
+    L.append(f"## 抽出結果（倍率順、{len(main_rows)}本）\n\n" + (table(main_rows) if main_rows else "該当なし\n"))
+    for b in buckets:
+        rs = bucket_rows[b["label"]]
+        L.append(f"\n## 別枠: {b['label']}（{len(rs)}本、倍率順）\n\n" + (table(rs) if rs else "該当なし\n"))
     if not extended and r2:
-        L.append(f"\n## 参考: 公開1〜2年前で基準クリア（{len(r2)}本）\n\n" + table(r2))
-    L.append(f"\n## タイトル出現ワード 頻度ランキング（上位20語、出現本数／全{len(final)}本）\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
+        r2m = [r for r in r2 if not r["bucket"]]
+        L.append(f"\n## 参考: 公開1〜2年前で基準クリア（テーマ該当 {len(r2m)}本）\n\n" + (table(r2m) if r2m else "該当なし\n"))
+        for b in buckets:
+            rs = [r for r in r2 if r["bucket"] == b["label"]]
+            if rs: L.append(f"\n### 1〜2年前・別枠: {b['label']}（{len(rs)}本）\n\n" + table(rs))
+    L.append(f"\n## タイトル出現ワード 頻度ランキング（上位20語、出現本数／本表{len(main_rows)}本）\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
     for i, (w, c) in enumerate(freq.most_common(20), 1): L.append(f"| {i} | {w} | {c} |\n")
     if offtopic:
         L.append(f"\n## 別掲: 基準クリアだがタイトルにテーマ語なし（検索ノイズ、{len(offtopic)}本）\n\n")
