@@ -17,7 +17,10 @@ KINS（【下川先生】の菌ケア大学）向け YouTube Analytics API 取�
 認証（どれか）:
   1) --token  : 認可済みユーザー JSON（refresh_token 入り）。ローカルで一度作れば別マシンに持ち込める
   2) --credentials : OAuth クライアント (credentials.json)。ブラウザで認可して --token に保存
-  3) 環境変数 YT_ACCESS_TOKEN : アクセストークン直指定（OAuth Playground 等。約1時間で失効）
+  3) --device : ブラウザの無い環境向け。OAuth クライアント（種類「テレビと制限付き入力デバイス」）の
+                credentials.json か環境変数 YT_CLIENT_ID / YT_CLIENT_SECRET を使い、表示された URL と
+                コードをスマホ等で承認する。取得したトークンは --token に保存
+  4) 環境変数 YT_ACCESS_TOKEN : アクセストークン直指定（OAuth Playground 等。約1時間で失効）
   必要スコープ: yt-analytics.readonly, youtube.readonly
 
 使い方:
@@ -71,33 +74,86 @@ def log(*a):
 
 
 # ---------------- 認証 ----------------
+def load_client(credentials_file):
+    """OAuth クライアントの client_id / client_secret。credentials.json（installed / web / 直下）か環境変数から"""
+    if credentials_file and os.path.isfile(credentials_file):
+        d = json.load(open(credentials_file, encoding="utf-8"))
+        d = d.get("installed") or d.get("web") or d
+        if d.get("client_id"): return d["client_id"], d.get("client_secret", "")
+    if os.environ.get("YT_CLIENT_ID"):
+        return os.environ["YT_CLIENT_ID"], os.environ.get("YT_CLIENT_SECRET", "")
+    return None, None
+
+
+def device_flow(client_id, client_secret):
+    """OAuth 2.0 限定入力デバイス向けフロー。ユーザーが別端末で URL + コードを承認するのを待つ"""
+    r = requests.post("https://oauth2.googleapis.com/device/code", data={"client_id": client_id, "scope": " ".join(SCOPES)}, timeout=30)
+    if r.status_code != 200:
+        sys.exit(f"device/code 失敗 HTTP {r.status_code}: {r.text[:300]}（OAuth クライアントの種類は「テレビと制限付き入力デバイス」が必要）")
+    d = r.json()
+    print("\n==== 認可が必要です ====", file=sys.stderr)
+    print(f"  1) ブラウザで開く: {d.get('verification_url')}", file=sys.stderr)
+    print(f"  2) コードを入力: {d.get('user_code')}", file=sys.stderr)
+    print(f"  ({d.get('expires_in', 1800) // 60} 分以内。チャンネル所有者のアカウントで承認)\n", file=sys.stderr)
+    interval, deadline = int(d.get("interval", 5)), time.time() + int(d.get("expires_in", 1800))
+    while time.time() < deadline:
+        time.sleep(interval)
+        t = requests.post("https://oauth2.googleapis.com/token", data={"client_id": client_id, "client_secret": client_secret, "device_code": d["device_code"],
+                                                                        "grant_type": "urn:ietf:params:oauth:grant-type:device_code"}, timeout=30)
+        j = t.json()
+        if t.status_code == 200 and j.get("access_token"):
+            log("[auth] デバイス認可 完了")
+            return {"token": j["access_token"], "refresh_token": j.get("refresh_token"), "token_uri": "https://oauth2.googleapis.com/token",
+                    "client_id": client_id, "client_secret": client_secret, "scopes": SCOPES, "universe_domain": "googleapis.com"}
+        err = j.get("error")
+        if err == "slow_down": interval += 5
+        elif err in ("authorization_pending", None): continue
+        else: sys.exit(f"デバイス認可 失敗: {err} {j.get('error_description', '')}")
+    sys.exit("デバイス認可 期限切れ。もう一度実行してください")
+
+
 class Auth:
-    def __init__(self, token_file=None, credentials_file=None):
+    """認可済みユーザー JSON（token / refresh_token / client_id / client_secret）を扱う。更新は HTTP 直叩きで google-auth 非依存"""
+    def __init__(self, token_file=None, credentials_file=None, device=False):
         self.access_token = os.environ.get("YT_ACCESS_TOKEN")
-        self.creds = None
+        self.info, self.token_file, self.expires_at = None, token_file, 0
         if self.access_token:
             log("[auth] YT_ACCESS_TOKEN を使用"); return
-        from google.oauth2.credentials import Credentials
-        from google.auth.transport.requests import Request
         if token_file and os.path.isfile(token_file):
-            self.creds = Credentials.from_authorized_user_file(token_file, SCOPES)
-        if self.creds and self.creds.expired and self.creds.refresh_token:
-            self.creds.refresh(Request())
-        if not self.creds or not self.creds.valid:
-            if not credentials_file or not os.path.isfile(credentials_file):
-                sys.exit("認証情報がありません。--token（認可済み JSON）か --credentials（OAuth クライアント）、または YT_ACCESS_TOKEN を指定してください")
-            from google_auth_oauthlib.flow import InstalledAppFlow
-            flow = InstalledAppFlow.from_client_secrets_file(credentials_file, SCOPES)
-            self.creds = flow.run_local_server(port=0)
-        if token_file:
-            with open(token_file, "w", encoding="utf-8") as f: f.write(self.creds.to_json())
-            log(f"[auth] token を保存: {token_file}")
-        self.access_token = self.creds.token
+            self.info = json.load(open(token_file, encoding="utf-8"))
+            self.refresh()
+        if not self.access_token:
+            cid, csec = load_client(credentials_file)
+            if device:
+                if not cid: sys.exit("--device には credentials.json か YT_CLIENT_ID / YT_CLIENT_SECRET が必要です")
+                self.info = device_flow(cid, csec)
+            else:
+                if not credentials_file or not os.path.isfile(credentials_file):
+                    sys.exit("認証情報がありません。--token（認可済み JSON）、--credentials（OAuth クライアント）+ ブラウザ、--device、または YT_ACCESS_TOKEN を指定してください")
+                from google_auth_oauthlib.flow import InstalledAppFlow
+                creds = InstalledAppFlow.from_client_secrets_file(credentials_file, SCOPES).run_local_server(port=0)
+                self.info = json.loads(creds.to_json())
+            self.access_token, self.expires_at = self.info.get("token"), time.time() + 3300
+            self.save()
+
+    def refresh(self):
+        if not self.info or not self.info.get("refresh_token"): return
+        r = requests.post(self.info.get("token_uri", "https://oauth2.googleapis.com/token"),
+                          data={"client_id": self.info["client_id"], "client_secret": self.info.get("client_secret", ""),
+                                "refresh_token": self.info["refresh_token"], "grant_type": "refresh_token"}, timeout=30)
+        if r.status_code != 200:
+            sys.exit(f"トークン更新に失敗 HTTP {r.status_code}: {r.text[:300]}")
+        j = r.json(); self.access_token = j["access_token"]; self.info["token"] = j["access_token"]
+        self.expires_at = time.time() + int(j.get("expires_in", 3600)) - 120
+        self.save(); log("[auth] トークン更新")
+
+    def save(self):
+        if self.token_file and self.info:
+            with open(self.token_file, "w", encoding="utf-8") as f: json.dump(self.info, f, ensure_ascii=False, indent=1)
+            log(f"[auth] token を保存: {self.token_file}")
 
     def headers(self):
-        if self.creds is not None and self.creds.expired and self.creds.refresh_token:
-            from google.auth.transport.requests import Request
-            self.creds.refresh(Request()); self.access_token = self.creds.token
+        if self.info and self.info.get("refresh_token") and time.time() >= self.expires_at: self.refresh()
         return {"Authorization": f"Bearer {self.access_token}"}
 
 
@@ -387,6 +443,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--token", default="yt_token.json", help="認可済みユーザー JSON（無ければ --credentials で作成して保存）")
     ap.add_argument("--credentials", default="credentials.json", help="OAuth クライアント JSON")
+    ap.add_argument("--device", action="store_true", help="ブラウザ無し環境向け: デバイスコード方式で認可（URL とコードを表示して待つ）")
     ap.add_argument("--videos-csv", help="Data API の代わりに yt_channel_audit.py の CSV から動画一覧を読む")
     ap.add_argument("--out-dir", default=os.path.join(os.path.dirname(__file__), "..", "..", "clients", "KINS", "output"))
     ap.add_argument("--tag", default=datetime.now(JST).strftime("%Y%m%d"))
@@ -400,7 +457,7 @@ def main():
     out_dir = os.path.abspath(a.out_dir); os.makedirs(out_dir, exist_ok=True)
     only = set(a.only.split(","))
     today_pt = datetime.now(PT).date()
-    api = Api(Auth(a.token, a.credentials))
+    api = Api(Auth(a.token, a.credentials, a.device))
 
     videos = list_videos_csv(a.videos_csv) if a.videos_csv else list_videos_data_api(api)
     if videos is None: sys.exit("動画一覧を取得できませんでした（youtube.readonly スコープ、または --videos-csv を確認）")
