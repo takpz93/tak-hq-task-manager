@@ -99,7 +99,7 @@ def main():
             howto = re.compile(cfg["howto_regex"]); media = re.compile(cfg["media_regex"]); food = re.compile(cfg["food_regex"]); nonfood = re.compile(cfg.get("nonfood_regex", "(?!x)x"))
             past = re.compile(cfg.get("past_regex", "(?!x)x")); howto_strong = re.compile(cfg["howto_strong_regex"])
             # 飲食業種語と経営・勤務表現が同じ文内で近接（前40字／後30字）していることを根拠とする
-            prox = re.compile(f"(?:{cfg['food_regex']})[^。\\n]{{0,40}}(?:{ev_re.pattern})|(?:{ev_re.pattern})[^。\\n]{{0,30}}(?:{cfg['food_regex']})")
+            prox = re.compile(f"(?:{cfg['food_regex']})[^。]{{0,40}}(?:{ev_re.pattern})|(?:{ev_re.pattern})[^。]{{0,30}}(?:{cfg['food_regex']})", re.S)
             m = prox.search(desc)
             if nonfood.search(nm): why = "飲食以外の業種（" + nonfood.search(nm).group(0) + "）"
             elif media.search(nm + " " + desc): why = "メディア・番組・取材型（" + media.search(nm + " " + desc).group(0) + "）"
