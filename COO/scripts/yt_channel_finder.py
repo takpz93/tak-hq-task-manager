@@ -95,11 +95,21 @@ def main():
         elif latest is None or latest > 365: why = "直近1年に長尺投稿なし"
         elif ex_re.search(info["name"] + " " + info["description"]): why = "除外語に該当（" + ex_re.search(info["name"] + " " + info["description"]).group(0) + "）"
         else:
-            src = info["description"] + "\n" + "\n".join(v["title"] for v in longs[:20])
-            m = ev_re.search(info["description"]); mt = [v["title"] for v in longs[:20] if ev_re.search(v["title"])]
-            if m: info["evidence"] = "概要欄: …" + info["description"][max(0, m.start()-25):m.end()+25].replace("\n", " ") + "…"
-            elif len(mt) >= 2: info["evidence"] = "タイトル: " + " ／ ".join(t[:40] for t in mt[:2])
-            else: why = "経営・勤務の根拠がタイトル・概要欄に無い"
+            desc = info["description"]; nm = info["name"]; titles = [v["title"] for v in longs[:10]]
+            howto = re.compile(cfg["howto_regex"]); media = re.compile(cfg["media_regex"]); food = re.compile(cfg["food_regex"]); nonfood = re.compile(cfg.get("nonfood_regex", "(?!x)x"))
+            past = re.compile(cfg.get("past_regex", "(?!x)x")); howto_strong = re.compile(cfg["howto_strong_regex"])
+            # 飲食業種語と経営・勤務表現が同じ文内で近接（前40字／後30字）していることを根拠とする
+            prox = re.compile(f"(?:{cfg['food_regex']})[^。\\n]{{0,40}}(?:{ev_re.pattern})|(?:{ev_re.pattern})[^。\\n]{{0,30}}(?:{cfg['food_regex']})")
+            m = prox.search(desc)
+            if nonfood.search(nm): why = "飲食以外の業種（" + nonfood.search(nm).group(0) + "）"
+            elif media.search(nm + " " + desc): why = "メディア・番組・取材型（" + media.search(nm + " " + desc).group(0) + "）"
+            elif not m:
+                if howto.search(nm + " " + desc): why = "解説・ノウハウ・コンサル系（" + howto.search(nm + " " + desc).group(0) + "）"
+                else: why = "概要欄に『飲食業種＋本人が経営・勤務』の一人称の記述なし" + ("（経営・勤務語のみ: " + ev_re.search(desc).group(0) + "）" if ev_re.search(desc) else "")
+            elif past.search(nm) or past.search(desc[max(0, m.start()-20):m.end()+20]): why = "過去形・元経営者（" + (past.search(nm) or past.search(desc[max(0, m.start()-20):m.end()+20])).group(0) + "）"
+            elif howto_strong.search(nm + " " + desc): why = "解説・ノウハウ・コンサル系（" + howto_strong.search(nm + " " + desc).group(0) + "）"
+            elif sum(1 for t in titles if howto.search(t)) >= 3: why = "直近10本の3本以上がノウハウ系タイトル"
+            else: info["evidence"] = "概要欄: …" + desc[max(0, m.start()-30):m.end()+30].replace("\n", " ") + "…"
         if why: rejected.append((info["name"], cid, why)); continue
         # 直近10本の詳細
         rec = []
@@ -123,7 +133,7 @@ def main():
     L.append("## 探索・判定条件\n\n")
     L.append(f"- 検索KW（{len(cfg['keywords'])}語）: {' ／ '.join(cfg['keywords'])}。各語でチャンネル検索＋動画検索（1年以内・関連順／再生順／期間なし）を行い、ヒット動画の投稿チャンネルを候補化\n")
     L.append(f"- 登録者 {smin:,}〜{smax:,}人（非公開は除外）／日本語チャンネル／動画タブ直近2ページに180秒超の動画が5本以上／直近1年に長尺投稿あり\n")
-    L.append(f"- 経営・勤務の根拠: 概要欄またはタイトル（直近20本中2本以上）に `{cfg['evidence_regex']}` が含まれること。該当箇所を「根拠」列に転記（機械判定。最終確認は要目視）\n")
+    L.append(f"- 本人が飲食店を経営／勤務している根拠: 概要欄に一人称の経営・勤務表現（`{cfg['evidence_regex']}`）があり、かつ飲食業種語（`{cfg['food_regex'][:60]}…`）があること。該当箇所を「根拠」列に転記（機械判定。最終確認は要目視）\n- 除外: ノウハウ・コンサル・レシピ系（`{cfg['howto_regex'][:60]}…`）、メディア・番組・取材型（`{cfg['media_regex'][:60]}…`）、飲食以外の業種\n")
     L.append("- 倍率 = 再生数 ÷ 登録者数。平均・中央値は直近10本（180秒超）で算出。直近30日の投稿本数は長尺のみ（ショートは日付が取れないため除外）\n")
     L.append("- サムネURL: 一覧にHD版がある動画は maxresdefault、無い動画は hqdefault。hq720 列も併記。実体の取得確認はこの環境では不可\n\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 候補チャンネル | {len(cands)} |\n| 条件クリア | {len(kept)} |\n| 除外 | {len(rejected)} |\n\n")
