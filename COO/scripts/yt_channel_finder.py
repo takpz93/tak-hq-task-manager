@@ -50,7 +50,7 @@ def channel_info(cid, cache, pages=2):
             if lk.get("contentType") != "LOCKUP_CONTENT_TYPE_VIDEO": continue
             src = json.dumps(lk.get("contentImage", {}))
             mm = re.search(r'/vi(?:_webp)?/[^/]+/([a-z0-9_]+)\.(?:jpg|webp)', src)
-            lk_rows = lockup_rows({"x": lk})
+            lk_rows = lockup_rows({"lockupViewModel": lk})
             if lk_rows:
                 r = lk_rows[0]; r["thumbKind"] = mm.group(1) if mm else None; vids.append(r)
         tok = None
