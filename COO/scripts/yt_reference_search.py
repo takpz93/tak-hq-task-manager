@@ -60,9 +60,12 @@ def main():
            and (v["relDays_s"] is None or v["relDays_s"] <= MAX_AGE_DAYS) and (v["views_s"] is None or v["views_s"] >= min_views)]
     log(f"[prefilter] {len(pre)}/{len(cands)}")
     rows, hidden, offtopic, foreign = [], [], [], []
+    excl_ch = set(cfg.get("exclude_channel_ids", []))
     for i, v in enumerate(pre):
+        if v.get("channelId") in excl_ch: continue
         v = enrich(v, cache, today)
         if not v or v["ageDays"] > MAX_AGE_DAYS or v["viewCount"] is None or v["viewCount"] < min_views: continue
+        if v.get("channelId") in excl_ch: continue
         v["keywordsHit"] = " / ".join(sorted(hits[v["videoId"]]))
         if (topic_re and not topic_re.search(v["title"]) and not topic_re.search(v.get("title_en") or "")) or (excl_re and excl_re.search(v["title"])):
             offtopic.append(v); continue
@@ -76,6 +79,7 @@ def main():
     r1 = [r for r in rows if r["ageDays"] <= PRIMARY_AGE_DAYS]; r2 = [r for r in rows if r["ageDays"] > PRIMARY_AGE_DAYS]
     extended = len(r1) < min_hits
     final = r1 + r2 if extended else r1
+    if cfg.get("max_rows"): final = final[:cfg["max_rows"]]
     # 振り分け（config "buckets": [{"label","regex","unless_regex"}] を順に適用。どれにも当たらない行が本表）
     buckets = cfg.get("buckets") or []
     def bucket_of(r):
