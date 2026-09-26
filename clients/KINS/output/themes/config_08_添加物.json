@@ -1,0 +1,18 @@
+{
+ "title": "KINS 参考動画 テーマ08_添加物",
+ "out": "clients/KINS/output/themes/08_添加物.md",
+ "keywords": [
+  "食品添加物 危険",
+  "乳化剤",
+  "人工甘味料 腸"
+ ],
+ "topic_regex": "添加物|乳化剤|甘味料|アスパルテーム|スクラロース|保存料|着色料|化学|危険|腸|原材料|表示",
+ "exclude_regex": "ヤクザ|一目惚れ|社長の写真|演歌|ドラマ|少女|令嬢|御曹司|溺愛|復讐|スカッと|俺「|老人「|切り抜き|にじさんじ|ホロライブ|ゆっくり実況|ASMR",
+ "exclude_channel_ids": [
+  "UCXAU7ks-wPVoFJykHn08zvA"
+ ],
+ "min_hits": 15,
+ "max_rows": 15,
+ "min_views": 1000,
+ "compounds": []
+}
