@@ -36,7 +36,7 @@ CFG = {
     "topic_desc": "カレー／スパイス／ターメリック／血糖値／腸活／白米 等",
     "type_labels": ["専門家の解説型", "レシピ・料理型"],
     "type_desc": "レシピ／作り方／常備菜／混ぜるだけ／料理名のみのタイトル／料理系CH名→料理型、医師／管理栄養士／解説／研究／効果／血糖値／クリニック系CH名→解説型",
-    "pr_regex": None, "compact": False,
+    "pr_regex": None, "compact": False, "exclude_regex": None, "exclude_label": "テーマ外（除外語に該当）",
     "types": None,   # 汎用分類 [{"label","strong_kw","title_kw","channel_regex"}, {...}] を与えると既定の分類器の代わりに使う
 }
 
@@ -258,6 +258,7 @@ def classify_generic(title, channel):
         sc = sum(3 for w in ty.get("strong_kw", []) if w.lower() in t) + sum(1 for w in ty.get("title_kw", []) if w.lower() in t)
         if ty.get("channel_regex") and re.search(ty["channel_regex"], c, re.I): sc += 3
         scores.append(sc)
+    if max(scores) == 0: return CFG["types"][-1]["label"]   # どの語にも当たらない場合は末尾の型
     best = max(range(len(scores)), key=lambda i: (scores[i], -i))
     return CFG["types"][best]["label"]
 
@@ -364,7 +365,7 @@ def load_config(path):
         COMPOUND_RE = re.compile("|".join(re.escape(x) for x in COMPOUNDS))
     if "min_views" in c: MIN_VIEWS = c["min_views"]
     if "few_hits" in c: FEW_HITS = c["few_hits"]
-    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types", "pr_regex", "compact"):
+    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types", "pr_regex", "compact", "exclude_regex", "exclude_label"):
         if k in c: CFG[k] = c[k]
     if c.get("types"): CFG["type_labels"] = [t["label"] for t in c["types"]]
 
@@ -451,6 +452,11 @@ def main():
 
     offtopic = [r for r in rows if not r["onTopic"]]
     rows_on = [r for r in rows if r["onTopic"]]
+    ex_rows = []
+    if CFG.get("exclude_regex"):
+        EX_RE = re.compile(CFG["exclude_regex"], re.I)
+        ex_rows = [r for r in rows_on if EX_RE.search(r["title"]) or EX_RE.search(r["channel"])]
+        rows_on = [r for r in rows_on if r not in ex_rows]
     pr_rows = []
     if CFG.get("pr_regex"):
         PR_RE = re.compile(CFG["pr_regex"], re.I)
@@ -535,7 +541,7 @@ def main():
              f"- 登録者数非公開のチャンネルは倍率が算出できないため別掲\n"
              f"- タイトルにトピック語（{CFG['topic_desc']}）を含まないものは関連性低として別掲\n- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
     L.append("## 収集サマリー\n")
-    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏・その他言語） | {len(foreign)} |\n| トピック語なし（別掲・参考） | {len(offtopic)} |\n| メーカー広告・PR（別掲） | {len(pr_rows)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
+    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏・その他言語） | {len(foreign)} |\n| トピック語なし（別掲・参考） | {len(offtopic)} |\n| メーカー広告・PR（別掲） | {len(pr_rows)} |\n| {CFG['exclude_label']}（別掲） | {len(ex_rows)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
     L.append("### キーワード別 主枠ヒット数（1年以内）\n")
     L.append("| 軸 | キーワード | 1年以内 | 補完(1〜2年) |\n|---|---|---|---|\n")
     kw_supp = Counter(); [kw_supp.update(r["keywordsHit"].split(" / ")) for r in ja_supp]
@@ -558,6 +564,10 @@ def main():
         L.append(f"検索キーワードでヒットしたものの、タイトルにトピック語（{CFG['topic_desc']}）が無いもの。企画フォーマットの参考用。\n\n")
         L.append(md_table(offtopic, lang_col=True))
 
+    if ex_rows:
+        L.append(f"\n## 別掲：{CFG['exclude_label']}（{len(ex_rows)}本、倍率順。主枠・集計から除外）\n")
+        L.append(f"判定: タイトルまたはCH名が `{CFG['exclude_regex'][:80]}…` に一致（機械判定）\n\n")
+        L.append(md_table(sorted(ex_rows, key=lambda r: -r["ratio"]), lang_col=True))
     if pr_rows:
         L.append(f"\n## 別掲：メーカー広告・商品PR動画（{len(pr_rows)}本、倍率順。主枠・集計から除外）\n")
         L.append(f"判定: タイトルまたはCH名が `{CFG['pr_regex'][:80]}…` に一致（機械判定）\n\n")
