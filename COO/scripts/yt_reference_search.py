@@ -85,7 +85,10 @@ def main():
     def bucket_of(r):
         t = r["title"]
         for b in buckets:
-            if re.search(b["regex"], t, re.I) and not (b.get("unless_regex") and re.search(b["unless_regex"], t, re.I)):
+            hit = bool(b.get("regex")) and re.search(b["regex"], t, re.I)
+            # min_duration_sec: 尺がこの秒数以上なら該当（音源・配信など長尺コンテンツの振り分け用）
+            if not hit and b.get("min_duration_sec") and (r.get("durationSec_s") or 0) >= b["min_duration_sec"]: hit = True
+            if hit and not (b.get("unless_regex") and re.search(b["unless_regex"], t, re.I)):
                 return b["label"]
         return None
     for r in final + r2: r["bucket"] = bucket_of(r)
@@ -121,7 +124,7 @@ def main():
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
     if buckets:
         L.append(f"| 本表（テーマ該当） | {len(main_rows)} |\n" + "".join(f"| 別枠: {b['label']} | {len(bucket_rows[b['label']])} |\n" for b in buckets) + "\n")
-        L.append("振り分けルール（タイトルの語で機械的に判定）:\n" + "".join(f"- {b['label']}: `{b['regex']}`" + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
+        L.append("振り分けルール（タイトルの語・尺で機械的に判定）:\n" + "".join(f"- {b['label']}: `{b.get('regex','')}`" + (f"｜または尺{b['min_duration_sec']}秒以上" if b.get("min_duration_sec") else "") + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
     L.append(f"## 抽出結果（倍率順、{len(main_rows)}本）\n\n" + (table(main_rows) if main_rows else "該当なし\n"))
     for b in buckets:
         rs = bucket_rows[b["label"]]
