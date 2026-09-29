@@ -77,10 +77,7 @@ def main():
         if (i + 1) % 50 == 0: log(f"[details] {i+1}/{len(pre)}")
     rows.sort(key=lambda r: -r["ratio"])
     r1 = [r for r in rows if r["ageDays"] <= PRIMARY_AGE_DAYS]; r2 = [r for r in rows if r["ageDays"] > PRIMARY_AGE_DAYS]
-    extended = len(r1) < min_hits
-    final = r1 + r2 if extended else r1
-    if cfg.get("max_rows"): final = final[:cfg["max_rows"]]
-    # 振り分け（config "buckets": [{"label","regex","unless_regex"}] を順に適用。どれにも当たらない行が本表）
+    # 振り分け（config "buckets": [{"label","regex","unless_regex","min_duration_sec"}] を順に適用。どれにも当たらない行が本表）
     buckets = cfg.get("buckets") or []
     def bucket_of(r):
         t = r["title"]
@@ -91,7 +88,11 @@ def main():
             if hit and not (b.get("unless_regex") and re.search(b["unless_regex"], t, re.I)):
                 return b["label"]
         return None
-    for r in final + r2: r["bucket"] = bucket_of(r)
+    for r in rows: r["bucket"] = bucket_of(r)
+    # 2年への拡張判定は、別枠（音源など）を除いた本表の1年以内件数で行う
+    extended = len([r for r in r1 if not r["bucket"]]) < min_hits
+    final = r1 + r2 if extended else r1
+    if cfg.get("max_rows"): final = final[:cfg["max_rows"]]
     main_rows = [r for r in final if not r["bucket"]]
     bucket_rows = {b["label"]: [r for r in final if r["bucket"] == b["label"]] for b in buckets}
     log(f"[select] 1y {len(r1)}, 1-2y {len(r2)}, extended={extended}, hidden {len(hidden)}, offtopic {len(offtopic)}, foreign {len(foreign)}")
