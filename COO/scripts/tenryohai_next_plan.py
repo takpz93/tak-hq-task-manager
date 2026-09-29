@@ -148,13 +148,13 @@ def task_b(comp_json, today, out_dir, tag):
         for v in vids:
             if not v["views"] or not subs: continue
             ratio = v["views"] / subs; g = grade(ratio, subs)
-            rec = {"channel": ch["name"] or ch["label"], "handle": ch["handle"], "subs": subs, "publishDate": v["publishDate"], "title": v["title"], "videoId": v["videoId"],
+            rec = {"channel": ch["name"] or ch["label"], "label": ch["label"], "handle": ch["handle"], "subs": subs, "publishDate": v["publishDate"], "title": v["title"], "videoId": v["videoId"],
                    "url": f"https://www.youtube.com/watch?v={v['videoId']}", "durationSec": v["durationSec"], "views": v["views"], "ratio": ratio, "grade": g,
                    "thumb": f"https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg" if (v.get("thumbKind") or "").startswith(("maxres", "hq720")) else f"https://i.ytimg.com/vi/{v['videoId']}/hqdefault.jpg"}
             rows.append(rec)
             if g: hits.append(rec)
         rows.sort(key=lambda r: -r["ratio"])
-        summary.append({"channel": ch["name"] or ch["label"], "handle": ch["handle"], "subs": subs, "scale": scale(subs) if subs else "", "n12": len(vids), "shorts": shorts,
+        summary.append({"channel": ch["name"] or ch["label"], "label": ch["label"], "handle": ch["handle"], "subs": subs, "scale": scale(subs) if subs else "", "n12": len(vids), "shorts": shorts,
                         "g1": sum(1 for r in rows if r["grade"] == "G1"), "g2": sum(1 for r in rows if r["grade"] == "G2"),
                         "avg": sum(r["views"] for r in rows) / len(rows) if rows else 0, "median": sorted(r["views"] for r in rows)[len(rows)//2] if rows else 0, "rows": rows})
     hits.sort(key=lambda r: (r["channel"], -r["ratio"]))
@@ -207,29 +207,37 @@ def main():
     ap.add_argument("--out-dir", default="clients/天領盃/output"); ap.add_argument("--tag", default=datetime.now().strftime("%Y%m%d"))
     ap.add_argument("--since", default=(date.today() - timedelta(days=365)).isoformat())
     a = ap.parse_args(); today = date.today().isoformat(); os.makedirs(a.out_dir, exist_ok=True)
-    S = []
+    def build(W):
+        S = []
+        d8 = lambda x: x[2:]  # 2026-09-11 -> 26-09-11
+        if a.own_csv:
+            top = sorted(longs, key=lambda r: -(r["ratio"] or 0))[:15]
+            S.append(f"■ 自ch（直近12か月 長尺{len(longs)}本・ショート{len(shorts)}本・平均{avg:,.0f}回）倍率TOP15\n" + "\n".join(f"{r['ratio']:.2f}x {r['views']:,} {d8(r['publishDate'])} {r['type']} {r['title'][:W]}" for r in top))
+        if b_hits:
+            S.append("■ 競合サマリ（登録者／12か月長尺本数／G1／G2／中央値）\n" + "\n".join(f"{s['label']} {subs_s(s['subs'])} {s['n12']}本 G1:{s['g1']} G2:{s['g2']} 中央値{s['median']:,}" for s in summ))
+            S.append("■ 競合G1/G2 倍率TOP15\n" + "\n".join(f"{r['ratio']:.2f}x {r['grade']} {r['views']:,} {d8(r['publishDate'])} {r['label'][:5]} {r['title'][:W]}" for r in sorted(b_hits, key=lambda r: -r["ratio"])[:15]))
+        if c_rows:
+            S.append(f"■ 横断検索ヒット（{len(c_rows)}本）倍率TOP15\n" + "\n".join(f"{r['ratio']:.1f}x {r['viewCount']:,} {subs_s(r['subs'])} {d8(r['publishDate'])} {r['channel'][:6]} {r['title'][:W]}" for r in c_rows[:15]))
+        if fq:
+            for g in ("ランキング系", "◯選系"):
+                cnt, tot = fq[g]
+                S.append(f"■ 頻出ワード {g}（{tot}本）TOP15\n" + "、".join(f"{w}{c}" for w, c in cnt.most_common(15)))
+        return "\n\n".join(S)
+    longs = shorts = []; avg = 0; b_hits = []; summ = []; c_rows = []; fq = None
     if a.own_csv:
         longs, shorts, avg, older = task_a(a.own_csv, a.since, today, a.out_dir, a.tag)
-        top = sorted(longs, key=lambda r: -(r["ratio"] or 0))[:15]
-        S.append(f"■ 自ch（直近12か月 長尺{len(longs)}本・ショート{len(shorts)}本・平均{avg:,.0f}回）倍率TOP15\n" + "\n".join(f"{r['ratio']:.2f}x {r['views']:,} {r['publishDate']} [{r['type']}] {r['title'][:38]}" for r in top))
-    b_hits = []
     if a.comp_json and os.path.exists(a.comp_json):
         b_hits, summ = task_b(a.comp_json, today, a.out_dir, a.tag)
-        S.append("■ 競合サマリ\n" + "\n".join(f"{s['channel'][:12]} {subs_s(s['subs'])} 長尺{s['n12']}本 G1:{s['g1']} G2:{s['g2']} 中央値{s['median']:,}" for s in summ))
-        S.append("■ 競合G1/G2 倍率TOP15\n" + "\n".join(f"{r['ratio']:.2f}x {r['grade']} {r['views']:,} {r['publishDate']} {r['channel'][:8]} {r['title'][:34]}" for r in sorted(b_hits, key=lambda r: -r["ratio"])[:15]))
-    c_rows = []
     if a.search_json and os.path.exists(a.search_json):
         cfg = json.load(open(a.search_config, encoding="utf-8")) if a.search_config else {"keywords": [], "min_views": 1000}
         c_rows = task_c(a.search_json, cfg, today, a.out_dir, a.tag)
-        S.append(f"■ 横断検索ヒット（{len(c_rows)}本）倍率TOP15\n" + "\n".join(f"{r['ratio']:.2f}x {r['viewCount']:,} {subs_s(r['subs'])} {r['publishDate']} {r['channel'][:8]} {r['title'][:34]}" for r in c_rows[:15]))
     if b_hits or c_rows:
         fq = task_d(b_hits, c_rows, today, a.out_dir, a.tag)
-        for g in ("ランキング系", "◯選系"):
-            cnt, tot = fq[g]
-            S.append(f"■ 頻出ワード {g}（{tot}本）TOP15\n" + "、".join(f"{w}{c}" for w, c in cnt.most_common(15)))
-    out = "\n\n".join(S)
-    print(out[:3000])
-    log(f"[summary] {len(out)}字")
+    W = 40; out = build(W)
+    while len(out) > 3000 and W > 12:
+        W -= 2; out = build(W)
+    print(out)
+    log(f"[summary] {len(out)}字 (タイトル幅 {W})")
 
 if __name__ == "__main__":
     main()
