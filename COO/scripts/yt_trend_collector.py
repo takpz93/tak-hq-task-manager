@@ -258,7 +258,7 @@ def classify_generic(title, channel):
         sc = sum(3 for w in ty.get("strong_kw", []) if w.lower() in t) + sum(1 for w in ty.get("title_kw", []) if w.lower() in t)
         if ty.get("channel_regex") and re.search(ty["channel_regex"], c, re.I): sc += 3
         scores.append(sc)
-    if max(scores) == 0: return CFG["types"][-1]["label"]   # どの語にも当たらない場合は末尾の型
+    if max(scores) == 0: return CFG.get("default_type") or CFG["types"][-1]["label"]   # どの語にも当たらない場合は default_type（未指定なら末尾の型）
     best = max(range(len(scores)), key=lambda i: (scores[i], -i))
     return CFG["types"][best]["label"]
 
@@ -334,12 +334,12 @@ def safe_name(s, n=30):
 
 def md_table(rows, lang_col=False):
     if CFG.get("compact"):
-        h = "| 倍率 | タイトル（リンク） | CH名 | 登録者 | 再生数 | 公開日 | 尺 | 型 |" + (" 言語 |" if lang_col else "") + "\n|---|---|---|---|---|---|---|---|" + ("---|" if lang_col else "") + "\n"
+        h = "| 倍率 | タイトル（リンク） | CH名 | 登録者 | 再生数 | 公開日 | 尺 | 型 |" + (" 言語 |" if lang_col else "") + " サムネ |\n|---|---|---|---|---|---|---|---|" + ("---|" if lang_col else "") + "---|\n"
         out = []
         for r in rows:
             t = r["title"].replace("|", "｜")
             lc = f" {LANG_LABEL.get(r['lang'], r['lang'])} |" if lang_col else ""
-            out.append(f"| {r['ratio']:.1f}x | [{t}]({r['url']}) | {r['channel'].replace('|','｜')} | {fmt_subs(r['subs'])} | {fmt_n(r['views'])} | {r['publishDate']} | {r['durationSec']//60}:{r['durationSec']%60:02d} | {r['type']} |{lc}")
+            out.append(f"| {r['ratio']:.1f}x | [{t}]({r['url']}) | {r['channel'].replace('|','｜')} | {fmt_subs(r['subs'])} | {fmt_n(r['views'])} | {r['publishDate']} | {r['durationSec']//60}:{r['durationSec']%60:02d} | {r['type']} |{lc} [maxres]({r['thumb']}) / [hq720]({r['thumb'].replace('maxresdefault','hq720')}) |")
         return h + "\n".join(out) + "\n"
     h = "| # | タイトル | CH名 | 登録者数 | 再生数 | 倍率 | 公開日 | 尺 | 型 | KW |" + (" 言語 |" if lang_col else "") + " サムネ |\n|---|---|---|---|---|---|---|---|---|---|" + ("---|" if lang_col else "") + "---|\n"
     out = []
@@ -355,7 +355,7 @@ def counter_table(cnt, label, top=30):
 
 # ---------- main ----------
 def load_config(path):
-    global KEYWORDS, KEYWORDS_REF, TOPIC_RE, COMPOUNDS, COMPOUND_RE, MIN_VIEWS, FEW_HITS
+    global KEYWORDS, KEYWORDS_REF, TOPIC_RE, COMPOUNDS, COMPOUND_RE, MIN_VIEWS, FEW_HITS, MAX_AGE_DAYS
     c = json.load(open(path, encoding="utf-8"))
     if "keywords" in c: KEYWORDS = c["keywords"]
     if "keywords_ref" in c: KEYWORDS_REF = c["keywords_ref"]
@@ -365,7 +365,8 @@ def load_config(path):
         COMPOUND_RE = re.compile("|".join(re.escape(x) for x in COMPOUNDS))
     if "min_views" in c: MIN_VIEWS = c["min_views"]
     if "few_hits" in c: FEW_HITS = c["few_hits"]
-    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types", "pr_regex", "compact", "exclude_regex", "exclude_label"):
+    if "max_age_days" in c: MAX_AGE_DAYS = c["max_age_days"]
+    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types", "pr_regex", "compact", "exclude_regex", "exclude_label", "default_type", "pr_channel_regex"):
         if k in c: CFG[k] = c[k]
     if c.get("types"): CFG["type_labels"] = [t["label"] for t in c["types"]]
 
@@ -460,7 +461,8 @@ def main():
     pr_rows = []
     if CFG.get("pr_regex"):
         PR_RE = re.compile(CFG["pr_regex"], re.I)
-        pr_rows = [r for r in rows_on if PR_RE.search(r["title"]) or PR_RE.search(r["channel"])]
+        PR_CH_RE = re.compile(CFG["pr_channel_regex"], re.I) if CFG.get("pr_channel_regex") else None
+        pr_rows = [r for r in rows_on if PR_RE.search(r["title"]) or PR_RE.search(r["channel"]) or (PR_CH_RE and PR_CH_RE.search(r["channel"]))]
         rows_on = [r for r in rows_on if r not in pr_rows]
     ja_1y = [r for r in rows_on if r["lang"] == "ja" and r["ageDays"] <= PRIMARY_AGE_DAYS]
     ja_2y = [r for r in rows_on if r["lang"] == "ja" and r["ageDays"] > PRIMARY_AGE_DAYS]
@@ -570,19 +572,32 @@ def main():
         L.append(md_table(sorted(ex_rows, key=lambda r: -r["ratio"]), lang_col=True))
     if pr_rows:
         L.append(f"\n## 別掲：メーカー広告・商品PR動画（{len(pr_rows)}本、倍率順。主枠・集計から除外）\n")
-        L.append(f"判定: タイトルまたはCH名が `{CFG['pr_regex'][:80]}…` に一致（機械判定）\n\n")
+        L.append(f"判定: タイトルまたはCH名が `{CFG['pr_regex'][:80]}…` に一致" + (f"、またはCH名が `{CFG['pr_channel_regex'][:80]}…` に一致" if CFG.get("pr_channel_regex") else "") + "（機械判定）\n\n")
         L.append(md_table(sorted(pr_rows, key=lambda r: -r["ratio"]), lang_col=True))
     L.append("\n## 追加集計：タイトル頻出ワード（主枠 全{}本）\n".format(len(main_rows)))
     L.append("### 名詞（上位30）\n"); L.append(counter_table(nouns, "名詞", 30))
     L.append("\n### 数字表現（上位20）\n"); L.append(counter_table(nums, "数字表現", 20))
     L.append("\n### 【】内ワード（上位20）\n"); L.append(counter_table(brackets, "【】内", 20))
 
+    def _med(xs):
+        xs = sorted(xs); n = len(xs)
+        return 0 if not n else (xs[n//2] if n % 2 else (xs[n//2-1]+xs[n//2])/2)
+    L.append(f"\n## 追加集計：再生数・倍率の中央値と平均値（主枠 全{len(main_rows)}本）\n")
+    L.append("| 母集団 | 本数 | 再生数の中央値 | 再生数の平均値 | 倍率の中央値 | 倍率の平均値 |\n|---|---|---|---|---|---|\n")
+    bands = [("主枠 全体", main_rows),
+             ("大規模（登録10万人以上）", [r for r in main_rows if r["subs"] >= 100000]),
+             ("中規模（登録1万〜10万人）", [r for r in main_rows if 10000 <= r["subs"] < 100000]),
+             ("小規模（登録1万人未満）", [r for r in main_rows if r["subs"] < 10000])]
+    if pr_rows: bands.append(("メーカー広告・PR（別掲分）", pr_rows))
+    for name, rs in bands:
+        if rs: L.append(f"| {name} | {len(rs)} | {_med([r['views'] for r in rs]):,.0f} | {sum(r['views'] for r in rs)/len(rs):,.0f} | {_med([r['ratio'] for r in rs]):.1f}x | {sum(r['ratio'] for r in rs)/len(rs):.1f}x |\n")
+        else: L.append(f"| {name} | 0 | - | - | - | - |\n")
     TL = CFG["type_labels"]
-    L.append(f"\n## 追加集計：「{TL[0]}」vs「{TL[1]}」\n")
-    L.append("| 型 | 本数 | 再生数の中央値 | 倍率の中央値 | 合計再生数 | 倍率平均 |\n|---|---|---|---|---|---|\n")
+    L.append("\n## 追加集計：型別（" + "／".join(TL) + "）\n")
+    L.append("| 型 | 本数 | 再生数の中央値 | 再生数の平均値 | 倍率の中央値 | 倍率の平均値 |\n|---|---|---|---|---|---|\n")
     for t in TL:
         s = type_stats.get(t)
-        if s: L.append(f"| {t} | {s['n']} | {s['views_med']:,.0f} | {s['ratio_med']:.1f}x | {s['views']:,} | {s['ratio_avg']:.1f}x |\n")
+        if s: L.append(f"| {t} | {s['n']} | {s['views_med']:,.0f} | {s['views']/s['n']:,.0f} | {s['ratio_med']:.1f}x | {s['ratio_avg']:.1f}x |\n")
         else: L.append(f"| {t} | 0 | - | - | - | - |\n")
     L.append(f"\n（判定はタイトル・CH名のキーワードによる自動分類。{CFG['type_desc']}）\n")
     for t in TL:
