@@ -146,7 +146,7 @@ def main():
             c_info.append((name, None, None, 0, 0, 0)); log(f"[C] {name}: channel NOT FOUND"); continue
         cname, csubs, cv = channel_videos(cid, cache, C_MAX_AGE)
         cv = [v for v in cv if v["videoId"] and (v["relDays_s"] is None or v["relDays_s"] <= C_MAX_AGE + 60)]
-        hitv = [v for v in cv if C_RE.search(v["title"].replace("抜き打ち", ""))]
+        hitv = [v for v in cv if C_RE.search(re.sub(r"抜き打ち|垢抜|見抜", "", v["title"]))]
         kept = []
         for v in hitv:
             v["channel"] = cname or found; v["channelId"] = cid
@@ -156,7 +156,7 @@ def main():
             kept.append(e)
         c_rows += kept
         # ショート（参考）
-        sh = [v for v in channel_shorts(cid, cache) if v["videoId"] and C_RE.search(v["title"].replace("抜き打ち", ""))]
+        sh = [v for v in channel_shorts(cid, cache) if v["videoId"] and C_RE.search(re.sub(r"抜き打ち|垢抜|見抜", "", v["title"]))]
         skept = []
         for v in sh:
             v["channel"] = cname or found; v["channelId"] = cid
@@ -193,7 +193,7 @@ def main():
     for i, v in enumerate(top5, 1):
         L.append(f"| {i} | {clean(v['title'])} | {v['viewCount']:,} | {v['publishDate']} | {v['url']} | https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg |\n")
     L.append(f"\n## 【C】指名6チャンネル内「抜歯・抜く・残す・歯周病・セカンドオピニオン」関連動画（2年以内・全件・再生数順、{len(c_rows)}本）\n\n")
-    L.append("抽出: 各チャンネルの動画タブ（本編）を2年分取得し、タイトルに 抜歯／抜く・抜か・抜き・抜い・抜け／残す・残し・残せ・残る／歯周病／歯槽膿漏／セカンドオピニオン を含むもの（「抜き打ち」は除外）。倍率基準は適用せず（倍率は参考表示）。\n\n")
+    L.append("抽出: 各チャンネルの動画タブ（本編）を2年分取得し、タイトルに 抜歯／抜く・抜か・抜き・抜い・抜け／残す・残し・残せ・残る／歯周病／歯槽膿漏／セカンドオピニオン を含むもの（「抜き打ち」「垢抜け」「見抜く」は除外）。倍率基準は適用せず（倍率は参考表示）。\n\n")
     L.append("| チャンネル（指定名） | 解決したチャンネル | 登録者数 | 2年以内の本編 | 関連動画（本編） | 関連ショート（本表には含めず） |\n|---|---|---|---|---|---|\n")
     for name, cname, csubs, n, k, sk in c_info: L.append(f"| {name} | {cname or '未特定'} | {fmt_subs(csubs)} | {n} | {k} | {sk} |\n")
     L.append(f"\n### C-1 本編（{len(c_rows)}本、再生数順）\n\n" + (a_table(c_rows) if c_rows else "該当なし\n"))
