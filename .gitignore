@@ -11,3 +11,6 @@ migrate_events_to_tasks.py
 fix_duplicate_tasks.py
 .streamlit/secrets.toml
 .DS_Store
+
+# YouTube InnerTube レスポンスキャッシュ（yt_trend_collector.py 等が生成。再実行で再生成可）
+COO/.cache_yt/
