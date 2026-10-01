@@ -885,7 +885,7 @@
    "views_s": 11000,
    "relDays_s": 90,
    "durationSec_s": 1091,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯が痛くならない予防チャンネル",
    "channelId": "UCqGpNSBrcuKv_qTLeiD7hvg",
    "title_en": "【保存版】毎日磨いても虫歯になる…歯医者が実践する正しい予防法5選",
@@ -898,7 +898,7 @@
    "handle": "/@chikatsukai",
    "ageDays": 96,
    "url": "https://www.youtube.com/watch?v=qvPFXhTUCHs",
-   "thumb": "https://i.ytimg.com/vi/qvPFXhTUCHs/hqdefault.jpg"
+   "thumb": "https://i.ytimg.com/vi/qvPFXhTUCHs/maxresdefault.jpg"
   },
   {
    "videoId": "frTWAifb0x0",
@@ -906,7 +906,7 @@
    "views_s": 10000,
    "relDays_s": 60,
    "durationSec_s": 909,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯が痛くならない予防チャンネル",
    "channelId": "UCqGpNSBrcuKv_qTLeiD7hvg",
    "title_en": "あなたもやってる…歯周病になるNG習慣5選を現役歯医者が徹底解説！",
@@ -919,7 +919,7 @@
    "handle": "/@chikatsukai",
    "ageDays": 68,
    "url": "https://www.youtube.com/watch?v=frTWAifb0x0",
-   "thumb": "https://i.ytimg.com/vi/frTWAifb0x0/hqdefault.jpg"
+   "thumb": "https://i.ytimg.com/vi/frTWAifb0x0/maxresdefault.jpg"
   },
   {
    "videoId": "L-PZgQzTPfY",
@@ -927,7 +927,7 @@
    "views_s": 8842,
    "relDays_s": 90,
    "durationSec_s": 1058,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯が痛くならない予防チャンネル",
    "channelId": "UCqGpNSBrcuKv_qTLeiD7hvg",
    "title_en": "【忖度なし】現役歯科医が本音で語る「絶対に行ってはいけない歯医者」5選",
@@ -940,7 +940,7 @@
    "handle": "/@chikatsukai",
    "ageDays": 103,
    "url": "https://www.youtube.com/watch?v=L-PZgQzTPfY",
-   "thumb": "https://i.ytimg.com/vi/L-PZgQzTPfY/hqdefault.jpg"
+   "thumb": "https://i.ytimg.com/vi/L-PZgQzTPfY/maxresdefault.jpg"
   },
   {
    "videoId": "sgpBAo10lfg",
@@ -948,7 +948,7 @@
    "views_s": 3803,
    "relDays_s": 30,
    "durationSec_s": 739,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯が痛くならない予防チャンネル",
    "channelId": "UCqGpNSBrcuKv_qTLeiD7hvg",
    "title_en": "【要注意】歯医者にコレ言われたら危険！信頼できない歯科医がよく言うこと",
@@ -961,7 +961,7 @@
    "handle": "/@chikatsukai",
    "ageDays": 40,
    "url": "https://www.youtube.com/watch?v=sgpBAo10lfg",
-   "thumb": "https://i.ytimg.com/vi/sgpBAo10lfg/hqdefault.jpg"
+   "thumb": "https://i.ytimg.com/vi/sgpBAo10lfg/maxresdefault.jpg"
   },
   {
    "videoId": "L0MJhrDYkP0",
@@ -969,7 +969,7 @@
    "views_s": 2074,
    "relDays_s": 60,
    "durationSec_s": 1001,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯が痛くならない予防チャンネル",
    "channelId": "UCqGpNSBrcuKv_qTLeiD7hvg",
    "title_en": "【保存版】9割が間違えてる正しい歯の磨き方5選を現役歯科医師が徹底解説！",
@@ -982,7 +982,7 @@
    "handle": "/@chikatsukai",
    "ageDays": 82,
    "url": "https://www.youtube.com/watch?v=L0MJhrDYkP0",
-   "thumb": "https://i.ytimg.com/vi/L0MJhrDYkP0/hqdefault.jpg"
+   "thumb": "https://i.ytimg.com/vi/L0MJhrDYkP0/maxresdefault.jpg"
   }
  ],
  "C": [
@@ -992,7 +992,7 @@
    "views_s": 2170000,
    "relDays_s": 365,
    "durationSec_s": 787,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "ザ・ホワイトデンタルクリニック 【熟睡歯科治療専門の歯医者】",
    "channelId": "UC4GnqL6CD46ojljTcz_ElkA",
    "title_en": "歯周病の最終形態！歯石除去すら出来ません😭",
@@ -1005,7 +1005,7 @@
    "handle": "/@TheWhiteDentalClinic",
    "ageDays": 692,
    "url": "https://www.youtube.com/watch?v=2X47UXuUSas",
-   "thumb": "https://i.ytimg.com/vi/2X47UXuUSas/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/2X47UXuUSas/maxresdefault.jpg",
    "ratio": 3.8001276223776226
   },
   {
@@ -1014,7 +1014,7 @@
    "views_s": 1880000,
    "relDays_s": 365,
    "durationSec_s": 2479,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "【保存版】二度と歯周病にならない本気の予防法",
@@ -1027,7 +1027,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 507,
    "url": "https://www.youtube.com/watch?v=4F02gITeU0U",
-   "thumb": "https://i.ytimg.com/vi/4F02gITeU0U/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/4F02gITeU0U/maxresdefault.jpg",
    "ratio": 11.196732142857142
   },
   {
@@ -1036,7 +1036,7 @@
    "views_s": 760000,
    "relDays_s": 365,
    "durationSec_s": 2196,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "[Permanent Edition] Practical explanation of the ultimate tooth brushing method to prevent period...",
@@ -1049,7 +1049,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 549,
    "url": "https://www.youtube.com/watch?v=cjzwYqOAhp4",
-   "thumb": "https://i.ytimg.com/vi/cjzwYqOAhp4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/cjzwYqOAhp4/maxresdefault.jpg",
    "ratio": 4.566797619047619
   },
   {
@@ -1058,7 +1058,7 @@
    "views_s": 600000,
    "relDays_s": 330,
    "durationSec_s": 1347,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "ザ・ホワイトデンタルクリニック 【熟睡歯科治療専門の歯医者】",
    "channelId": "UC4GnqL6CD46ojljTcz_ElkA",
    "title_en": "重度歯周病の恐怖😱ほとんどの歯が抜歯に⁉️",
@@ -1071,7 +1071,7 @@
    "handle": "/@TheWhiteDentalClinic",
    "ageDays": 347,
    "url": "https://www.youtube.com/watch?v=5W4K2vGL0lw",
-   "thumb": "https://i.ytimg.com/vi/5W4K2vGL0lw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/5W4K2vGL0lw/maxresdefault.jpg",
    "ratio": 1.051097902097902
   },
   {
@@ -1080,7 +1080,7 @@
    "views_s": 580000,
    "relDays_s": 240,
    "durationSec_s": 497,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "This product is the best mouthwash for periodontal disease. We will explain how to choose the bes...",
@@ -1093,7 +1093,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 249,
    "url": "https://www.youtube.com/watch?v=xNiiEmfKH9g",
-   "thumb": "https://i.ytimg.com/vi/xNiiEmfKH9g/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/xNiiEmfKH9g/maxresdefault.jpg",
    "ratio": 16.80131805157593
   },
   {
@@ -1102,7 +1102,7 @@
    "views_s": 380000,
    "relDays_s": 365,
    "durationSec_s": 1347,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Tooth Loss] Periodontal disease can be cured with home care! We'll explain in detail how to prot...",
@@ -1115,7 +1115,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 489,
    "url": "https://www.youtube.com/watch?v=Gud_O-JAe4k",
-   "thumb": "https://i.ytimg.com/vi/Gud_O-JAe4k/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Gud_O-JAe4k/maxresdefault.jpg",
    "ratio": 11.11243553008596
   },
   {
@@ -1124,7 +1124,7 @@
    "views_s": 280000,
    "relDays_s": 365,
    "durationSec_s": 819,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Read this before brushing your teeth!] Interdental brushes and flossing are useless! Do this bef...",
@@ -1137,7 +1137,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 486,
    "url": "https://www.youtube.com/watch?v=xVNswAy0pts",
-   "thumb": "https://i.ytimg.com/vi/xVNswAy0pts/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/xVNswAy0pts/maxresdefault.jpg",
    "ratio": 8.223638968481376
   },
   {
@@ -1146,7 +1146,7 @@
    "views_s": 260000,
    "relDays_s": 365,
    "durationSec_s": 760,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Mouthwash] If you are suffering from periodontal disease, try this! A practicing dentist answers...",
@@ -1159,7 +1159,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 449,
    "url": "https://www.youtube.com/watch?v=Ms7ndjKTylk",
-   "thumb": "https://i.ytimg.com/vi/Ms7ndjKTylk/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Ms7ndjKTylk/maxresdefault.jpg",
    "ratio": 7.462148997134671
   },
   {
@@ -1168,7 +1168,7 @@
    "views_s": 240000,
    "relDays_s": 365,
    "durationSec_s": 906,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "ザ・ホワイトデンタルクリニック 【熟睡歯科治療専門の歯医者】",
    "channelId": "UC4GnqL6CD46ojljTcz_ElkA",
    "title_en": "【歯石除去】こんなにきれいな歯なのに抜歯なの⁉️",
@@ -1181,7 +1181,7 @@
    "handle": "/@TheWhiteDentalClinic",
    "ageDays": 632,
    "url": "https://www.youtube.com/watch?v=AKJ5_QC6Prg",
-   "thumb": "https://i.ytimg.com/vi/AKJ5_QC6Prg/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/AKJ5_QC6Prg/maxresdefault.jpg",
    "ratio": 0.42828146853146853
   },
   {
@@ -1190,7 +1190,7 @@
    "views_s": 230000,
    "relDays_s": 365,
    "durationSec_s": 825,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "ザ・ホワイトデンタルクリニック 【熟睡歯科治療専門の歯医者】",
    "channelId": "UC4GnqL6CD46ojljTcz_ElkA",
    "title_en": "歯石・歯並び・歯周病　数々の口内トラブルからの復活！",
@@ -1203,7 +1203,7 @@
    "handle": "/@TheWhiteDentalClinic",
    "ageDays": 664,
    "url": "https://www.youtube.com/watch?v=LToTU9paujg",
-   "thumb": "https://i.ytimg.com/vi/LToTU9paujg/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/LToTU9paujg/maxresdefault.jpg",
    "ratio": 0.4172727272727273
   },
   {
@@ -1212,7 +1212,7 @@
    "views_s": 200000,
    "relDays_s": 300,
    "durationSec_s": 1482,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "ザ・ホワイトデンタルクリニック 【熟睡歯科治療専門の歯医者】",
    "channelId": "UC4GnqL6CD46ojljTcz_ElkA",
    "title_en": "Dramatic improvement in periodontal disease in 3 months! [Tartar removal]",
@@ -1225,7 +1225,7 @@
    "handle": "/@TheWhiteDentalClinic",
    "ageDays": 323,
    "url": "https://www.youtube.com/watch?v=WurBbvwfouM",
-   "thumb": "https://i.ytimg.com/vi/WurBbvwfouM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/WurBbvwfouM/maxresdefault.jpg",
    "ratio": 0.3535979020979021
   },
   {
@@ -1234,7 +1234,7 @@
    "views_s": 170000,
    "relDays_s": 365,
    "durationSec_s": 730,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What is the toothpaste that dentists recommend for people with severe periodontal disease or sens...",
@@ -1247,7 +1247,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 416,
    "url": "https://www.youtube.com/watch?v=A0uSlJxIigI",
-   "thumb": "https://i.ytimg.com/vi/A0uSlJxIigI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/A0uSlJxIigI/maxresdefault.jpg",
    "ratio": 4.921575931232091
   },
   {
@@ -1256,7 +1256,7 @@
    "views_s": 140000,
    "relDays_s": 365,
    "durationSec_s": 942,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "The Truth About Treating Periodontal Disease on Your Own Without Relying on a Dentist",
@@ -1269,7 +1269,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 633,
    "url": "https://www.youtube.com/watch?v=caDgv7XWiEc",
-   "thumb": "https://i.ytimg.com/vi/caDgv7XWiEc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/caDgv7XWiEc/maxresdefault.jpg",
    "ratio": 0.891547619047619
   },
   {
@@ -1278,7 +1278,7 @@
    "views_s": 120000,
    "relDays_s": 365,
    "durationSec_s": 803,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "Beautiful woman with 7 cavities discovered to have periodontal disease!? Intraoral photos",
@@ -1291,7 +1291,7 @@
    "handle": "/@kimishika",
    "ageDays": 663,
    "url": "https://www.youtube.com/watch?v=vK6OsA1Vx2g",
-   "thumb": "https://i.ytimg.com/vi/vK6OsA1Vx2g/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/vK6OsA1Vx2g/maxresdefault.jpg",
    "ratio": 1.5850972762645914
   },
   {
@@ -1300,7 +1300,7 @@
    "views_s": 110000,
    "relDays_s": 240,
    "durationSec_s": 1288,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Here are 4 insurance treatments that dentists think you should avoid! We will introduce insurance...",
@@ -1313,7 +1313,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 245,
    "url": "https://www.youtube.com/watch?v=T_gEyYy3_CA",
-   "thumb": "https://i.ytimg.com/vi/T_gEyYy3_CA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/T_gEyYy3_CA/maxresdefault.jpg",
    "ratio": 3.407134670487106
   },
   {
@@ -1322,7 +1322,7 @@
    "views_s": 110000,
    "relDays_s": 210,
    "durationSec_s": 668,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you're in trouble, try this! A dentist has carefully selected and explained the toothbrush and...",
@@ -1335,7 +1335,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 221,
    "url": "https://www.youtube.com/watch?v=jZ0PHhm4MUw",
-   "thumb": "https://i.ytimg.com/vi/jZ0PHhm4MUw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/jZ0PHhm4MUw/maxresdefault.jpg",
    "ratio": 3.3216045845272206
   },
   {
@@ -1344,7 +1344,7 @@
    "views_s": 110000,
    "relDays_s": 150,
    "durationSec_s": 1315,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Former Inmate's Tooth Treatment] 7 Teeth Extracted in One Day! After 7 Years in Prison, 14 Tooth...",
@@ -1357,7 +1357,7 @@
    "handle": "/@kimishika",
    "ageDays": 183,
    "url": "https://www.youtube.com/watch?v=jwajfkQliR4",
-   "thumb": "https://i.ytimg.com/vi/jwajfkQliR4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/jwajfkQliR4/maxresdefault.jpg",
    "ratio": 1.4397276264591439
   },
   {
@@ -1366,7 +1366,7 @@
    "views_s": 110000,
    "relDays_s": 240,
    "durationSec_s": 669,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What are the consistent characteristics of people who don't lose their teeth in old age? I will e...",
@@ -1379,7 +1379,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 255,
    "url": "https://www.youtube.com/watch?v=ZhXdBcap-CI",
-   "thumb": "https://i.ytimg.com/vi/ZhXdBcap-CI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ZhXdBcap-CI/maxresdefault.jpg",
    "ratio": 3.1674498567335245
   },
   {
@@ -1388,7 +1388,7 @@
    "views_s": 110000,
    "relDays_s": 365,
    "durationSec_s": 1062,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Dental Phobia] 18 cavities lurking in a beautiful woman's mouth... Treatment for nerve removal a...",
@@ -1401,7 +1401,7 @@
    "handle": "/@kimishika",
    "ageDays": 418,
    "url": "https://www.youtube.com/watch?v=SaERASxBABY",
-   "thumb": "https://i.ytimg.com/vi/SaERASxBABY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/SaERASxBABY/maxresdefault.jpg",
    "ratio": 1.426964980544747
   },
   {
@@ -1410,7 +1410,7 @@
    "views_s": 100000,
    "relDays_s": 365,
    "durationSec_s": 740,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Tooth rot and extraction surgery] A beautiful businesswoman with seven cavities has a serious pr...",
@@ -1423,7 +1423,7 @@
    "handle": "/@kimishika",
    "ageDays": 544,
    "url": "https://www.youtube.com/watch?v=gH6MG1Ne40I",
-   "thumb": "https://i.ytimg.com/vi/gH6MG1Ne40I/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/gH6MG1Ne40I/maxresdefault.jpg",
    "ratio": 1.41431906614786
   },
   {
@@ -1432,7 +1432,7 @@
    "views_s": 100000,
    "relDays_s": 365,
    "durationSec_s": 972,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Dental phobia] A beautiful idol who fled from her completely buried wisdom tooth extraction surg...",
@@ -1445,30 +1445,8 @@
    "handle": "/@kimishika",
    "ageDays": 462,
    "url": "https://www.youtube.com/watch?v=Y24jSx_tJ20",
-   "thumb": "https://i.ytimg.com/vi/Y24jSx_tJ20/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Y24jSx_tJ20/maxresdefault.jpg",
    "ratio": 1.3504280155642023
-  },
-  {
-   "videoId": "WI6pPpwAVBc",
-   "title": "歯学部6年生の口の中を抜き打ち検査したら、とんでもない結果になりました…",
-   "views_s": 100000,
-   "relDays_s": 21,
-   "durationSec_s": 965,
-   "thumbKind": null,
-   "channel": "君のための歯医者さん",
-   "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
-   "title_en": "I did an oral exam on our dental assistant staff member—a 6th-year dental student—and was shocked...",
-   "viewCount": 103180,
-   "publishDate": "2026-09-03",
-   "isLive": false,
-   "subs": 77100,
-   "subsHidden": false,
-   "channel_en": "君のための歯医者さん",
-   "handle": "/@kimishika",
-   "ageDays": 28,
-   "url": "https://www.youtube.com/watch?v=WI6pPpwAVBc",
-   "thumb": "https://i.ytimg.com/vi/WI6pPpwAVBc/hqdefault.jpg",
-   "ratio": 1.3382619974059662
   },
   {
    "videoId": "OqLpnlWc3t8",
@@ -1476,7 +1454,7 @@
    "views_s": 88000,
    "relDays_s": 210,
    "durationSec_s": 1001,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What are the common characteristics of people who lose their teeth in old age? A dentist and dent...",
@@ -1489,7 +1467,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 236,
    "url": "https://www.youtube.com/watch?v=OqLpnlWc3t8",
-   "thumb": "https://i.ytimg.com/vi/OqLpnlWc3t8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/OqLpnlWc3t8/maxresdefault.jpg",
    "ratio": 2.5463896848137537
   },
   {
@@ -1498,7 +1476,7 @@
    "views_s": 88000,
    "relDays_s": 365,
    "durationSec_s": 1038,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Is it effective for severe periodontal disease? A practicing dentist explains the drugs that may ...",
@@ -1511,7 +1489,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 445,
    "url": "https://www.youtube.com/watch?v=yI7s_uzRIgM",
-   "thumb": "https://i.ytimg.com/vi/yI7s_uzRIgM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/yI7s_uzRIgM/maxresdefault.jpg",
    "ratio": 2.5460744985673354
   },
   {
@@ -1520,7 +1498,7 @@
    "views_s": 81000,
    "relDays_s": 365,
    "durationSec_s": 495,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "No matter how hard you try to treat periodontal disease, if you have ____, it will not be cured.....",
@@ -1533,30 +1511,8 @@
    "handle": "/@haplus-kimura",
    "ageDays": 438,
    "url": "https://www.youtube.com/watch?v=QxshUv62Q-g",
-   "thumb": "https://i.ytimg.com/vi/QxshUv62Q-g/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/QxshUv62Q-g/maxresdefault.jpg",
    "ratio": 2.3426074498567333
-  },
-  {
-   "videoId": "JLfV221Sfew",
-   "title": "【自宅公開!?】32歳歯科院長のリアルすぎる自宅に抜き打ち訪問したらとんでもない家に住んでたwww",
-   "views_s": 80000,
-   "relDays_s": 330,
-   "durationSec_s": 1372,
-   "thumbKind": null,
-   "channel": "君のための歯医者さん",
-   "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
-   "title_en": "[Home Reveal!?] We made a surprise visit to the 32-year-old dental director's incredibly real hom...",
-   "viewCount": 80200,
-   "publishDate": "2025-10-15",
-   "isLive": false,
-   "subs": 77100,
-   "subsHidden": false,
-   "channel_en": "君のための歯医者さん",
-   "handle": "/@kimishika",
-   "ageDays": 351,
-   "url": "https://www.youtube.com/watch?v=JLfV221Sfew",
-   "thumb": "https://i.ytimg.com/vi/JLfV221Sfew/hqdefault.jpg",
-   "ratio": 1.0402075226977952
   },
   {
    "videoId": "_zlgQBtBbDM",
@@ -1564,7 +1520,7 @@
    "views_s": 78000,
    "relDays_s": 270,
    "durationSec_s": 862,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "If the pocket is over XXmm, you need to have it extracted immediately! Explaining the criteria fo...",
@@ -1577,30 +1533,8 @@
    "handle": "/@MaeokaDental",
    "ageDays": 290,
    "url": "https://www.youtube.com/watch?v=_zlgQBtBbDM",
-   "thumb": "https://i.ytimg.com/vi/_zlgQBtBbDM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/_zlgQBtBbDM/maxresdefault.jpg",
    "ratio": 0.46907738095238094
-  },
-  {
-   "videoId": "Hoj8_3S21lQ",
-   "title": "ママ歯科衛生士の歯は本当にキレイ？抜き打ち検査で歯石までチェックしてみた！",
-   "views_s": 75000,
-   "relDays_s": 14,
-   "durationSec_s": 623,
-   "thumbKind": null,
-   "channel": "君のための歯医者さん",
-   "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
-   "title_en": "Are a Mom Dental Hygienist's Teeth Really Clean? A Surprise Inspection to Check for Tartar!",
-   "viewCount": 75763,
-   "publishDate": "2026-09-14",
-   "isLive": false,
-   "subs": 77100,
-   "subsHidden": false,
-   "channel_en": "君のための歯医者さん",
-   "handle": "/@kimishika",
-   "ageDays": 17,
-   "url": "https://www.youtube.com/watch?v=Hoj8_3S21lQ",
-   "thumb": "https://i.ytimg.com/vi/Hoj8_3S21lQ/hqdefault.jpg",
-   "ratio": 0.9826588845654993
   },
   {
    "videoId": "kVgQFCwULBo",
@@ -1608,7 +1542,7 @@
    "views_s": 75000,
    "relDays_s": 240,
    "durationSec_s": 1453,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Former prisoner confesses] Is tooth extraction without anesthesia normal? Dental treatment in pr...",
@@ -1621,7 +1555,7 @@
    "handle": "/@kimishika",
    "ageDays": 268,
    "url": "https://www.youtube.com/watch?v=kVgQFCwULBo",
-   "thumb": "https://i.ytimg.com/vi/kVgQFCwULBo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/kVgQFCwULBo/maxresdefault.jpg",
    "ratio": 0.975201037613489
   },
   {
@@ -1630,7 +1564,7 @@
    "views_s": 72000,
    "relDays_s": 365,
    "durationSec_s": 888,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[If you don't know, it's dangerous] Dentists honestly explain why wisdom tooth extraction in your...",
@@ -1643,30 +1577,8 @@
    "handle": "/@kimishika",
    "ageDays": 439,
    "url": "https://www.youtube.com/watch?v=n3FBh5DajNc",
-   "thumb": "https://i.ytimg.com/vi/n3FBh5DajNc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/n3FBh5DajNc/maxresdefault.jpg",
    "ratio": 0.9340077821011673
-  },
-  {
-   "videoId": "dxZovXJGFZs",
-   "title": "新人の美人歯科衛生士の歯を抜き打ちで歯石チェックしたらまさかの事態が発覚した！？",
-   "views_s": 70000,
-   "relDays_s": 210,
-   "durationSec_s": 993,
-   "thumbKind": null,
-   "channel": "君のための歯医者さん",
-   "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
-   "title_en": "When we did a surprise tartar check on the teeth of a beautiful new dental hygienist, we discover...",
-   "viewCount": 70758,
-   "publishDate": "2026-02-28",
-   "isLive": false,
-   "subs": 77100,
-   "subsHidden": false,
-   "channel_en": "君のための歯医者さん",
-   "handle": "/@kimishika",
-   "ageDays": 215,
-   "url": "https://www.youtube.com/watch?v=dxZovXJGFZs",
-   "thumb": "https://i.ytimg.com/vi/dxZovXJGFZs/hqdefault.jpg",
-   "ratio": 0.9177431906614786
   },
   {
    "videoId": "qHFSwoW02dU",
@@ -1674,7 +1586,7 @@
    "views_s": 68000,
    "relDays_s": 300,
    "durationSec_s": 537,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Complete Edition] This is the best tooth brushing method to prevent periodontal disease! Dentist...",
@@ -1687,7 +1599,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 309,
    "url": "https://www.youtube.com/watch?v=qHFSwoW02dU",
-   "thumb": "https://i.ytimg.com/vi/qHFSwoW02dU/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/qHFSwoW02dU/maxresdefault.jpg",
    "ratio": 1.9585959885386819
   },
   {
@@ -1696,7 +1608,7 @@
    "views_s": 67000,
    "relDays_s": 330,
    "durationSec_s": 765,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Danger] If your gums recede with age, your teeth will fall out! We'll show you the latest method...",
@@ -1709,7 +1621,7 @@
    "handle": "/@kimishika",
    "ageDays": 345,
    "url": "https://www.youtube.com/watch?v=9ZK-pEyX9k4",
-   "thumb": "https://i.ytimg.com/vi/9ZK-pEyX9k4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/9ZK-pEyX9k4/maxresdefault.jpg",
    "ratio": 0.881011673151751
   },
   {
@@ -1718,7 +1630,7 @@
    "views_s": 67000,
    "relDays_s": 365,
    "durationSec_s": 303,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "ザ・ホワイトデンタルクリニック 【熟睡歯科治療専門の歯医者】",
    "channelId": "UC4GnqL6CD46ojljTcz_ElkA",
    "title_en": "[Tooth decay and periodontal disease] Revive your worn-out and wobbly teeth!",
@@ -1731,7 +1643,7 @@
    "handle": "/@TheWhiteDentalClinic",
    "ageDays": 426,
    "url": "https://www.youtube.com/watch?v=VSJ9dvuIvcQ",
-   "thumb": "https://i.ytimg.com/vi/VSJ9dvuIvcQ/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/VSJ9dvuIvcQ/maxresdefault.jpg",
    "ratio": 0.11729895104895105
   },
   {
@@ -1740,7 +1652,7 @@
    "views_s": 57000,
    "relDays_s": 300,
    "durationSec_s": 819,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Dental Phobia] A beautiful woman with 18 cavities has her \"giant wisdom teeth\" removed...and the...",
@@ -1753,7 +1665,7 @@
    "handle": "/@kimishika",
    "ageDays": 324,
    "url": "https://www.youtube.com/watch?v=p8UFv8u9FI0",
-   "thumb": "https://i.ytimg.com/vi/p8UFv8u9FI0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/p8UFv8u9FI0/maxresdefault.jpg",
    "ratio": 0.746420233463035
   },
   {
@@ -1762,7 +1674,7 @@
    "views_s": 56000,
    "relDays_s": 365,
    "durationSec_s": 883,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Top Recommended Toothpastes by Category: Teeth Staining, Periodontal Disease, Cavities, and Kids!",
@@ -1775,7 +1687,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 466,
    "url": "https://www.youtube.com/watch?v=vzPqsdI7RiA",
-   "thumb": "https://i.ytimg.com/vi/vzPqsdI7RiA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/vzPqsdI7RiA/maxresdefault.jpg",
    "ratio": 1.6251289398280802
   },
   {
@@ -1784,7 +1696,7 @@
    "views_s": 52000,
    "relDays_s": 300,
    "durationSec_s": 571,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "Oral health trivia you'll want to share with others [Periodontal disease and tooth decay]",
@@ -1797,7 +1709,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 325,
    "url": "https://www.youtube.com/watch?v=WEX57t_wq9w",
-   "thumb": "https://i.ytimg.com/vi/WEX57t_wq9w/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/WEX57t_wq9w/maxresdefault.jpg",
    "ratio": 0.3116011904761905
   },
   {
@@ -1806,7 +1718,7 @@
    "views_s": 52000,
    "relDays_s": 240,
    "durationSec_s": 678,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯医者のさくら先生",
    "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
    "title_en": "Extracting the nerve of the tooth! We will show you everything about the latest root canal treatm...",
@@ -1819,7 +1731,7 @@
    "handle": "/@dental_sakura",
    "ageDays": 271,
    "url": "https://www.youtube.com/watch?v=KFu1vOalr7Q",
-   "thumb": "https://i.ytimg.com/vi/KFu1vOalr7Q/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/KFu1vOalr7Q/maxresdefault.jpg",
    "ratio": 0.8275277337559429
   },
   {
@@ -1828,7 +1740,7 @@
    "views_s": 47000,
    "relDays_s": 150,
    "durationSec_s": 1241,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "This article explains what happens if you leave a missing tooth untreated, broken down by locatio...",
@@ -1841,7 +1753,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 164,
    "url": "https://www.youtube.com/watch?v=dD8UeKglH70",
-   "thumb": "https://i.ytimg.com/vi/dD8UeKglH70/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/dD8UeKglH70/maxresdefault.jpg",
    "ratio": 1.3493982808022922
   },
   {
@@ -1850,7 +1762,7 @@
    "views_s": 43000,
    "relDays_s": 365,
    "durationSec_s": 950,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Check this out before going to the dentist!] Is that dentist a good choice? Five points to look ...",
@@ -1863,7 +1775,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 485,
    "url": "https://www.youtube.com/watch?v=oIGJ6KU2Kyo",
-   "thumb": "https://i.ytimg.com/vi/oIGJ6KU2Kyo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/oIGJ6KU2Kyo/maxresdefault.jpg",
    "ratio": 1.2406017191977077
   },
   {
@@ -1872,7 +1784,7 @@
    "views_s": 41000,
    "relDays_s": 365,
    "durationSec_s": 892,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Even those with dental phobia can do it] A close look at the treatment of a gravure idol who has...",
@@ -1885,7 +1797,7 @@
    "handle": "/@kimishika",
    "ageDays": 424,
    "url": "https://www.youtube.com/watch?v=b67BNGFgO84",
-   "thumb": "https://i.ytimg.com/vi/b67BNGFgO84/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/b67BNGFgO84/maxresdefault.jpg",
    "ratio": 0.5319195849546045
   },
   {
@@ -1894,7 +1806,7 @@
    "views_s": 37000,
    "relDays_s": 90,
    "durationSec_s": 938,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Must-See for Gum Disease Patients] 4 Things You Must Do to Avoid Losing Your Teeth! How to Keep ...",
@@ -1907,7 +1819,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 96,
    "url": "https://www.youtube.com/watch?v=ukNZGHk86Bo",
-   "thumb": "https://i.ytimg.com/vi/ukNZGHk86Bo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ukNZGHk86Bo/maxresdefault.jpg",
    "ratio": 1.0778796561604584
   },
   {
@@ -1916,7 +1828,7 @@
    "views_s": 37000,
    "relDays_s": 365,
    "durationSec_s": 1326,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "[Shocking Fact] Teeth that have been declared to be extracted can still be kept! [With actual exa...",
@@ -1929,7 +1841,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 598,
    "url": "https://www.youtube.com/watch?v=1q2be1WhoPw",
-   "thumb": "https://i.ytimg.com/vi/1q2be1WhoPw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/1q2be1WhoPw/maxresdefault.jpg",
    "ratio": 0.2220059523809524
   },
   {
@@ -1938,7 +1850,7 @@
    "views_s": 36000,
    "relDays_s": 210,
    "durationSec_s": 544,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Are oral irrigators effective for periodontal disease? A dentist seriously considers whether peop...",
@@ -1951,7 +1863,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 222,
    "url": "https://www.youtube.com/watch?v=03KRh-7UvdA",
-   "thumb": "https://i.ytimg.com/vi/03KRh-7UvdA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/03KRh-7UvdA/maxresdefault.jpg",
    "ratio": 1.0417765042979943
   },
   {
@@ -1960,7 +1872,7 @@
    "views_s": 32000,
    "relDays_s": 180,
    "durationSec_s": 1171,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Treatment costs exceeding 4 million yen!?] What happens to your teeth after 7 years in prison? A...",
@@ -1973,7 +1885,7 @@
    "handle": "/@kimishika",
    "ageDays": 188,
    "url": "https://www.youtube.com/watch?v=PkYk01PD52I",
-   "thumb": "https://i.ytimg.com/vi/PkYk01PD52I/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/PkYk01PD52I/maxresdefault.jpg",
    "ratio": 0.4238651102464332
   },
   {
@@ -1982,7 +1894,7 @@
    "views_s": 31000,
    "relDays_s": 365,
    "durationSec_s": 1331,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Are silver fillings dangerous? A dentist explains dangerous habits that can lead to tooth loss an...",
@@ -1995,7 +1907,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 487,
    "url": "https://www.youtube.com/watch?v=rJpB_JIw4TI",
-   "thumb": "https://i.ytimg.com/vi/rJpB_JIw4TI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/rJpB_JIw4TI/maxresdefault.jpg",
    "ratio": 0.9132091690544413
   },
   {
@@ -2004,7 +1916,7 @@
    "views_s": 31000,
    "relDays_s": 210,
    "durationSec_s": 421,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you're thinking about treating periodontal disease with mouthwash, be sure to check this out! ...",
@@ -2017,7 +1929,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 234,
    "url": "https://www.youtube.com/watch?v=H35nj5SokKY",
-   "thumb": "https://i.ytimg.com/vi/H35nj5SokKY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/H35nj5SokKY/maxresdefault.jpg",
    "ratio": 0.8903438395415473
   },
   {
@@ -2026,7 +1938,7 @@
    "views_s": 30000,
    "relDays_s": 270,
    "durationSec_s": 690,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯医者のさくら先生",
    "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
    "title_en": "My tooth is cracked and smells like sewer...! A dentist will explain the process while treating y...",
@@ -2039,7 +1951,7 @@
    "handle": "/@dental_sakura",
    "ageDays": 278,
    "url": "https://www.youtube.com/watch?v=C-LBfNnLcqc",
-   "thumb": "https://i.ytimg.com/vi/C-LBfNnLcqc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/C-LBfNnLcqc/maxresdefault.jpg",
    "ratio": 0.4874009508716323
   },
   {
@@ -2048,7 +1960,7 @@
    "views_s": 30000,
    "relDays_s": 240,
    "durationSec_s": 1352,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "A dentist explains the difficulty of removing wisdom teeth and the \"difficulty and time limit tha...",
@@ -2061,7 +1973,7 @@
    "handle": "/@kimishika",
    "ageDays": 257,
    "url": "https://www.youtube.com/watch?v=uWEftVA3Dn0",
-   "thumb": "https://i.ytimg.com/vi/uWEftVA3Dn0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/uWEftVA3Dn0/maxresdefault.jpg",
    "ratio": 0.391621271076524
   },
   {
@@ -2070,7 +1982,7 @@
    "views_s": 30000,
    "relDays_s": 365,
    "durationSec_s": 835,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you are suffering from periodontal disease, we recommend you to use this toothbrush! A dentist...",
@@ -2083,7 +1995,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 457,
    "url": "https://www.youtube.com/watch?v=XAm3Evqamgo",
-   "thumb": "https://i.ytimg.com/vi/XAm3Evqamgo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/XAm3Evqamgo/maxresdefault.jpg",
    "ratio": 0.8637249283667622
   },
   {
@@ -2092,7 +2004,7 @@
    "views_s": 29000,
    "relDays_s": 365,
    "durationSec_s": 819,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "A beautiful businesswoman with seven decayed teeth who had to have them extracted undergoes a tar...",
@@ -2105,7 +2017,7 @@
    "handle": "/@kimishika",
    "ageDays": 387,
    "url": "https://www.youtube.com/watch?v=aMqd3hLEgvg",
-   "thumb": "https://i.ytimg.com/vi/aMqd3hLEgvg/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/aMqd3hLEgvg/maxresdefault.jpg",
    "ratio": 0.38302204928664074
   },
   {
@@ -2114,7 +2026,7 @@
    "views_s": 29000,
    "relDays_s": 120,
    "durationSec_s": 1065,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What Do People Who End Up Needing a Tooth Extraction After Root Canal Retreatment Have in Common?...",
@@ -2127,7 +2039,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 131,
    "url": "https://www.youtube.com/watch?v=Ueyr0vOgLwA",
-   "thumb": "https://i.ytimg.com/vi/Ueyr0vOgLwA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Ueyr0vOgLwA/maxresdefault.jpg",
    "ratio": 0.836189111747851
   },
   {
@@ -2136,7 +2048,7 @@
    "views_s": 28000,
    "relDays_s": 365,
    "durationSec_s": 1211,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "[Sad News] Periodontal disease in people who do ____ doesn't go away! A detailed explanation of h...",
@@ -2149,30 +2061,8 @@
    "handle": "/@MaeokaDental",
    "ageDays": 367,
    "url": "https://www.youtube.com/watch?v=9lMcsSCh5Kc",
-   "thumb": "https://i.ytimg.com/vi/9lMcsSCh5Kc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/9lMcsSCh5Kc/maxresdefault.jpg",
    "ratio": 0.1677559523809524
-  },
-  {
-   "videoId": "AMPQFDdXoTA",
-   "title": "美人すぎる新人歯科助手の歯を仕事中に抜き打ち検査で歯石除去したら口の中がまさかの状態だった！？",
-   "views_s": 27000,
-   "relDays_s": 330,
-   "durationSec_s": 836,
-   "thumbKind": null,
-   "channel": "君のための歯医者さん",
-   "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
-   "title_en": "A beautiful new dental assistant's teeth were inspected during a surprise dental check-up while s...",
-   "viewCount": 27210,
-   "publishDate": "2025-10-25",
-   "isLive": false,
-   "subs": 77100,
-   "subsHidden": false,
-   "channel_en": "君のための歯医者さん",
-   "handle": "/@kimishika",
-   "ageDays": 341,
-   "url": "https://www.youtube.com/watch?v=AMPQFDdXoTA",
-   "thumb": "https://i.ytimg.com/vi/AMPQFDdXoTA/hqdefault.jpg",
-   "ratio": 0.3529182879377432
   },
   {
    "videoId": "8q1jWvlm9mI",
@@ -2180,7 +2070,7 @@
    "views_s": 27000,
    "relDays_s": 150,
    "durationSec_s": 797,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Actually, this treatment can worsen periodontal disease... A practicing dentist will talk about t...",
@@ -2193,7 +2083,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 161,
    "url": "https://www.youtube.com/watch?v=8q1jWvlm9mI",
-   "thumb": "https://i.ytimg.com/vi/8q1jWvlm9mI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/8q1jWvlm9mI/maxresdefault.jpg",
    "ratio": 0.7781948424068768
   },
   {
@@ -2202,7 +2092,7 @@
    "views_s": 25000,
    "relDays_s": 240,
    "durationSec_s": 765,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you do this, periodontal disease will never be cured... We will introduce measures to prevent ...",
@@ -2215,7 +2105,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 266,
    "url": "https://www.youtube.com/watch?v=ezGqeWu_Mpc",
-   "thumb": "https://i.ytimg.com/vi/ezGqeWu_Mpc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ezGqeWu_Mpc/maxresdefault.jpg",
    "ratio": 0.7224641833810889
   },
   {
@@ -2224,7 +2114,7 @@
    "views_s": 24000,
    "relDays_s": 365,
    "durationSec_s": 982,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "98%がやらない！虫歯や歯周病から歯を守り歯を失わない三原則を解説します【歯医者 歯石 抜歯】",
@@ -2237,7 +2127,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 480,
    "url": "https://www.youtube.com/watch?v=2DvyongEEG4",
-   "thumb": "https://i.ytimg.com/vi/2DvyongEEG4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/2DvyongEEG4/maxresdefault.jpg",
    "ratio": 0.7055873925501432
   },
   {
@@ -2246,7 +2136,7 @@
    "views_s": 22000,
    "relDays_s": 90,
    "durationSec_s": 991,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "[WARNING] 90% of people don't know this! What is the reason you lose your teeth if it's not cavit...",
@@ -2259,7 +2149,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 101,
    "url": "https://www.youtube.com/watch?v=GQJs2HhL49Y",
-   "thumb": "https://i.ytimg.com/vi/GQJs2HhL49Y/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/GQJs2HhL49Y/maxresdefault.jpg",
    "ratio": 0.1360297619047619
   },
   {
@@ -2268,7 +2158,7 @@
    "views_s": 20000,
    "relDays_s": 2,
    "durationSec_s": 1384,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Overcoming Dentophobia!?] A beauty with 18 cavities gets teeth extracted and temporaries fitted,...",
@@ -2281,7 +2171,7 @@
    "handle": "/@kimishika",
    "ageDays": 3,
    "url": "https://www.youtube.com/watch?v=R-3WlsKrIp8",
-   "thumb": "https://i.ytimg.com/vi/R-3WlsKrIp8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/R-3WlsKrIp8/maxresdefault.jpg",
    "ratio": 0.2714526588845655
   },
   {
@@ -2290,7 +2180,7 @@
    "views_s": 20000,
    "relDays_s": 365,
    "durationSec_s": 1221,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯科医の暴露チャンネル【前岡遼馬】",
    "channelId": "UCfQqKwY2VNJx_g0JimDVYJg",
    "title_en": "【虫歯でも歯周病でもない、痛みの原因と解決策を徹底解説】",
@@ -2303,7 +2193,7 @@
    "handle": "/@MaeokaDental",
    "ageDays": 654,
    "url": "https://www.youtube.com/watch?v=kLPKe7NJ58E",
-   "thumb": "https://i.ytimg.com/vi/kLPKe7NJ58E/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/kLPKe7NJ58E/maxresdefault.jpg",
    "ratio": 0.12013690476190476
   },
   {
@@ -2312,7 +2202,7 @@
    "views_s": 19000,
    "relDays_s": 300,
    "durationSec_s": 575,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Will a root cyst lead to tooth extraction if left untreated? We will explain the consequences of ...",
@@ -2325,7 +2215,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 311,
    "url": "https://www.youtube.com/watch?v=tlSlOe7jb8Q",
-   "thumb": "https://i.ytimg.com/vi/tlSlOe7jb8Q/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/tlSlOe7jb8Q/maxresdefault.jpg",
    "ratio": 0.5679083094555873
   },
   {
@@ -2334,7 +2224,7 @@
    "views_s": 18000,
    "relDays_s": 270,
    "durationSec_s": 644,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What are the treatments to save a tooth when a root fracture is the number one cause of tooth los...",
@@ -2347,7 +2237,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 287,
    "url": "https://www.youtube.com/watch?v=G35Ga8PN7Y8",
-   "thumb": "https://i.ytimg.com/vi/G35Ga8PN7Y8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/G35Ga8PN7Y8/maxresdefault.jpg",
    "ratio": 0.5415472779369628
   },
   {
@@ -2356,7 +2246,7 @@
    "views_s": 18000,
    "relDays_s": 210,
    "durationSec_s": 693,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Here are five rules to follow after root canal treatment! We will introduce what you should and s...",
@@ -2369,7 +2259,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 219,
    "url": "https://www.youtube.com/watch?v=Y81mtX8ll-E",
-   "thumb": "https://i.ytimg.com/vi/Y81mtX8ll-E/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Y81mtX8ll-E/maxresdefault.jpg",
    "ratio": 0.5330085959885387
   },
   {
@@ -2378,7 +2268,7 @@
    "views_s": 18000,
    "relDays_s": 365,
    "durationSec_s": 709,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Keepsake Edition] A practicing dentist will introduce you to how to brush your teeth, including ...",
@@ -2391,7 +2281,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 403,
    "url": "https://www.youtube.com/watch?v=_MSs-s9piGM",
-   "thumb": "https://i.ytimg.com/vi/_MSs-s9piGM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/_MSs-s9piGM/maxresdefault.jpg",
    "ratio": 0.5296848137535817
   },
   {
@@ -2400,7 +2290,7 @@
    "views_s": 18000,
    "relDays_s": 6,
    "durationSec_s": 991,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Is This Dental Crown Actually Ruining Your Teeth?! Explaining Which Fillings and Crowns You Shoul...",
@@ -2413,7 +2303,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 7,
    "url": "https://www.youtube.com/watch?v=TXD1c2QHqwM",
-   "thumb": "https://i.ytimg.com/vi/TXD1c2QHqwM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/TXD1c2QHqwM/maxresdefault.jpg",
    "ratio": 0.5169914040114613
   },
   {
@@ -2422,7 +2312,7 @@
    "views_s": 17000,
    "relDays_s": 240,
    "durationSec_s": 645,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What are the criteria for tooth extraction for various symptoms? A practicing dentist explains th...",
@@ -2435,7 +2325,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 263,
    "url": "https://www.youtube.com/watch?v=-7mMeiJzfpM",
-   "thumb": "https://i.ytimg.com/vi/-7mMeiJzfpM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/-7mMeiJzfpM/maxresdefault.jpg",
    "ratio": 0.5057593123209169
   },
   {
@@ -2444,7 +2334,7 @@
    "views_s": 17000,
    "relDays_s": 365,
    "durationSec_s": 569,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Do you have any of these symptoms? We will introduce you to symptoms of periodontal disease that ...",
@@ -2457,7 +2347,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 401,
    "url": "https://www.youtube.com/watch?v=Nmou2PTLlmc",
-   "thumb": "https://i.ytimg.com/vi/Nmou2PTLlmc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Nmou2PTLlmc/maxresdefault.jpg",
    "ratio": 0.4965042979942693
   },
   {
@@ -2466,7 +2356,7 @@
    "views_s": 16000,
    "relDays_s": 365,
    "durationSec_s": 532,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Save this] A practicing dentist will introduce you to the 7 signs that your teeth are about to f...",
@@ -2479,7 +2369,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 367,
    "url": "https://www.youtube.com/watch?v=XSToqMcTtzE",
-   "thumb": "https://i.ytimg.com/vi/XSToqMcTtzE/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/XSToqMcTtzE/maxresdefault.jpg",
    "ratio": 0.4860458452722063
   },
   {
@@ -2488,7 +2378,7 @@
    "views_s": 16000,
    "relDays_s": 210,
    "durationSec_s": 624,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "These foods have a negative effect on periodontal disease... Dentists will introduce a ranking of...",
@@ -2501,7 +2391,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 239,
    "url": "https://www.youtube.com/watch?v=jSzQfv0UnGc",
-   "thumb": "https://i.ytimg.com/vi/jSzQfv0UnGc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/jSzQfv0UnGc/maxresdefault.jpg",
    "ratio": 0.4785386819484241
   },
   {
@@ -2510,7 +2400,7 @@
    "views_s": 16000,
    "relDays_s": 365,
    "durationSec_s": 723,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "A must-read for people with periodontal disease! Foods and drinks that most people don't know abo...",
@@ -2523,7 +2413,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 436,
    "url": "https://www.youtube.com/watch?v=0hc_jHeyUuI",
-   "thumb": "https://i.ytimg.com/vi/0hc_jHeyUuI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/0hc_jHeyUuI/maxresdefault.jpg",
    "ratio": 0.4773925501432665
   },
   {
@@ -2532,7 +2422,7 @@
    "views_s": 16000,
    "relDays_s": 330,
    "durationSec_s": 635,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you are serious about curing periodontal disease in the shortest time possible, we would like ...",
@@ -2545,7 +2435,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 364,
    "url": "https://www.youtube.com/watch?v=qka-jqVw26g",
-   "thumb": "https://i.ytimg.com/vi/qka-jqVw26g/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/qka-jqVw26g/maxresdefault.jpg",
    "ratio": 0.4769627507163324
   },
   {
@@ -2554,7 +2444,7 @@
    "views_s": 16000,
    "relDays_s": 270,
    "durationSec_s": 763,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "A dentist will show you how to make your tooth last longer after having a nerve removed! We will ...",
@@ -2567,7 +2457,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 301,
    "url": "https://www.youtube.com/watch?v=EgX4RLMkcl4",
-   "thumb": "https://i.ytimg.com/vi/EgX4RLMkcl4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/EgX4RLMkcl4/maxresdefault.jpg",
    "ratio": 0.47467048710601717
   },
   {
@@ -2576,7 +2466,7 @@
    "views_s": 16000,
    "relDays_s": 90,
    "durationSec_s": 903,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Compilation] 5 Things You Must Stop Doing Right Now If Your Periodontal Disease Won't Heal! A De...",
@@ -2589,7 +2479,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 112,
    "url": "https://www.youtube.com/watch?v=6vstA_FDAAs",
-   "thumb": "https://i.ytimg.com/vi/6vstA_FDAAs/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/6vstA_FDAAs/maxresdefault.jpg",
    "ratio": 0.46478510028653297
   },
   {
@@ -2598,7 +2488,7 @@
    "views_s": 15000,
    "relDays_s": 30,
    "durationSec_s": 1160,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What do people who keep their teeth into old age have in common...? A practicing dentist explains...",
@@ -2611,7 +2501,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 49,
    "url": "https://www.youtube.com/watch?v=UeWjw38qRUA",
-   "thumb": "https://i.ytimg.com/vi/UeWjw38qRUA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/UeWjw38qRUA/maxresdefault.jpg",
    "ratio": 0.45593123209169056
   },
   {
@@ -2620,7 +2510,7 @@
    "views_s": 15000,
    "relDays_s": 150,
    "durationSec_s": 704,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "This is absolutely NOT recommended for weakened teeth! A practicing dentist explains what to do w...",
@@ -2633,30 +2523,8 @@
    "handle": "/@haplus-kimura",
    "ageDays": 166,
    "url": "https://www.youtube.com/watch?v=CQokEDNymSs",
-   "thumb": "https://i.ytimg.com/vi/CQokEDNymSs/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/CQokEDNymSs/maxresdefault.jpg",
    "ratio": 0.45501432664756447
-  },
-  {
-   "videoId": "7xmJ0JeIOW4",
-   "title": "歯科医の口腔内を抜き打ちチェックしてみた！【歯医者 | デンタルMeンタリング | YouTube歯科大学 | マウスピース矯正】",
-   "views_s": 15000,
-   "relDays_s": 365,
-   "durationSec_s": 572,
-   "thumbKind": null,
-   "channel": "歯医者のさくら先生",
-   "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
-   "title_en": "We did a surprise check on the inside of a dentist's mouth! [Dentist | Dental Mentoring | YouTube...",
-   "viewCount": 15406,
-   "publishDate": "2025-04-06",
-   "isLive": false,
-   "subs": 63100,
-   "subsHidden": false,
-   "channel_en": "歯医者のさくら先生",
-   "handle": "/@dental_sakura",
-   "ageDays": 543,
-   "url": "https://www.youtube.com/watch?v=7xmJ0JeIOW4",
-   "thumb": "https://i.ytimg.com/vi/7xmJ0JeIOW4/hqdefault.jpg",
-   "ratio": 0.24415213946117273
   },
   {
    "videoId": "I4v8D-ZGzvw",
@@ -2664,7 +2532,7 @@
    "views_s": 15000,
    "relDays_s": 120,
    "durationSec_s": 825,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What kind of treatment is wisdom tooth extraction for people in their 40s and older? A practicing...",
@@ -2677,30 +2545,8 @@
    "handle": "/@haplus-kimura",
    "ageDays": 141,
    "url": "https://www.youtube.com/watch?v=I4v8D-ZGzvw",
-   "thumb": "https://i.ytimg.com/vi/I4v8D-ZGzvw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/I4v8D-ZGzvw/maxresdefault.jpg",
    "ratio": 0.44106017191977076
-  },
-  {
-   "videoId": "Xqap40KmAQI",
-   "title": "歯科衛生士の口腔内を抜き打ちチェックしてみた！第3弾【歯医者】",
-   "views_s": 15000,
-   "relDays_s": 365,
-   "durationSec_s": 271,
-   "thumbKind": null,
-   "channel": "歯医者のさくら先生",
-   "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
-   "title_en": "check4 H264 v2",
-   "viewCount": 15271,
-   "publishDate": "2025-02-23",
-   "isLive": false,
-   "subs": 63100,
-   "subsHidden": false,
-   "channel_en": "歯医者のさくら先生",
-   "handle": "/@dental_sakura",
-   "ageDays": 585,
-   "url": "https://www.youtube.com/watch?v=Xqap40KmAQI",
-   "thumb": "https://i.ytimg.com/vi/Xqap40KmAQI/hqdefault.jpg",
-   "ratio": 0.24201267828843107
   },
   {
    "videoId": "TMyeAlenrOc",
@@ -2708,7 +2554,7 @@
    "views_s": 15000,
    "relDays_s": 120,
    "durationSec_s": 962,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If this applies to you, you should be careful about bad breath... A practicing dentist explains t...",
@@ -2721,7 +2567,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 148,
    "url": "https://www.youtube.com/watch?v=TMyeAlenrOc",
-   "thumb": "https://i.ytimg.com/vi/TMyeAlenrOc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/TMyeAlenrOc/maxresdefault.jpg",
    "ratio": 0.43315186246418336
   },
   {
@@ -2730,7 +2576,7 @@
    "views_s": 14000,
    "relDays_s": 30,
    "durationSec_s": 965,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Foods That Actually Cause Gum Disease... Foods to Watch Out for if You're Over 50",
@@ -2743,7 +2589,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 51,
    "url": "https://www.youtube.com/watch?v=f3zB4ZtGAUg",
-   "thumb": "https://i.ytimg.com/vi/f3zB4ZtGAUg/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/f3zB4ZtGAUg/maxresdefault.jpg",
    "ratio": 0.40879656160458455
   },
   {
@@ -2752,7 +2598,7 @@
    "views_s": 13000,
    "relDays_s": 330,
    "durationSec_s": 1232,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Warning] Your teeth are falling apart due to cavities and periodontal disease... Why can't insur...",
@@ -2765,7 +2611,7 @@
    "handle": "/@kimishika",
    "ageDays": 364,
    "url": "https://www.youtube.com/watch?v=a411FYTpiNE",
-   "thumb": "https://i.ytimg.com/vi/a411FYTpiNE/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/a411FYTpiNE/maxresdefault.jpg",
    "ratio": 0.18038910505836575
   },
   {
@@ -2774,7 +2620,7 @@
    "views_s": 13000,
    "relDays_s": 180,
    "durationSec_s": 696,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Can a tooth with a fractured root be saved? A dentist explains the treatment options and methods ...",
@@ -2787,7 +2633,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 202,
    "url": "https://www.youtube.com/watch?v=9viLRsPmPNo",
-   "thumb": "https://i.ytimg.com/vi/9viLRsPmPNo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/9viLRsPmPNo/maxresdefault.jpg",
    "ratio": 0.3770487106017192
   },
   {
@@ -2796,7 +2642,7 @@
    "views_s": 12000,
    "relDays_s": 14,
    "durationSec_s": 1770,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Why do middle-aged people get gum disease? A practicing dentist explains the causes of periodonta...",
@@ -2809,7 +2655,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 21,
    "url": "https://www.youtube.com/watch?v=BEDZZEs7DVU",
-   "thumb": "https://i.ytimg.com/vi/BEDZZEs7DVU/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/BEDZZEs7DVU/maxresdefault.jpg",
    "ratio": 0.37191977077363897
   },
   {
@@ -2818,7 +2664,7 @@
    "views_s": 12000,
    "relDays_s": 180,
    "durationSec_s": 965,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[90% of ordinary people can't spot it!?] Can you spot the three cavities hidden in this X-ray?",
@@ -2831,7 +2677,7 @@
    "handle": "/@kimishika",
    "ageDays": 211,
    "url": "https://www.youtube.com/watch?v=om8YWhXnwao",
-   "thumb": "https://i.ytimg.com/vi/om8YWhXnwao/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/om8YWhXnwao/maxresdefault.jpg",
    "ratio": 0.167094682230869
   },
   {
@@ -2862,7 +2708,7 @@
    "views_s": 12000,
    "relDays_s": 330,
    "durationSec_s": 734,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Treating periodontal disease on your own!? We will introduce you to the diet and other important ...",
@@ -2875,7 +2721,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 352,
    "url": "https://www.youtube.com/watch?v=p5aTgq4-40A",
-   "thumb": "https://i.ytimg.com/vi/p5aTgq4-40A/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/p5aTgq4-40A/maxresdefault.jpg",
    "ratio": 0.3681948424068768
   },
   {
@@ -2884,7 +2730,7 @@
    "views_s": 12000,
    "relDays_s": 180,
    "durationSec_s": 622,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "A practicing dentist provides a thorough explanation of how to boost your teeth's immunity! We'll...",
@@ -2897,7 +2743,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 199,
    "url": "https://www.youtube.com/watch?v=7xsmhnYtSE0",
-   "thumb": "https://i.ytimg.com/vi/7xsmhnYtSE0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/7xsmhnYtSE0/maxresdefault.jpg",
    "ratio": 0.3669054441260745
   },
   {
@@ -2906,7 +2752,7 @@
    "views_s": 12000,
    "relDays_s": 150,
    "durationSec_s": 1247,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "A practicing dentist explains dental habits that can lead to dementia! We'll discuss the relation...",
@@ -2919,7 +2765,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 157,
    "url": "https://www.youtube.com/watch?v=_E94Tb2zR-s",
-   "thumb": "https://i.ytimg.com/vi/_E94Tb2zR-s/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/_E94Tb2zR-s/maxresdefault.jpg",
    "ratio": 0.36512893982808026
   },
   {
@@ -2928,7 +2774,7 @@
    "views_s": 12000,
    "relDays_s": 240,
    "durationSec_s": 618,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "The wrong toothbrush and tooth brushing method can be counterproductive to periodontal disease. A...",
@@ -2941,7 +2787,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 256,
    "url": "https://www.youtube.com/watch?v=JLC7_Z-ryIo",
-   "thumb": "https://i.ytimg.com/vi/JLC7_Z-ryIo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/JLC7_Z-ryIo/maxresdefault.jpg",
    "ratio": 0.35773638968481375
   },
   {
@@ -2950,7 +2796,7 @@
    "views_s": 11000,
    "relDays_s": 180,
    "durationSec_s": 699,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you have these symptoms, you're in trouble... A practicing dentist explains in an easy-to-unde...",
@@ -2963,7 +2809,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 185,
    "url": "https://www.youtube.com/watch?v=VmhDFQjQhM4",
-   "thumb": "https://i.ytimg.com/vi/VmhDFQjQhM4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/VmhDFQjQhM4/maxresdefault.jpg",
    "ratio": 0.32573065902578796
   },
   {
@@ -2972,7 +2818,7 @@
    "views_s": 10000,
    "relDays_s": 30,
    "durationSec_s": 768,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯医者のさくら先生",
    "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
    "title_en": "For Those Struggling with Recurring Recurrence...! Tooth Extraction or Preservation? Explaining t...",
@@ -2985,7 +2831,7 @@
    "handle": "/@dental_sakura",
    "ageDays": 60,
    "url": "https://www.youtube.com/watch?v=jRS31ESFtHQ",
-   "thumb": "https://i.ytimg.com/vi/jRS31ESFtHQ/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/jRS31ESFtHQ/maxresdefault.jpg",
    "ratio": 0.17335974643423138
   },
   {
@@ -2994,7 +2840,7 @@
    "views_s": 10000,
    "relDays_s": 180,
    "durationSec_s": 872,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Must-Keep] A practicing dentist reveals his absolute favorite! The \"ultimate toothpaste\" that pr...",
@@ -3007,7 +2853,7 @@
    "handle": "/@kimishika",
    "ageDays": 198,
    "url": "https://www.youtube.com/watch?v=FrvH9u-9xG4",
-   "thumb": "https://i.ytimg.com/vi/FrvH9u-9xG4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/FrvH9u-9xG4/maxresdefault.jpg",
    "ratio": 0.140337224383917
   },
   {
@@ -3016,7 +2862,7 @@
    "views_s": 10000,
    "relDays_s": 330,
    "durationSec_s": 499,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Saved Edition] What happens if you leave your tooth number 7 extracted? A dentist with over 20,0...",
@@ -3029,7 +2875,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 340,
    "url": "https://www.youtube.com/watch?v=d3x0T7BqplQ",
-   "thumb": "https://i.ytimg.com/vi/d3x0T7BqplQ/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/d3x0T7BqplQ/maxresdefault.jpg",
    "ratio": 0.3083667621776504
   },
   {
@@ -3038,7 +2884,7 @@
    "views_s": 10000,
    "relDays_s": 365,
    "durationSec_s": 952,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Why is periodontal disease difficult to cure? Answering questions and explaining three reasons wh...",
@@ -3051,7 +2897,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 417,
    "url": "https://www.youtube.com/watch?v=00YOe7bsLFo",
-   "thumb": "https://i.ytimg.com/vi/00YOe7bsLFo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/00YOe7bsLFo/maxresdefault.jpg",
    "ratio": 0.3048424068767908
   },
   {
@@ -3060,7 +2906,7 @@
    "views_s": 10000,
    "relDays_s": 240,
    "durationSec_s": 863,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What should you be careful of after having a tooth extracted? Dentists and hygienists will explai...",
@@ -3073,7 +2919,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 265,
    "url": "https://www.youtube.com/watch?v=k3xXebcuDEY",
-   "thumb": "https://i.ytimg.com/vi/k3xXebcuDEY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/k3xXebcuDEY/maxresdefault.jpg",
    "ratio": 0.2997707736389685
   },
   {
@@ -3082,7 +2928,7 @@
    "views_s": 9837,
    "relDays_s": 150,
    "durationSec_s": 715,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What kind of care did people who kept their teeth healthy even as they aged, despite having perio...",
@@ -3095,7 +2941,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 170,
    "url": "https://www.youtube.com/watch?v=AUUuvvDev7g",
-   "thumb": "https://i.ytimg.com/vi/AUUuvvDev7g/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/AUUuvvDev7g/maxresdefault.jpg",
    "ratio": 0.28186246418338107
   },
   {
@@ -3104,7 +2950,7 @@
    "views_s": 9636,
    "relDays_s": 240,
    "durationSec_s": 527,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Is there a drug that can restore receding gums and bone?! A dentist will introduce the effectiven...",
@@ -3117,7 +2963,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 269,
    "url": "https://www.youtube.com/watch?v=ICnKsjx1AGo",
-   "thumb": "https://i.ytimg.com/vi/ICnKsjx1AGo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ICnKsjx1AGo/maxresdefault.jpg",
    "ratio": 0.2761031518624642
   },
   {
@@ -3126,7 +2972,7 @@
    "views_s": 9285,
    "relDays_s": 30,
    "durationSec_s": 937,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "5 Leading Reasons Why You Might Be Told You Need an Extraction... Your Unexpected Mistakes or Hab...",
@@ -3139,7 +2985,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 37,
    "url": "https://www.youtube.com/watch?v=QAWLNeDVS9U",
-   "thumb": "https://i.ytimg.com/vi/QAWLNeDVS9U/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/QAWLNeDVS9U/maxresdefault.jpg",
    "ratio": 0.2660458452722063
   },
   {
@@ -3148,7 +2994,7 @@
    "views_s": 8964,
    "relDays_s": 300,
    "durationSec_s": 1098,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[Must-see for patients!?] The secrets and points to note about insurance-covered medical treatmen...",
@@ -3161,7 +3007,7 @@
    "handle": "/@kimishika",
    "ageDays": 331,
    "url": "https://www.youtube.com/watch?v=5xqTrPCZ9v8",
-   "thumb": "https://i.ytimg.com/vi/5xqTrPCZ9v8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/5xqTrPCZ9v8/maxresdefault.jpg",
    "ratio": 0.11626459143968872
   },
   {
@@ -3170,7 +3016,7 @@
    "views_s": 8685,
    "relDays_s": 120,
    "durationSec_s": 1111,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Here's what it's like to have really bad bad breath... A practicing dentist will explain the caus...",
@@ -3183,7 +3029,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 139,
    "url": "https://www.youtube.com/watch?v=1WcRgv8RwaM",
-   "thumb": "https://i.ytimg.com/vi/1WcRgv8RwaM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/1WcRgv8RwaM/maxresdefault.jpg",
    "ratio": 0.2488538681948424
   },
   {
@@ -3192,7 +3038,7 @@
    "views_s": 8636,
    "relDays_s": 270,
    "durationSec_s": 823,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "【知らないと抜歯確定？】ぐらぐらする歯が“残せる人・残せない人”の決定的な差",
@@ -3205,7 +3051,7 @@
    "handle": "/@kimishika",
    "ageDays": 292,
    "url": "https://www.youtube.com/watch?v=ulwtyExacr0",
-   "thumb": "https://i.ytimg.com/vi/ulwtyExacr0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ulwtyExacr0/maxresdefault.jpg",
    "ratio": 0.11201037613488975
   },
   {
@@ -3214,7 +3060,7 @@
    "views_s": 8442,
    "relDays_s": 365,
    "durationSec_s": 598,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you are considering periodontal treatment, please watch this! We will explain the difference b...",
@@ -3227,7 +3073,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 395,
    "url": "https://www.youtube.com/watch?v=-0CD_qFE_oM",
-   "thumb": "https://i.ytimg.com/vi/-0CD_qFE_oM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/-0CD_qFE_oM/maxresdefault.jpg",
    "ratio": 0.24189111747851003
   },
   {
@@ -3236,7 +3082,7 @@
    "views_s": 8343,
    "relDays_s": 365,
    "durationSec_s": 631,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you want to improve your periodontal disease, try these foods! What are the 3 important foods ...",
@@ -3249,7 +3095,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 376,
    "url": "https://www.youtube.com/watch?v=46VWKo0xWH8",
-   "thumb": "https://i.ytimg.com/vi/46VWKo0xWH8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/46VWKo0xWH8/maxresdefault.jpg",
    "ratio": 0.239054441260745
   },
   {
@@ -3258,7 +3104,7 @@
    "views_s": 8284,
    "relDays_s": 120,
    "durationSec_s": 710,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "A Must-See for Anyone Prone to Tartar Buildup! A Practicing Dentist Explains How to Prevent Tarta...",
@@ -3271,7 +3117,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 137,
    "url": "https://www.youtube.com/watch?v=a0ceN7ua0dY",
-   "thumb": "https://i.ytimg.com/vi/a0ceN7ua0dY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/a0ceN7ua0dY/maxresdefault.jpg",
    "ratio": 0.23736389684813752
   },
   {
@@ -3280,7 +3126,7 @@
    "views_s": 8178,
    "relDays_s": 365,
    "durationSec_s": 491,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "How does a dental bridge change over time? A practicing dentist will introduce a case study that ...",
@@ -3293,7 +3139,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 391,
    "url": "https://www.youtube.com/watch?v=mv4g_DDZobs",
-   "thumb": "https://i.ytimg.com/vi/mv4g_DDZobs/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/mv4g_DDZobs/maxresdefault.jpg",
    "ratio": 0.23432664756446991
   },
   {
@@ -3302,7 +3148,7 @@
    "views_s": 8130,
    "relDays_s": 90,
    "durationSec_s": 724,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Trying to cure periodontal disease on your own?! We'll introduce self-treatment methods you shoul...",
@@ -3315,7 +3161,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 121,
    "url": "https://www.youtube.com/watch?v=9os74CxZI5I",
-   "thumb": "https://i.ytimg.com/vi/9os74CxZI5I/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/9os74CxZI5I/maxresdefault.jpg",
    "ratio": 0.2329512893982808
   },
   {
@@ -3324,7 +3170,7 @@
    "views_s": 7893,
    "relDays_s": 270,
    "durationSec_s": 631,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Choose this option if you lose a tooth in your 50s! We will explain the treatment options you sho...",
@@ -3337,7 +3183,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 289,
    "url": "https://www.youtube.com/watch?v=TRUp0NzJ_iw",
-   "thumb": "https://i.ytimg.com/vi/TRUp0NzJ_iw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/TRUp0NzJ_iw/maxresdefault.jpg",
    "ratio": 0.22616045845272206
   },
   {
@@ -3346,7 +3192,7 @@
    "views_s": 7313,
    "relDays_s": 330,
    "durationSec_s": 1180,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "A must-see for people with periodontal disease",
@@ -3359,7 +3205,7 @@
    "handle": "/@kimishika",
    "ageDays": 362,
    "url": "https://www.youtube.com/watch?v=bVW1_1Jk9jQ",
-   "thumb": "https://i.ytimg.com/vi/bVW1_1Jk9jQ/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/bVW1_1Jk9jQ/maxresdefault.jpg",
    "ratio": 0.0948508430609598
   },
   {
@@ -3368,7 +3214,7 @@
    "views_s": 7307,
    "relDays_s": 365,
    "durationSec_s": 626,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Your front teeth have fallen out! We'll introduce the recommended treatments for such situations,...",
@@ -3381,30 +3227,8 @@
    "handle": "/@haplus-kimura",
    "ageDays": 399,
    "url": "https://www.youtube.com/watch?v=3meenPjKEb0",
-   "thumb": "https://i.ytimg.com/vi/3meenPjKEb0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/3meenPjKEb0/maxresdefault.jpg",
    "ratio": 0.20936962750716331
-  },
-  {
-   "videoId": "lLgzXO1rcV8",
-   "title": "通うに値する！？さくら先生の歯科医院を抜き打ちチェック！【歯医者 | デンタルMeンタリング | YouTube歯科大学 | マウスピース矯正】",
-   "views_s": 7060,
-   "relDays_s": 365,
-   "durationSec_s": 518,
-   "thumbKind": null,
-   "channel": "歯医者のさくら先生",
-   "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
-   "title_en": "Is it worth going to?! A surprise check on Dr. Sakura's dental clinic! [Dentist | Dental Mentorin...",
-   "viewCount": 7060,
-   "publishDate": "2025-03-30",
-   "isLive": false,
-   "subs": 63100,
-   "subsHidden": false,
-   "channel_en": "歯医者のさくら先生",
-   "handle": "/@dental_sakura",
-   "ageDays": 550,
-   "url": "https://www.youtube.com/watch?v=lLgzXO1rcV8",
-   "thumb": "https://i.ytimg.com/vi/lLgzXO1rcV8/hqdefault.jpg",
-   "ratio": 0.11188589540412044
   },
   {
    "videoId": "TMH421eRtY8",
@@ -3412,7 +3236,7 @@
    "views_s": 6807,
    "relDays_s": 120,
    "durationSec_s": 870,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "何気なく飲んでいるその薬が実は歯を悪くしているかもしれません...歯医者が歯周病や虫歯に悪影響な市販の薬をご紹介します",
@@ -3425,7 +3249,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 150,
    "url": "https://www.youtube.com/watch?v=TMH421eRtY8",
-   "thumb": "https://i.ytimg.com/vi/TMH421eRtY8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/TMH421eRtY8/maxresdefault.jpg",
    "ratio": 0.1950429799426934
   },
   {
@@ -3434,7 +3258,7 @@
    "views_s": 6468,
    "relDays_s": 90,
    "durationSec_s": 757,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Should You Use Floss or Interdental Brushes? A Comprehensive Guide to Interdental Care Products f...",
@@ -3447,7 +3271,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 107,
    "url": "https://www.youtube.com/watch?v=DPac8NRkpWg",
-   "thumb": "https://i.ytimg.com/vi/DPac8NRkpWg/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/DPac8NRkpWg/maxresdefault.jpg",
    "ratio": 0.1853295128939828
   },
   {
@@ -3456,7 +3280,7 @@
    "views_s": 6233,
    "relDays_s": 180,
    "durationSec_s": 754,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Here's the quick and easy recipe to combat periodontal disease! A dentist explains and discusses ...",
@@ -3469,7 +3293,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 193,
    "url": "https://www.youtube.com/watch?v=BkRt96okcCY",
-   "thumb": "https://i.ytimg.com/vi/BkRt96okcCY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/BkRt96okcCY/maxresdefault.jpg",
    "ratio": 0.17859598853868194
   },
   {
@@ -3478,7 +3302,7 @@
    "views_s": 6064,
    "relDays_s": 270,
    "durationSec_s": 696,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "When does root canal treatment fail? We will introduce cases of failed root canal treatment that ...",
@@ -3491,7 +3315,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 276,
    "url": "https://www.youtube.com/watch?v=PjQGQjPoz4s",
-   "thumb": "https://i.ytimg.com/vi/PjQGQjPoz4s/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/PjQGQjPoz4s/maxresdefault.jpg",
    "ratio": 0.17375358166189112
   },
   {
@@ -3500,7 +3324,7 @@
    "views_s": 6003,
    "relDays_s": 270,
    "durationSec_s": 571,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Complete explanation] Introducing the 5 steps to seriously cure periodontal disease! A practicin...",
@@ -3513,7 +3337,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 298,
    "url": "https://www.youtube.com/watch?v=alKGHxarEKI",
-   "thumb": "https://i.ytimg.com/vi/alKGHxarEKI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/alKGHxarEKI/maxresdefault.jpg",
    "ratio": 0.1720057306590258
   },
   {
@@ -3522,7 +3346,7 @@
    "views_s": 6003,
    "relDays_s": 300,
    "durationSec_s": 491,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What can you do to prolong the life of a tooth that has had its nerve removed? We will explain th...",
@@ -3535,7 +3359,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 333,
    "url": "https://www.youtube.com/watch?v=iWWOmKXDICc",
-   "thumb": "https://i.ytimg.com/vi/iWWOmKXDICc/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/iWWOmKXDICc/maxresdefault.jpg",
    "ratio": 0.1720057306590258
   },
   {
@@ -3544,7 +3368,7 @@
    "views_s": 5966,
    "relDays_s": 150,
    "durationSec_s": 1218,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Can you regain youthful smiles even in your 50s? A practicing dentist speaks frankly about dental...",
@@ -3557,30 +3381,8 @@
    "handle": "/@haplus-kimura",
    "ageDays": 160,
    "url": "https://www.youtube.com/watch?v=a_WD8anveCA",
-   "thumb": "https://i.ytimg.com/vi/a_WD8anveCA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/a_WD8anveCA/maxresdefault.jpg",
    "ratio": 0.17094555873925502
-  },
-  {
-   "videoId": "kSk3SvEfuRI",
-   "title": "歯科業界の人であれば虫歯はない？歯科衛生士さんの口腔内を抜き打ちで虫歯チェック！",
-   "views_s": 5893,
-   "relDays_s": 365,
-   "durationSec_s": 534,
-   "thumbKind": null,
-   "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
-   "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
-   "title_en": "Do people in the dental industry have cavities? A surprise cavity check of dental hygienists' mou...",
-   "viewCount": 5893,
-   "publishDate": "2025-07-23",
-   "isLive": false,
-   "subs": 34900,
-   "subsHidden": false,
-   "channel_en": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
-   "handle": "/@haplus-kimura",
-   "ageDays": 435,
-   "url": "https://www.youtube.com/watch?v=kSk3SvEfuRI",
-   "thumb": "https://i.ytimg.com/vi/kSk3SvEfuRI/hqdefault.jpg",
-   "ratio": 0.1688538681948424
   },
   {
    "videoId": "P8XBWQUiaGU",
@@ -3588,7 +3390,7 @@
    "views_s": 5828,
    "relDays_s": 210,
    "durationSec_s": 1206,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "君のための歯医者さん",
    "channelId": "UCapjEefgZPm7veFjDLFx0Ag",
    "title_en": "[The Trap of Orthodontics] Is that tooth extraction really necessary? A dentist explains the crit...",
@@ -3601,7 +3403,7 @@
    "handle": "/@kimishika",
    "ageDays": 236,
    "url": "https://www.youtube.com/watch?v=P8XBWQUiaGU",
-   "thumb": "https://i.ytimg.com/vi/P8XBWQUiaGU/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/P8XBWQUiaGU/maxresdefault.jpg",
    "ratio": 0.07559014267185474
   },
   {
@@ -3610,7 +3412,7 @@
    "views_s": 5813,
    "relDays_s": 180,
    "durationSec_s": 1110,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Is All-on-4 a treatment that involves extracting all your teeth?! A dentist with 10,000 implant c...",
@@ -3623,7 +3425,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 184,
    "url": "https://www.youtube.com/watch?v=N8SJz4nV52s",
-   "thumb": "https://i.ytimg.com/vi/N8SJz4nV52s/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/N8SJz4nV52s/maxresdefault.jpg",
    "ratio": 0.16656160458452723
   },
   {
@@ -3632,7 +3434,7 @@
    "views_s": 5752,
    "relDays_s": 270,
    "durationSec_s": 690,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Four Poisons] What are the eating habits that make periodontal disease difficult to cure? We wil...",
@@ -3645,7 +3447,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 291,
    "url": "https://www.youtube.com/watch?v=oufSH9dURbw",
-   "thumb": "https://i.ytimg.com/vi/oufSH9dURbw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/oufSH9dURbw/maxresdefault.jpg",
    "ratio": 0.1648137535816619
   },
   {
@@ -3654,7 +3456,7 @@
    "views_s": 5686,
    "relDays_s": 60,
    "durationSec_s": 730,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Which Interdental Brush Is Best for Periodontal Disease? A Dentist Explains How to Choose the Rig...",
@@ -3667,7 +3469,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 86,
    "url": "https://www.youtube.com/watch?v=uRLociGrkfk",
-   "thumb": "https://i.ytimg.com/vi/uRLociGrkfk/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/uRLociGrkfk/maxresdefault.jpg",
    "ratio": 0.16292263610315186
   },
   {
@@ -3676,7 +3478,7 @@
    "views_s": 5319,
    "relDays_s": 180,
    "durationSec_s": 723,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Watch this before periodontal disease progresses! A dentist explains the early symptoms of period...",
@@ -3689,7 +3491,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 190,
    "url": "https://www.youtube.com/watch?v=GoEJNpxJrW0",
-   "thumb": "https://i.ytimg.com/vi/GoEJNpxJrW0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/GoEJNpxJrW0/maxresdefault.jpg",
    "ratio": 0.15240687679083095
   },
   {
@@ -3698,7 +3500,7 @@
    "views_s": 4939,
    "relDays_s": 300,
    "durationSec_s": 612,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Important Announcement] Thank you so much for everything! We will answer your questions about pe...",
@@ -3711,7 +3513,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 326,
    "url": "https://www.youtube.com/watch?v=diHQYXo9-cE",
-   "thumb": "https://i.ytimg.com/vi/diHQYXo9-cE/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/diHQYXo9-cE/maxresdefault.jpg",
    "ratio": 0.14151862464183382
   },
   {
@@ -3720,7 +3522,7 @@
    "views_s": 4829,
    "relDays_s": 365,
    "durationSec_s": 655,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[You'll be missing out if you don't know] If you think you've been cured of periodontal disease, ...",
@@ -3733,7 +3535,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 374,
    "url": "https://www.youtube.com/watch?v=TK2W2BBVn0A",
-   "thumb": "https://i.ytimg.com/vi/TK2W2BBVn0A/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/TK2W2BBVn0A/maxresdefault.jpg",
    "ratio": 0.13836676217765043
   },
   {
@@ -3742,7 +3544,7 @@
    "views_s": 4739,
    "relDays_s": 365,
    "durationSec_s": 518,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯医者のさくら先生",
    "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
    "title_en": "The nerve of a lost tooth is restored!? A rare certified doctor thoroughly explains everything ab...",
@@ -3755,7 +3557,7 @@
    "handle": "/@dental_sakura",
    "ageDays": 719,
    "url": "https://www.youtube.com/watch?v=O1LN4sm57DY",
-   "thumb": "https://i.ytimg.com/vi/O1LN4sm57DY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/O1LN4sm57DY/maxresdefault.jpg",
    "ratio": 0.07510301109350238
   },
   {
@@ -3764,7 +3566,7 @@
    "views_s": 4443,
    "relDays_s": 270,
    "durationSec_s": 693,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you have periodontal disease, you should never undergo this treatment! A practicing dentist wi...",
@@ -3777,7 +3579,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 292,
    "url": "https://www.youtube.com/watch?v=iO4om9ldaOk",
-   "thumb": "https://i.ytimg.com/vi/iO4om9ldaOk/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/iO4om9ldaOk/maxresdefault.jpg",
    "ratio": 0.12730659025787966
   },
   {
@@ -3786,7 +3588,7 @@
    "views_s": 4341,
    "relDays_s": 180,
    "durationSec_s": 556,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Can you stay healthy even if you lose your teeth? A practicing dentist will explain the character...",
@@ -3799,7 +3601,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 213,
    "url": "https://www.youtube.com/watch?v=9CHAAJjlRK8",
-   "thumb": "https://i.ytimg.com/vi/9CHAAJjlRK8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/9CHAAJjlRK8/maxresdefault.jpg",
    "ratio": 0.12438395415472779
   },
   {
@@ -3808,7 +3610,7 @@
    "views_s": 4201,
    "relDays_s": 300,
    "durationSec_s": 620,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "This is the standard to decide whether to remove the nerve or not! We will explain the treatment ...",
@@ -3821,7 +3623,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 325,
    "url": "https://www.youtube.com/watch?v=jClgd3CGd9U",
-   "thumb": "https://i.ytimg.com/vi/jClgd3CGd9U/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/jClgd3CGd9U/maxresdefault.jpg",
    "ratio": 0.12037249283667621
   },
   {
@@ -3830,7 +3632,7 @@
    "views_s": 4135,
    "relDays_s": 365,
    "durationSec_s": 307,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯医者のさくら先生",
    "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
    "title_en": "男性が垢抜けるには？麻生泰先生におすすめを伺いました！【ドクターA(麻生泰)｜垢抜け｜清潔感｜ビジネスパーソン】",
@@ -3843,7 +3645,7 @@
    "handle": "/@dental_sakura",
    "ageDays": 669,
    "url": "https://www.youtube.com/watch?v=RtVGDKbevzo",
-   "thumb": "https://i.ytimg.com/vi/RtVGDKbevzo/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/RtVGDKbevzo/maxresdefault.jpg",
    "ratio": 0.06553090332805071
   },
   {
@@ -3852,7 +3654,7 @@
    "views_s": 4108,
    "relDays_s": 365,
    "durationSec_s": 544,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you remove the nerve of your tooth, you may end up in this situation... I would like to introd...",
@@ -3865,7 +3667,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 392,
    "url": "https://www.youtube.com/watch?v=ciXnSihotgY",
-   "thumb": "https://i.ytimg.com/vi/ciXnSihotgY/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ciXnSihotgY/maxresdefault.jpg",
    "ratio": 0.11770773638968482
   },
   {
@@ -3874,7 +3676,7 @@
    "views_s": 4060,
    "relDays_s": 14,
    "durationSec_s": 1421,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What Teeth Should Be Saved with All-on-4? A Dentist Explains the Criteria for Extraction in Full-...",
@@ -3887,7 +3689,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 19,
    "url": "https://www.youtube.com/watch?v=3j3V7wc_Tus",
-   "thumb": "https://i.ytimg.com/vi/3j3V7wc_Tus/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/3j3V7wc_Tus/maxresdefault.jpg",
    "ratio": 0.11633237822349571
   },
   {
@@ -3896,7 +3698,7 @@
    "views_s": 3653,
    "relDays_s": 30,
    "durationSec_s": 801,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "老後を考えたら親知らずはいつ抜くべき？親知らず抜歯について現役の歯医者がお話しします",
@@ -3909,7 +3711,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 40,
    "url": "https://www.youtube.com/watch?v=-WWq8jEI6ks",
-   "thumb": "https://i.ytimg.com/vi/-WWq8jEI6ks/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/-WWq8jEI6ks/maxresdefault.jpg",
    "ratio": 0.10467048710601719
   },
   {
@@ -3918,7 +3720,7 @@
    "views_s": 3604,
    "relDays_s": 210,
    "durationSec_s": 529,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "How much does it cost to fix a decayed tooth with insurance? We will explain the treatment option...",
@@ -3931,7 +3733,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 241,
    "url": "https://www.youtube.com/watch?v=iOb4_yNM9Z8",
-   "thumb": "https://i.ytimg.com/vi/iOb4_yNM9Z8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/iOb4_yNM9Z8/maxresdefault.jpg",
    "ratio": 0.10326647564469914
   },
   {
@@ -3940,7 +3742,7 @@
    "views_s": 3578,
    "relDays_s": 150,
    "durationSec_s": 1015,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "We'll show you many long-term All-on-4 cases! We'll introduce cases such as patients who came to ...",
@@ -3953,7 +3755,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 154,
    "url": "https://www.youtube.com/watch?v=1jI_eN5DW5c",
-   "thumb": "https://i.ytimg.com/vi/1jI_eN5DW5c/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/1jI_eN5DW5c/maxresdefault.jpg",
    "ratio": 0.1025214899713467
   },
   {
@@ -3962,7 +3764,7 @@
    "views_s": 3398,
    "relDays_s": 300,
    "durationSec_s": 665,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What is the difference between a mouth with periodontal disease and a healthy mouth? A practicing...",
@@ -3975,7 +3777,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 318,
    "url": "https://www.youtube.com/watch?v=QzOXpjOVPE4",
-   "thumb": "https://i.ytimg.com/vi/QzOXpjOVPE4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/QzOXpjOVPE4/maxresdefault.jpg",
    "ratio": 0.09736389684813754
   },
   {
@@ -3984,7 +3786,7 @@
    "views_s": 3131,
    "relDays_s": 365,
    "durationSec_s": 837,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "歯医者のさくら先生",
    "channelId": "UCC-OnxzXR9XxTOI_9x8aC0w",
    "title_en": "How much does pulp regeneration treatment cost? A thorough comparison with other clinics! [Dentis...",
@@ -3997,7 +3799,7 @@
    "handle": "/@dental_sakura",
    "ageDays": 413,
    "url": "https://www.youtube.com/watch?v=-rCGUbP1dto",
-   "thumb": "https://i.ytimg.com/vi/-rCGUbP1dto/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/-rCGUbP1dto/maxresdefault.jpg",
    "ratio": 0.049619651347068146
   },
   {
@@ -4006,7 +3808,7 @@
    "views_s": 2949,
    "relDays_s": 210,
    "durationSec_s": 740,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Caution] Here are the top causes of tooth loss in people in their 40s! A dentist will explain ho...",
@@ -4019,7 +3821,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 240,
    "url": "https://www.youtube.com/watch?v=Ee0sgVtGCmw",
-   "thumb": "https://i.ytimg.com/vi/Ee0sgVtGCmw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/Ee0sgVtGCmw/maxresdefault.jpg",
    "ratio": 0.08449856733524355
   },
   {
@@ -4028,7 +3830,7 @@
    "views_s": 2834,
    "relDays_s": 365,
    "durationSec_s": 939,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "If you haven't had your wisdom teeth removed, check it out now! If you leave your wisdom teeth un...",
@@ -4041,7 +3843,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 455,
    "url": "https://www.youtube.com/watch?v=-16py-AsQb0",
-   "thumb": "https://i.ytimg.com/vi/-16py-AsQb0/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/-16py-AsQb0/maxresdefault.jpg",
    "ratio": 0.08120343839541547
   },
   {
@@ -4050,7 +3852,7 @@
    "views_s": 2806,
    "relDays_s": 300,
    "durationSec_s": 586,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "This is actually the top cause of tooth loss... A dentist will explain in detail how to treat the...",
@@ -4063,7 +3865,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 315,
    "url": "https://www.youtube.com/watch?v=k0Dlgj-0v50",
-   "thumb": "https://i.ytimg.com/vi/k0Dlgj-0v50/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/k0Dlgj-0v50/maxresdefault.jpg",
    "ratio": 0.08040114613180516
   },
   {
@@ -4072,7 +3874,7 @@
    "views_s": 2790,
    "relDays_s": 365,
    "durationSec_s": 507,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What are the surprising effects of gum massage, which is effective not only for people with perio...",
@@ -4085,7 +3887,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 411,
    "url": "https://www.youtube.com/watch?v=94w28h26rko",
-   "thumb": "https://i.ytimg.com/vi/94w28h26rko/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/94w28h26rko/maxresdefault.jpg",
    "ratio": 0.07994269340974212
   },
   {
@@ -4094,7 +3896,7 @@
    "views_s": 2713,
    "relDays_s": 150,
    "durationSec_s": 868,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Can people with periodontal disease get implants? A dentist with 10,000 implant cases will introd...",
@@ -4107,7 +3909,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 179,
    "url": "https://www.youtube.com/watch?v=b6Q2eX_rNN8",
-   "thumb": "https://i.ytimg.com/vi/b6Q2eX_rNN8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/b6Q2eX_rNN8/maxresdefault.jpg",
    "ratio": 0.07773638968481375
   },
   {
@@ -4116,7 +3918,7 @@
    "views_s": 2600,
    "relDays_s": 240,
    "durationSec_s": 497,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Full Version] When is it too late to treat periodontal disease? A practicing dentist will provid...",
@@ -4129,7 +3931,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 272,
    "url": "https://www.youtube.com/watch?v=H62xX5Xvr4o",
-   "thumb": "https://i.ytimg.com/vi/H62xX5Xvr4o/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/H62xX5Xvr4o/maxresdefault.jpg",
    "ratio": 0.07449856733524356
   },
   {
@@ -4138,7 +3940,7 @@
    "views_s": 2478,
    "relDays_s": 120,
    "durationSec_s": 985,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Can Periodontal Bacteria Actually Cause Colon Cancer? Explaining How Oral Habits Might Lead to Co...",
@@ -4151,7 +3953,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 146,
    "url": "https://www.youtube.com/watch?v=ePwYgPqoiSs",
-   "thumb": "https://i.ytimg.com/vi/ePwYgPqoiSs/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ePwYgPqoiSs/maxresdefault.jpg",
    "ratio": 0.07100286532951289
   },
   {
@@ -4160,7 +3962,7 @@
    "views_s": 2404,
    "relDays_s": 150,
    "durationSec_s": 869,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "A dentist thoroughly explains the medically proven relationship between periodontal disease and t...",
@@ -4173,7 +3975,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 162,
    "url": "https://www.youtube.com/watch?v=G5ZE4HRnH6w",
-   "thumb": "https://i.ytimg.com/vi/G5ZE4HRnH6w/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/G5ZE4HRnH6w/maxresdefault.jpg",
    "ratio": 0.06888252148997134
   },
   {
@@ -4182,7 +3984,7 @@
    "views_s": 2394,
    "relDays_s": 365,
    "durationSec_s": 498,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Dentist] A practicing dentist will honestly explain the process and etiquette for smoothly obtai...",
@@ -4195,7 +3997,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 380,
    "url": "https://www.youtube.com/watch?v=9FU_3Bm8XTs",
-   "thumb": "https://i.ytimg.com/vi/9FU_3Bm8XTs/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/9FU_3Bm8XTs/maxresdefault.jpg",
    "ratio": 0.06859598853868194
   },
   {
@@ -4204,7 +4006,7 @@
    "views_s": 2288,
    "relDays_s": 330,
    "durationSec_s": 515,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "To avoid losing your teeth, I will tell you about two important things to avoid periodontal disease.",
@@ -4217,7 +4019,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 363,
    "url": "https://www.youtube.com/watch?v=hw0w3F5NC8I",
-   "thumb": "https://i.ytimg.com/vi/hw0w3F5NC8I/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/hw0w3F5NC8I/maxresdefault.jpg",
    "ratio": 0.06555873925501432
   },
   {
@@ -4226,7 +4028,7 @@
    "views_s": 2255,
    "relDays_s": 300,
    "durationSec_s": 611,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Keeper's Edition] A new method of treatment without removing the tooth nerve! We will explain pu...",
@@ -4239,7 +4041,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 324,
    "url": "https://www.youtube.com/watch?v=xJUBfeU4r0A",
-   "thumb": "https://i.ytimg.com/vi/xJUBfeU4r0A/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/xJUBfeU4r0A/maxresdefault.jpg",
    "ratio": 0.06461318051575932
   },
   {
@@ -4248,7 +4050,7 @@
    "views_s": 2246,
    "relDays_s": 365,
    "durationSec_s": 918,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "You want to fix your protruding mouth but don't want to have your teeth pulled...Here's the ortho...",
@@ -4261,7 +4063,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 458,
    "url": "https://www.youtube.com/watch?v=5hdaNno6S1o",
-   "thumb": "https://i.ytimg.com/vi/5hdaNno6S1o/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/5hdaNno6S1o/maxresdefault.jpg",
    "ratio": 0.06435530085959885
   },
   {
@@ -4270,7 +4072,7 @@
    "views_s": 2191,
    "relDays_s": 90,
    "durationSec_s": 699,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What You Need to Know About Handling a Knocked-Out Tooth... You Might Be Surprised to Learn You C...",
@@ -4283,7 +4085,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 93,
    "url": "https://www.youtube.com/watch?v=KSowWOckFzM",
-   "thumb": "https://i.ytimg.com/vi/KSowWOckFzM/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/KSowWOckFzM/maxresdefault.jpg",
    "ratio": 0.06277936962750716
   },
   {
@@ -4292,7 +4094,7 @@
    "views_s": 2112,
    "relDays_s": 60,
    "durationSec_s": 666,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "What happens if you can't go to the dentist in your old age? We'll discuss the realities of tooth...",
@@ -4305,7 +4107,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 91,
    "url": "https://www.youtube.com/watch?v=T2RLVADdADA",
-   "thumb": "https://i.ytimg.com/vi/T2RLVADdADA/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/T2RLVADdADA/maxresdefault.jpg",
    "ratio": 0.060515759312320914
   },
   {
@@ -4314,7 +4116,7 @@
    "views_s": 2103,
    "relDays_s": 270,
    "durationSec_s": 511,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Viewer discretion advised] We introduce cases where we used implants to treat patients whose tee...",
@@ -4327,7 +4129,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 288,
    "url": "https://www.youtube.com/watch?v=VuirgGyuwBI",
-   "thumb": "https://i.ytimg.com/vi/VuirgGyuwBI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/VuirgGyuwBI/maxresdefault.jpg",
    "ratio": 0.06025787965616046
   },
   {
@@ -4336,7 +4138,7 @@
    "views_s": 2029,
    "relDays_s": 210,
    "durationSec_s": 937,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Is it possible to get an implant immediately after tooth extraction? If you don't want to go with...",
@@ -4349,7 +4151,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 233,
    "url": "https://www.youtube.com/watch?v=R_E6BoqwLrI",
-   "thumb": "https://i.ytimg.com/vi/R_E6BoqwLrI/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/R_E6BoqwLrI/maxresdefault.jpg",
    "ratio": 0.058166189111747854
   },
   {
@@ -4358,7 +4160,7 @@
    "views_s": 1779,
    "relDays_s": 365,
    "durationSec_s": 644,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "Are there 100 physical illnesses that are affected by periodontal disease? A practicing dentist e...",
@@ -4371,7 +4173,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 429,
    "url": "https://www.youtube.com/watch?v=HU6JnyHs7Pw",
-   "thumb": "https://i.ytimg.com/vi/HU6JnyHs7Pw/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/HU6JnyHs7Pw/maxresdefault.jpg",
    "ratio": 0.05097421203438395
   },
   {
@@ -4380,7 +4182,7 @@
    "views_s": 1664,
    "relDays_s": 365,
    "durationSec_s": 488,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[You'll regret not knowing] Periodontal disease is on the rise in people in their 30s and 40s! A ...",
@@ -4393,7 +4195,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 481,
    "url": "https://www.youtube.com/watch?v=4gHxrqrOPD4",
-   "thumb": "https://i.ytimg.com/vi/4gHxrqrOPD4/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/4gHxrqrOPD4/maxresdefault.jpg",
    "ratio": 0.047679083094555874
   },
   {
@@ -4402,7 +4204,7 @@
    "views_s": 1500,
    "relDays_s": 365,
    "durationSec_s": 505,
-   "thumbKind": null,
+   "thumbKind": "hq720",
    "channel": "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    "channelId": "UCVAurvhj_jFRQgQ_YVmGllg",
    "title_en": "[Periodontal disease for implants] Is there a 10% chance that your implant will fall out within 1...",
@@ -4415,7 +4217,7 @@
    "handle": "/@haplus-kimura",
    "ageDays": 389,
    "url": "https://www.youtube.com/watch?v=ak-VwowQ1j8",
-   "thumb": "https://i.ytimg.com/vi/ak-VwowQ1j8/hqdefault.jpg",
+   "thumb": "https://i.ytimg.com/vi/ak-VwowQ1j8/maxresdefault.jpg",
    "ratio": 0.04297994269340974
   }
  ],
@@ -6123,7 +5925,7 @@
    "君のための歯医者さん",
    77100,
    158,
-   26,
+   21,
    4
   ],
   [
@@ -6131,7 +5933,7 @@
    "歯医者のさくら先生",
    63099,
    99,
-   9,
+   6,
    13
   ],
   [
@@ -6139,7 +5941,7 @@
    "木村先生には歯が立たない!!【あなたの歯にプラスする】 ",
    34900,
    415,
-   106,
+   105,
    8
   ]
  ]
