@@ -77,18 +77,22 @@ def main():
         if (i + 1) % 50 == 0: log(f"[details] {i+1}/{len(pre)}")
     rows.sort(key=lambda r: -r["ratio"])
     r1 = [r for r in rows if r["ageDays"] <= PRIMARY_AGE_DAYS]; r2 = [r for r in rows if r["ageDays"] > PRIMARY_AGE_DAYS]
-    extended = len(r1) < min_hits
-    final = r1 + r2 if extended else r1
-    if cfg.get("max_rows"): final = final[:cfg["max_rows"]]
-    # 振り分け（config "buckets": [{"label","regex","unless_regex"}] を順に適用。どれにも当たらない行が本表）
+    # 振り分け（config "buckets": [{"label","regex","unless_regex","min_duration_sec"}] を順に適用。どれにも当たらない行が本表）
     buckets = cfg.get("buckets") or []
     def bucket_of(r):
         t = r["title"]
         for b in buckets:
-            if re.search(b["regex"], t, re.I) and not (b.get("unless_regex") and re.search(b["unless_regex"], t, re.I)):
+            hit = bool(b.get("regex")) and re.search(b["regex"], t, re.I)
+            # min_duration_sec: 尺がこの秒数以上なら該当（音源・配信など長尺コンテンツの振り分け用）
+            if not hit and b.get("min_duration_sec") and (r.get("durationSec_s") or 0) >= b["min_duration_sec"]: hit = True
+            if hit and not (b.get("unless_regex") and re.search(b["unless_regex"], t, re.I)):
                 return b["label"]
         return None
-    for r in final + r2: r["bucket"] = bucket_of(r)
+    for r in rows: r["bucket"] = bucket_of(r)
+    # 2年への拡張判定は、別枠（音源など）を除いた本表の1年以内件数で行う
+    extended = len([r for r in r1 if not r["bucket"]]) < min_hits
+    final = r1 + r2 if extended else r1
+    if cfg.get("max_rows"): final = final[:cfg["max_rows"]]
     main_rows = [r for r in final if not r["bucket"]]
     bucket_rows = {b["label"]: [r for r in final if r["bucket"] == b["label"]] for b in buckets}
     log(f"[select] 1y {len(r1)}, 1-2y {len(r2)}, extended={extended}, hidden {len(hidden)}, offtopic {len(offtopic)}, foreign {len(foreign)}")
@@ -121,7 +125,7 @@ def main():
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
     if buckets:
         L.append(f"| 本表（テーマ該当） | {len(main_rows)} |\n" + "".join(f"| 別枠: {b['label']} | {len(bucket_rows[b['label']])} |\n" for b in buckets) + "\n")
-        L.append("振り分けルール（タイトルの語で機械的に判定）:\n" + "".join(f"- {b['label']}: `{b['regex']}`" + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
+        L.append("振り分けルール（タイトルの語・尺で機械的に判定）:\n" + "".join(f"- {b['label']}: `{b.get('regex','')}`" + (f"｜または尺{b['min_duration_sec']}秒以上" if b.get("min_duration_sec") else "") + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
     L.append(f"## 抽出結果（倍率順、{len(main_rows)}本）\n\n" + (table(main_rows) if main_rows else "該当なし\n"))
     for b in buckets:
         rs = bucket_rows[b["label"]]
