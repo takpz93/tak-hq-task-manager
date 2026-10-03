@@ -366,7 +366,7 @@ def load_config(path):
     if "min_views" in c: MIN_VIEWS = c["min_views"]
     if "few_hits" in c: FEW_HITS = c["few_hits"]
     if "max_age_days" in c: MAX_AGE_DAYS = c["max_age_days"]
-    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types", "pr_regex", "compact", "exclude_regex", "exclude_label", "default_type", "pr_channel_regex"):
+    for k in ("title", "out_prefix", "thumb_dir", "topic_desc", "type_desc", "types", "pr_regex", "compact", "exclude_regex", "exclude_label", "default_type", "pr_channel_regex", "title_split", "own_channel_ids"):
         if k in c: CFG[k] = c[k]
     if c.get("types"): CFG["type_labels"] = [t["label"] for t in c["types"]]
 
@@ -464,6 +464,10 @@ def main():
         PR_CH_RE = re.compile(CFG["pr_channel_regex"], re.I) if CFG.get("pr_channel_regex") else None
         pr_rows = [r for r in rows_on if PR_RE.search(r["title"]) or PR_RE.search(r["channel"]) or (PR_CH_RE and PR_CH_RE.search(r["channel"]))]
         rows_on = [r for r in rows_on if r not in pr_rows]
+    own_rows = []
+    if CFG.get("own_channel_ids"):
+        own_rows = [r for r in rows_on if r.get("channelId") in CFG["own_channel_ids"]]
+        rows_on = [r for r in rows_on if r not in own_rows]
     ja_1y = [r for r in rows_on if r["lang"] == "ja" and r["ageDays"] <= PRIMARY_AGE_DAYS]
     ja_2y = [r for r in rows_on if r["lang"] == "ja" and r["ageDays"] > PRIMARY_AGE_DAYS]
     foreign = [r for r in rows_on if r["lang"] != "ja"]
@@ -476,6 +480,12 @@ def main():
 
     main_rows = ja_1y + ja_supp
     for r in main_rows: r["period"] = "1年以内" if r["ageDays"] <= PRIMARY_AGE_DAYS else "1〜2年(補完)"
+    SPLIT = CFG.get("title_split")
+    if SPLIT:
+        for r in main_rows + foreign + pr_rows + own_rows:
+            r["split"] = SPLIT["else_label"]
+            for g in SPLIT["groups"]:
+                if re.search(g["regex"], r["title"], re.I): r["split"] = g["label"]; break
 
     # 5) 集計
     nouns, nums, brackets = word_stats(main_rows)
@@ -525,9 +535,9 @@ def main():
     import csv
     with open(os.path.join(a.out, CFG["out_prefix"] + ".csv"), "w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["区分", "タイトル", "URL", "CH名", "登録者数", "再生数", "倍率", "公開日", "尺(秒)", "型", "ヒットKW", "軸", "期間", "言語", "サムネURL"])
-        for r in main_rows + foreign:
-            w.writerow(["参考枠" if r["lang"] != "ja" else "主枠", r["title"], r["url"], r["channel"], r["subs"], r["views"], f"{r['ratio']:.2f}", r["publishDate"], r["durationSec"], r["type"], r["keywordsHit"], r["axis"], r.get("period", "-"), r["lang"], r["thumb"]])
+        w.writerow(["区分", "タイトル", "URL", "CH名", "登録者数", "再生数", "倍率", "公開日", "尺(秒)", "型", "ヒットKW", "軸", "期間", "言語", "サムネURL", "サムネURL(hq720)"] + ([SPLIT["col"]] if SPLIT else []))
+        for r in main_rows + foreign + [dict(x, _k="PR") for x in pr_rows] + [dict(x, _k="自CH") for x in own_rows]:
+            w.writerow([r.get("_k") or ("参考枠" if r["lang"] != "ja" else "主枠"), r["title"], r["url"], r["channel"], r["subs"], r["views"], f"{r['ratio']:.2f}", r["publishDate"], r["durationSec"], r["type"], r["keywordsHit"], r["axis"], r.get("period", "-"), r["lang"], r["thumb"], r["thumb"].replace("maxresdefault", "hq720")] + ([r.get("split", "")] if SPLIT else []))
 
     # md
     L = []
@@ -543,7 +553,7 @@ def main():
              f"- 登録者数非公開のチャンネルは倍率が算出できないため別掲\n"
              f"- タイトルにトピック語（{CFG['topic_desc']}）を含まないものは関連性低として別掲\n- 日本語チャンネルを主枠、英語・中国語圏は参考枠として別立て（英語UIで取得した原題に仮名が残るかどうかで判定。海外動画の自動翻訳タイトルは原題に置き換えて表示）\n")
     L.append("## 収集サマリー\n")
-    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏・その他言語） | {len(foreign)} |\n| トピック語なし（別掲・参考） | {len(offtopic)} |\n| メーカー広告・PR（別掲） | {len(pr_rows)} |\n| {CFG['exclude_label']}（別掲） | {len(ex_rows)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
+    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索でヒットしたユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 詳細取得後に条件内 | {len(detailed)} |\n| 倍率基準クリア（全言語） | {len(rows)} |\n| **主枠（日本語・1年以内）** | **{len(ja_1y)}** |\n| 主枠補完（日本語・1〜2年） | {len(ja_supp)} |\n| 参考枠（英語・中国語圏・その他言語） | {len(foreign)} |\n| トピック語なし（別掲・参考） | {len(offtopic)} |\n| メーカー広告・PR（別掲） | {len(pr_rows)} |\n| 自チャンネル（別掲） | {len(own_rows)} |\n| {CFG['exclude_label']}（別掲） | {len(ex_rows)} |\n| 登録者数非公開で判定不可 | {len(hidden)} |\n")
     L.append("### キーワード別 主枠ヒット数（1年以内）\n")
     L.append("| 軸 | キーワード | 1年以内 | 補完(1〜2年) |\n|---|---|---|---|\n")
     kw_supp = Counter(); [kw_supp.update(r["keywordsHit"].split(" / ")) for r in ja_supp]
@@ -574,6 +584,9 @@ def main():
         L.append(f"\n## 別掲：メーカー広告・商品PR動画（{len(pr_rows)}本、倍率順。主枠・集計から除外）\n")
         L.append(f"判定: タイトルまたはCH名が `{CFG['pr_regex'][:80]}…` に一致" + (f"、またはCH名が `{CFG['pr_channel_regex'][:80]}…` に一致" if CFG.get("pr_channel_regex") else "") + "（機械判定）\n\n")
         L.append(md_table(sorted(pr_rows, key=lambda r: -r["ratio"]), lang_col=True))
+    if own_rows:
+        L.append(f"\n## 別掲：自チャンネル（{len(own_rows)}本、倍率順。主枠・集計から除外）\n")
+        L.append(md_table(own_rows))
     L.append("\n## 追加集計：タイトル頻出ワード（主枠 全{}本）\n".format(len(main_rows)))
     L.append("### 名詞（上位30）\n"); L.append(counter_table(nouns, "名詞", 30))
     L.append("\n### 数字表現（上位20）\n"); L.append(counter_table(nums, "数字表現", 20))
@@ -592,6 +605,30 @@ def main():
     for name, rs in bands:
         if rs: L.append(f"| {name} | {len(rs)} | {_med([r['views'] for r in rs]):,.0f} | {sum(r['views'] for r in rs)/len(rs):,.0f} | {_med([r['ratio'] for r in rs]):.1f}x | {sum(r['ratio'] for r in rs)/len(rs):.1f}x |\n")
         else: L.append(f"| {name} | 0 | - | - | - | - |\n")
+    if SPLIT:
+        labels = [g["label"] for g in SPLIT["groups"]] + [SPLIT["else_label"]]
+        def _stat_row(name, rs):
+            if not rs: return f"| {name} | 0 | - | - | - | - |\n"
+            return f"| {name} | {len(rs)} | {_med([r['views'] for r in rs]):,.0f} | {sum(r['views'] for r in rs)/len(rs):,.0f} | {_med([r['ratio'] for r in rs]):.1f}x | {sum(r['ratio'] for r in rs)/len(rs):.1f}x |\n"
+        L.append(f"\n## 追加集計：{SPLIT['title']}（主枠 全{len(main_rows)}本）\n")
+        L.append(SPLIT.get("note", "") + "\n\n")
+        L.append("| 区分 | 本数 | 再生数の中央値 | 再生数の平均値 | 倍率の中央値 | 倍率の平均値 |\n|---|---|---|---|---|---|\n")
+        for lb in labels: L.append(_stat_row(lb, [r for r in main_rows if r["split"] == lb]))
+        for grp in SPLIT.get("merged", []):
+            L.append(_stat_row(grp["label"], [r for r in main_rows if r["split"] in grp["labels"]]))
+        L.append("\n### 規模帯別\n")
+        L.append("| 区分 | 規模帯 | 本数 | 再生数の中央値 | 再生数の平均値 | 倍率の中央値 | 倍率の平均値 |\n|---|---|---|---|---|---|---|\n")
+        for lb in labels:
+            for bname, lo, hi in (("大規模（10万人以上）", 100000, 10**12), ("中規模（1万〜10万人）", 10000, 100000), ("小規模（1万人未満）", 0, 10000)):
+                rs = [r for r in main_rows if r["split"] == lb and lo <= r["subs"] < hi]
+                L.append(_stat_row(f"{lb} | {bname}", rs))
+        L.append("\n### 型 × 区分（本数）\n")
+        L.append("| 型 | " + " | ".join(labels) + " |\n|---|" + "---|" * len(labels) + "\n")
+        for t in CFG["type_labels"]:
+            L.append(f"| {t} | " + " | ".join(str(sum(1 for r in main_rows if r['type'] == t and r['split'] == lb)) for lb in labels) + " |\n")
+        for lb in labels:
+            rs = [r for r in main_rows if r["split"] == lb]
+            if rs: L.append(f"\n### {lb} 一覧（{len(rs)}本、倍率順）\n" + md_table(rs))
     TL = CFG["type_labels"]
     L.append("\n## 追加集計：型別（" + "／".join(TL) + "）\n")
     L.append("| 型 | 本数 | 再生数の中央値 | 再生数の平均値 | 倍率の中央値 | 倍率の平均値 |\n|---|---|---|---|---|---|\n")
