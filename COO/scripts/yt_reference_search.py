@@ -82,6 +82,9 @@ def main():
     def bucket_of(r):
         t = r["title"]
         for b in buckets:
+            if b.get("channel_ids"):
+                if r.get("channelId") in b["channel_ids"]: return b["label"]
+                continue
             hit = bool(b.get("regex")) and re.search(b["regex"], t, re.I)
             # min_duration_sec: 尺がこの秒数以上なら該当（音源・配信など長尺コンテンツの振り分け用）
             if not hit and b.get("min_duration_sec") and (r.get("durationSec_s") or 0) >= b["min_duration_sec"]: hit = True
@@ -103,13 +106,16 @@ def main():
         for g in genres:
             if re.search(g["regex"], t, re.I): return g["label"]
         return "その他"
+    tags = cfg.get("tags") or []
+    def tags_of(r):
+        return [tg["label"] for tg in tags if re.search(tg["regex"], r["title"], re.I)]
     def table(rs):
-        gcol = " ジャンル |" if genres else ""
-        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 |" + gcol + " 動画長(秒) | サムネイル画像URL | サムネURL(hq720) | ヒット検索語 |\n|---|---|---|---|---|---|---|---|---|" + ("---|" if genres else "") + "---|---|---|---|\n"
+        gcol = (" ジャンル |" if genres else "") + (" タグ |" if tags else "")
+        h = "| # | 動画タイトル | 動画URL | チャンネル名 | 登録者数 | 規模帯 | 再生数 | 倍率 | 公開日 |" + gcol + " 動画長(秒) | サムネイル画像URL | サムネURL(hq720) | ヒット検索語 |\n|---|---|---|---|---|---|---|---|---|" + ("---|" if genres else "") + ("---|" if tags else "") + "---|---|---|---|\n"
         for i, r in enumerate(rs, 1):
             th = r["thumb"] + ("" if "maxres" in r["thumb"] else "（maxres無し→high）")
             hq = f"https://i.ytimg.com/vi/{r['videoId']}/hq720.jpg"
-            gv = f" {genre_of(r)} |" if genres else ""
+            gv = (f" {genre_of(r)} |" if genres else "") + (f" {'／'.join(tags_of(r)) or '-'} |" if tags else "")
             h += f"| {i} | {clean(r['title'])} | {r['url']} | {clean(r['channel'])} | {fmt_subs(r['subs'])} | {scale(r['subs'])} | {r['viewCount']:,} | {r['ratio']:.2f} | {r['publishDate']} |{gv} {r['durationSec_s']} | {th} | {hq} | {r.get('keywordsHit','')} |\n"
         return h
     freq = word_freq([r["title"] for r in main_rows], cfg.get("compounds", []))
@@ -125,7 +131,7 @@ def main():
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
     if buckets:
         L.append(f"| 本表（テーマ該当） | {len(main_rows)} |\n" + "".join(f"| 別枠: {b['label']} | {len(bucket_rows[b['label']])} |\n" for b in buckets) + "\n")
-        L.append("振り分けルール（タイトルの語・尺で機械的に判定）:\n" + "".join(f"- {b['label']}: `{b.get('regex','')}`" + (f"｜または尺{b['min_duration_sec']}秒以上" if b.get("min_duration_sec") else "") + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
+        L.append("振り分けルール（タイトルの語・尺で機械的に判定）:\n" + "".join(f"- {b['label']}: " + (f"チャンネルID {', '.join(b['channel_ids'])}" if b.get("channel_ids") else f"`{b.get('regex','')}`") + (f"｜または尺{b['min_duration_sec']}秒以上" if b.get("min_duration_sec") else "") + (f"（ただし `{b['unless_regex']}` を含む場合は本表）" if b.get("unless_regex") else "") + "\n" for b in buckets) + "\n")
     L.append(f"## 抽出結果（倍率順、{len(main_rows)}本）\n\n" + (table(main_rows) if main_rows else "該当なし\n"))
     for b in buckets:
         rs = bucket_rows[b["label"]]
@@ -136,6 +142,33 @@ def main():
         for b in buckets:
             rs = [r for r in r2 if r["bucket"] == b["label"]]
             if rs: L.append(f"\n### 1〜2年前・別枠: {b['label']}（{len(rs)}本）\n\n" + table(rs))
+    if tags:
+        def _med(xs):
+            xs = sorted(xs); n = len(xs)
+            return 0 if not n else (xs[n//2] if n % 2 else (xs[n//2-1]+xs[n//2])/2)
+        def _row(name, rs):
+            if not rs: return f"| {name} | 0 | - | - | - | - |\n"
+            return f"| {name} | {len(rs)} | {sum(r['ratio'] for r in rs)/len(rs):.2f} | {_med([r['ratio'] for r in rs]):.2f} | {_med([r['viewCount'] for r in rs]):,.0f} | {sum(r['viewCount'] for r in rs)/len(rs):,.0f} |\n"
+        for r in main_rows: r["tags"] = tags_of(r)
+        L.append(f"\n## 追加集計: タイトルの型タグ別（本表{len(main_rows)}本、タイトルの正規表現による機械判定）\n\n")
+        L.append("| 型 | 本数 | 平均倍率 | 倍率中央値 | 再生数中央値 | 再生数平均 |\n|---|---|---|---|---|---|\n")
+        L.append(_row("本表 全体", main_rows))
+        for tg in tags:
+            L.append(_row(f"{tg['label']} あり", [r for r in main_rows if tg["label"] in r["tags"]]))
+            L.append(_row(f"{tg['label']} なし", [r for r in main_rows if tg["label"] not in r["tags"]]))
+        if len(tags) >= 2:
+            a, b = tags[0]["label"], tags[1]["label"]
+            L.append(f"\n### {a} × {b} のクロス\n\n| 組み合わせ | 本数 | 平均倍率 | 倍率中央値 | 再生数中央値 | 再生数平均 |\n|---|---|---|---|---|---|\n")
+            L.append(_row(f"{a}のみ", [r for r in main_rows if a in r["tags"] and b not in r["tags"]]))
+            L.append(_row(f"{b}のみ", [r for r in main_rows if b in r["tags"] and a not in r["tags"]]))
+            L.append(_row("両方あり", [r for r in main_rows if a in r["tags"] and b in r["tags"]]))
+            L.append(_row("どちらもなし", [r for r in main_rows if a not in r["tags"] and b not in r["tags"]]))
+        L.append("\n### 規模帯別（極小チャンネルの高倍率に引っ張られないための内訳）\n\n| 型 | 規模帯 | 本数 | 平均倍率 | 倍率中央値 | 再生数中央値 | 再生数平均 |\n|---|---|---|---|---|---|---|\n")
+        for tg in tags:
+            for sc in ("大規模", "中規模", "小規模"):
+                rs = [r for r in main_rows if tg["label"] in r["tags"] and scale(r["subs"]).startswith(sc)]
+                L.append(_row(f"{tg['label']} あり | {sc}", rs))
+        L.append("\n判定ルール:\n" + "".join(f"- {tg['label']}: `{tg['regex']}`\n" for tg in tags))
     L.append(f"\n## タイトル出現ワード 頻度ランキング（上位20語、出現本数／本表{len(main_rows)}本）\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
     for i, (w, c) in enumerate(freq.most_common(20), 1): L.append(f"| {i} | {w} | {c} |\n")
     if offtopic:
