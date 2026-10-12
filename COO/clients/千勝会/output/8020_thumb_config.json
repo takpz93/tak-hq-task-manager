@@ -1,0 +1,7 @@
+{"prefix": "8020", "outdir": "/home/user/tak-hq-task-manager/COO/clients/千勝会/output",
+ "bg": [[70, 135, 165], [45, 100, 125]],
+ "cards": [
+  {"top": "一番多いパターンは", "bottom": "磨いてるつもり"},
+  {"top": "歯ブラシだけの人は", "bottom": "ここ磨けてる？"},
+  {"top": "痛くなってから歯医者", "bottom": "それ第1位"}
+ ]}
