@@ -14,6 +14,8 @@ from yt_trend_collector import STOP, threshold
 OWN_ID, OWN_HANDLE = "UCx8tnZhehtNYsHBHpeHqHOg", "senichi_kato_tenryohai"
 MIN_SUBS = 1000
 KEY_TERMS = ["入手困難", "幻", "プレミア", "転売", "定価", "買えない"]
+SAKE_RE = re.compile(r"日本酒|吟醸|純米|清酒|地酒|銘柄|蔵元|酒蔵|杜氏|酒米|特約店|酒屋|酒販|十四代|新政|而今|獺祭|飛露喜|田酒|鍋島|花陽浴|sake", re.I)
+OTHER_RE = re.compile(r"焼酎|チューハイ|サワー|ワイン|ビール|ウイスキー|ハイボール|シャンパン|カクテル|JINRO|チャミスル", re.I)
 
 def clean(x): return re.sub(r"\s+", " ", x or "").replace("|", "｜").strip()
 def subs_s(n): return f"{n:,}人"
@@ -41,18 +43,24 @@ def is_own(r):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--search-json", required=True); ap.add_argument("--config", required=True); ap.add_argument("--out", required=True)
+    ap.add_argument("--search-json", required=True); ap.add_argument("--config", required=True); ap.add_argument("--out", required=True); ap.add_argument("--candidates", type=int); ap.add_argument("--prefiltered", type=int)
     a = ap.parse_args(); cfg = json.load(open(a.config, encoding="utf-8")); d = json.load(open(a.search_json, encoding="utf-8"))
     today = date.today().isoformat()
     # final = 基準クリア（1年以内 + 20本未満なら2年まで）。r2 = 1〜2年（拡張しなかった場合の参考）
     passed = d["final"]; extended = any(r["ageDays"] > 365 for r in passed)
+    def valid(r): return not is_own(r) and r["subs"] >= MIN_SUBS
+    # 除外（登録者1,000人未満・自ch）を適用した後の1年以内が20本未満なら、2年以内（r2）まで広げる
+    if not extended and sum(1 for r in passed if valid(r)) < 20:
+        passed = passed + d.get("r2", []); extended = True
     own = [r for r in passed if is_own(r)]
     small = [r for r in passed if not is_own(r) and r["subs"] < MIN_SUBS]
-    main_rows = sorted([r for r in passed if not is_own(r) and r["subs"] >= MIN_SUBS], key=lambda r: -r["ratio"])
+    # 日本酒固有語が無く、他の酒類語だけで「酒」に当たった動画はテーマ外として別掲へ
+    other_liquor = [r for r in passed if valid(r) and OTHER_RE.search(r["title"]) and not SAKE_RE.search(r["title"])]
+    main_rows = sorted([r for r in passed if valid(r) and r not in other_liquor], key=lambda r: -r["ratio"])
     # 別掲: テーマ語なし／創作系（倍率基準クリアのみ）
     noise = [r for r in d.get("offtopic", []) if r.get("subs") and r["subs"] >= MIN_SUBS and not is_own(r)]
     for r in noise: r["ratio"] = r["viewCount"] / r["subs"]
-    noise = sorted([r for r in noise if r["ratio"] >= threshold(r["subs"]) and r["ageDays"] <= (730 if extended else 365)], key=lambda r: -r["ratio"])
+    noise = sorted([r for r in noise if r["ratio"] >= threshold(r["subs"]) and r["ageDays"] <= (730 if extended else 365)] + other_liquor, key=lambda r: -r["ratio"])
     r2 = [] if extended else sorted([r for r in d.get("r2", []) if not is_own(r) and r["subs"] >= MIN_SUBS], key=lambda r: -r["ratio"])
 
     def thumb(r):
@@ -75,13 +83,13 @@ def main():
     L.append("## 検索・抽出条件\n\n")
     L.append(f"- 検索キーワード（{len(cfg['keywords'])}語、各語で検索し結果をマージ・重複排除）: {' ／ '.join(cfg['keywords'])}\n")
     L.append("- 各語につき 関連順・再生順・新着順×1年以内 ＋ 期間指定なし×関連順・再生順、続きページ込み\n")
-    L.append(f"- 公開期間: 直近1年以内で基準クリアが {n_1y}本" + ("（20本未満のため2年以内まで拡張。公開日列で判別可）" if extended else "（20本以上のため拡張なし。1〜2年前の該当は参考として別掲）") + "\n")
+    L.append(f"- 公開期間: 直近1年以内で基準クリア（除外適用後）が {n_1y}本" + ("（20本未満のため2年以内まで拡張。公開日列で判別可）" if extended else "（20本以上のため拡張なし。1〜2年前の該当は参考として別掲）") + "\n")
     L.append("- 動画長 180秒超のみ（ショート専用枠は除外。180秒超の縦動画は検索データから判別不可）／日本語チャンネルのみ（英語UIで取得した原題に仮名が残るかで判定）\n")
     L.append(f"- 除外: 登録者{MIN_SUBS:,}人未満 {len(small)}本（別掲）／自チャンネル @{OWN_HANDLE} {len(own)}本／再生数{cfg.get('min_views',1000):,}回未満／登録者非公開 {len(d.get('hidden', []))}本／日本語以外 {len(d.get('foreign', []))}本\n")
     L.append("- 倍率 = 再生数 ÷ チャンネル登録者数（登録者数は取得時点）。大規模(10万人以上)≧1倍／中規模(1万〜10万人)≧2倍／小規模(1万人未満)≧3倍\n")
-    L.append(f"- 本表から外して別掲: タイトルにテーマ語（{cfg['topic_regex'][:50]}…）を含まない検索ノイズ、および除外語（{cfg['exclude_regex']}）を含む創作・ドラマ系\n")
+    L.append(f"- 本表から外して別掲: タイトルにテーマ語（{cfg['topic_regex'][:50]}…）を含まない検索ノイズ、および除外語（{cfg['exclude_regex']}）を含む創作・ドラマ系。加えて、日本酒固有語（日本酒|吟醸|純米|清酒|地酒|銘柄|蔵元|酒蔵|杜氏|酒米|特約店|酒屋|酒販|主要銘柄名）が無く焼酎・チューハイ・ワイン等の語だけで「酒」に当たった動画も別掲\n")
     L.append("- サムネイル画像URL: YouTube の検索メタデータに HD 版（hq720）がある動画は maxresdefault.jpg が存在するため記載。無い動画は「取得不可」とし、代替の hqdefault.jpg を併記。画像ホスト（i.ytimg.com）へのアクセスはこの環境で遮断されており、実体の取得確認は未実施\n\n")
-    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {d.get('candidates', '')} |\n| 基準クリア（期間内） | {len(passed)} |\n| 本表（日本酒テーマとして有効） | {len(main_rows)}（1年以内 {n_1y}／1〜2年 {n_2y}） |\n| 別掲: ノイズ・創作系 | {len(noise)} |\n| 別掲: 登録者{MIN_SUBS:,}人未満 | {len(small)} |\n| 除外: 自チャンネル | {len(own)} |\n\n")
+    L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {a.candidates or ''} |\n| 事前フィルタ通過（尺・期間・再生数） | {a.prefiltered or ''} |\n| 基準クリア（期間内） | {len(passed)} |\n| 本表（日本酒テーマとして有効） | {len(main_rows)}（1年以内 {n_1y}／1〜2年 {n_2y}） |\n| 別掲: ノイズ・創作系 | {len(noise)} |\n| 別掲: 登録者{MIN_SUBS:,}人未満 | {len(small)} |\n| 除外: 自チャンネル | {len(own)} |\n\n")
     L.append(f"## 本表: 抽出結果（{len(main_rows)}本、倍率順）\n\n" + (table(main_rows) if main_rows else "該当なし\n"))
     L.append(f"\n## 別掲: 検索ノイズ・創作ドラマ系（基準クリアだがテーマ外、{len(noise)}本）\n\n" + (table(noise) if noise else "該当なし\n"))
     L.append(f"\n## 別掲: 登録者{MIN_SUBS:,}人未満（基準クリア、{len(small)}本）\n\n" + (table(sorted(small, key=lambda r: -r['ratio'])) if small else "該当なし\n"))
