@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """綿久 10/15公開回「羽毛布団、買うなら今？」サムネ3案（A/B/C）＋コンタクトシート生成（Pillow）
 レイヤー: 01_bg（背景グラデ）/ 02_guide（写真差し込みガイド・消せる）/ 03_text（文字）→ final に合成
-使い方: python3 COO/scripts/watakyu_thumb_umou.py --font <NotoSansCJKjp-Black.otf> --out <dir> [--variant v1|v2]
+使い方: python3 COO/scripts/watakyu_thumb_umou.py --font <NotoSansCJKjp-Black.otf> --out <dir> [--variant v1|v2|v3]
 """
 import argparse, os
 from PIL import Image, ImageDraw, ImageFont
@@ -23,6 +23,12 @@ DESIGNS_V2 = [
     ("A", [("羽毛布団の", YELLOW)], [("半額は", WHITE), ("疑え", RED)], 1),
     ("B", [("昔5万の羽毛布団", YELLOW)], [("今は", WHITE), ("10万", RED), ("です", WHITE)], 1),
     ("C", [("同じ羽毛布団", YELLOW)], [("なぜ値段が", WHITE), ("倍", RED)], 2),
+]
+# v3（2回目の差し戻し後）: 1行目で商品を言い切り、2行目で「結論」または「持ち帰れるもの」。(ラベル, 上段, 下段, 写真ガイド枚数)  ※文言は指示どおり1文字も変えない
+DESIGNS_V3 = [
+    ("A", [("羽毛布団の", YELLOW)], [("半額は", WHITE), ("疑え", RED)], 1),
+    ("B", [("羽毛布団は", YELLOW)], [("3つ", RED), ("聞けば分かる", WHITE)], 1),
+    ("C", [("羽毛布団は", YELLOW)], [("待つほど", WHITE), ("高い", RED)], 1),
 ]
 CAPTION = "業界歴26年・創業177年の老舗寝具店社長"
 
@@ -94,11 +100,11 @@ def text_layer(font_path, upper, lower):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--font", required=True); ap.add_argument("--out", required=True)
-    ap.add_argument("--variant", choices=["v1", "v2"], default="v1", help="v1=初版文言, v2=差し戻し後の文言（ファイル名に _v2）")
+    ap.add_argument("--variant", choices=["v1", "v2", "v3"], default="v1", help="v1=初版, v2=1回目差し戻し後, v3=2回目差し戻し後（ファイル名に _v2/_v3）")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    designs = [(l, u, lo, 1) for l, u, lo in DESIGNS] if a.variant == "v1" else DESIGNS_V2
-    sfx = "" if a.variant == "v1" else "_v2"
+    designs = {"v1": [(l, u, lo, 1) for l, u, lo in DESIGNS], "v2": DESIGNS_V2, "v3": DESIGNS_V3}[a.variant]
+    sfx = "" if a.variant == "v1" else "_" + a.variant
     bg = background(); bg.save(os.path.join(a.out, f"layer_01_bg{sfx}.png"))
     guides = {}
     finals = []
