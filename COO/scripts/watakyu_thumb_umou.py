@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """綿久 10/15公開回「羽毛布団、買うなら今？」サムネ3案（A/B/C）＋コンタクトシート生成（Pillow）
 レイヤー: 01_bg（背景グラデ）/ 02_guide（写真差し込みガイド・消せる）/ 03_text（文字）→ final に合成
-使い方: python3 COO/scripts/watakyu_thumb_umou.py --font <NotoSansCJKjp-Black.otf> --out <dir> [--variant v1|v2|v3]
+使い方: python3 COO/scripts/watakyu_thumb_umou.py --font <NotoSansCJKjp-Black.otf> --out <dir> [--variant v1|v2|v3|final]
 """
 import argparse, os
 from PIL import Image, ImageDraw, ImageFont
@@ -30,6 +30,8 @@ DESIGNS_V3 = [
     ("B", [("羽毛布団は", YELLOW)], [("3つ", RED), ("聞けば分かる", WHITE)], 1),
     ("C", [("羽毛布団は", YELLOW)], [("待つほど", WHITE), ("高い", RED)], 1),
 ]
+# 決定版（Tak決定・v3 C案ベースで上段のみ差し替え）。ファイル名はラベルそのまま  ※文言は指示どおり1文字も変えない
+DESIGN_FINAL = [("FINAL_羽毛布団の買い時", [("羽毛布団の買い時", YELLOW)], [("待つほど", WHITE), ("高い", RED)], 1)]
 CAPTION = "業界歴26年・創業177年の老舗寝具店社長"
 
 def stroke_of(size): return max(8, size // 12)
@@ -100,22 +102,30 @@ def text_layer(font_path, upper, lower):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--font", required=True); ap.add_argument("--out", required=True)
-    ap.add_argument("--variant", choices=["v1", "v2", "v3"], default="v1", help="v1=初版, v2=1回目差し戻し後, v3=2回目差し戻し後（ファイル名に _v2/_v3）")
+    ap.add_argument("--variant", choices=["v1", "v2", "v3", "final"], default="v1", help="v1=初版, v2=1回目差し戻し後, v3=2回目差し戻し後（ファイル名に _v2/_v3）, final=決定版（ラベル名で出力・コンタクトシートなし）")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    designs = {"v1": [(l, u, lo, 1) for l, u, lo in DESIGNS], "v2": DESIGNS_V2, "v3": DESIGNS_V3}[a.variant]
-    sfx = "" if a.variant == "v1" else "_" + a.variant
-    bg = background(); bg.save(os.path.join(a.out, f"layer_01_bg{sfx}.png"))
+    designs = {"v1": [(l, u, lo, 1) for l, u, lo in DESIGNS], "v2": DESIGNS_V2, "v3": DESIGNS_V3, "final": DESIGN_FINAL}[a.variant]
+    is_final = a.variant == "final"
+    sfx = "" if a.variant in ("v1", "final") else "_" + a.variant
+    bg = background()
+    if not is_final: bg.save(os.path.join(a.out, f"layer_01_bg{sfx}.png"))
     guides = {}
     finals = []
     for label, up, lo, n in designs:
         if n not in guides:
-            guides[n] = guide(a.font, n); guides[n].save(os.path.join(a.out, f"layer_02_guide{sfx}_{n}photo.png"))
+            guides[n] = guide(a.font, n)
+            if not is_final: guides[n].save(os.path.join(a.out, f"layer_02_guide{sfx}_{n}photo.png"))
         tl, su, sl = text_layer(a.font, up, lo)
-        tl.save(os.path.join(a.out, f"{label}_layer_03_text{sfx}.png"))
         final = Image.alpha_composite(Image.alpha_composite(bg, guides[n]), tl).convert("RGB")
-        p = os.path.join(a.out, f"{label}_final{sfx}.png"); final.save(p); finals.append((label, final))
+        if is_final:
+            bg.save(os.path.join(a.out, f"{label}_layer_01_bg.png")); guides[n].save(os.path.join(a.out, f"{label}_layer_02_guide.png"))
+            tl.save(os.path.join(a.out, f"{label}_layer_03_text.png")); p = os.path.join(a.out, f"{label}.png")
+        else:
+            tl.save(os.path.join(a.out, f"{label}_layer_03_text{sfx}.png")); p = os.path.join(a.out, f"{label}_final{sfx}.png")
+        final.save(p); finals.append((label, final))
         print(f"{label}: font upper {su}px / lower {sl}px, guide x{n} -> {p}")
+    if is_final: return
     # コンタクトシート（横一列、上にラベル）
     pad, lab_h = 24, 70; tw = W // 2; th = H // 2
     sheet = Image.new("RGB", (pad + (tw + pad) * 3, lab_h + th + pad), (245, 245, 245)); sd = ImageDraw.Draw(sheet)
