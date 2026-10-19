@@ -8,6 +8,8 @@
  - 上段: 白・Medium／下段: 黄＋赤縁取り・Black、画面幅80%以上
 使い方: python3 chikatsukai_thumb_render.py <config.json>
  config: {"prefix": "8020", "outdir": "...", "bg": [[r,g,b],[r,g,b]], "cards": [{"top": "...", "bottom": "..."}, ...]}
+ 強調: 文言中の [ ] で囲んだ部分を強調色で描く（例 "[何分]で終わってる？"）。括弧は描画しない
+   上段の強調 = 黄・Black・赤縁／下段の強調 = 赤・Black・白縁（通常の下段は黄・赤縁）
 """
 import json, os, sys
 from PIL import Image, ImageDraw, ImageFont
@@ -42,47 +44,78 @@ def fit(text, path, max_w, max_h, stroke=0):
         else: hi = mid - 1
     return lo
 
-def spaced(d, xy, text, f, gap, **kw):
-    """1文字ずつ gap px 空けて描く（短い下段を画面幅80%以上に広げるため）"""
-    x, y = xy
+def parse(text):
+    """'[強調]通常' → [(文字, 強調か)]"""
+    out, emph = [], False
     for ch in text:
-        d.text((x, y), ch, font=f, **kw)
-        x += d.textlength(ch, font=f) + gap
+        if ch == "[": emph = True
+        elif ch == "]": emph = False
+        else: out.append((ch, emph))
+    return out
 
-def spaced_width(d, text, f, gap):
-    return sum(d.textlength(ch, font=f) for ch in text) + gap * (len(text) - 1)
+def plain(text): return text.replace("[", "").replace("]", "")
+
+RED, YELLOW, WHITE, DARK = (214, 0, 18, 255), (255, 226, 0, 255), (255, 255, 255, 255), (20, 0, 0, 230)
+
+def draw_chars(d, x, base, chars, fonts, gap, styles):
+    """1文字ずつベースライン揃えで描く。styles[emph] = (font_key, fill, stroke_w, stroke_fill, outer_w)"""
+    # 外側の暗い縁を先に全文字ぶん描いてから本体を重ねる（隣の文字の縁が本体に被らないように）
+    for layer in ("outer", "body"):
+        cx = x
+        for ch, emph in chars:
+            fk, fill, sw, sf, ow = styles[emph]
+            f = fonts[fk]
+            if layer == "outer" and ow:
+                d.text((cx, base), ch, font=f, fill=(0, 0, 0, 0), stroke_width=sw + ow, stroke_fill=DARK, anchor="ls")
+            if layer == "body":
+                d.text((cx, base), ch, font=f, fill=fill, stroke_width=sw, stroke_fill=sf, anchor="ls")
+            cx += d.textlength(ch, font=f) + gap
+
+def chars_width(d, chars, fonts, styles, gap):
+    return sum(d.textlength(ch, font=fonts[styles[e][0]]) for ch, e in chars) + gap * (len(chars) - 1)
 
 def text_layer(top, bottom):
     lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
-    bw = SAFE_RIGHT - MARGIN_L - 10          # 下段の最大幅（右下10%の手前まで）
-    # 下段（主役）: 高さ上限185px、幅が80%未満なら字間で広げる
-    bs = fit(bottom, FONT_BLACK, bw, 185, stroke=0.06)
-    fb = font(FONT_BLACK, bs); sw = max(6, int(bs * 0.06))
+    bw = SAFE_RIGHT - MARGIN_L - 10          # 文字の最大幅（右下10%の手前まで）
+    # 下段（主役）: 高さ上限175px、幅が80%未満なら字間で広げる
+    bs = fit(plain(bottom), FONT_BLACK, bw, 175, stroke=0.06)
+    sw = max(6, int(bs * 0.06))
+    bf = {"B": font(FONT_BLACK, bs)}
+    bstyle = {False: ("B", YELLOW, sw, RED, 5), True: ("B", RED, sw, WHITE, 5)}
+    bch = parse(bottom)
     gap = 0
     need = int(W * 0.80) + 2 * sw
-    if spaced_width(d, bottom, fb, 0) + 2 * sw < need and len(bottom) > 1:
-        gap = (need - spaced_width(d, bottom, fb, 0) - 2 * sw) / (len(bottom) - 1)
-    tw = spaced_width(d, bottom, fb, gap) + 2 * sw
-    asc, desc = fb.getmetrics()
-    _, t0, _, b0 = d.textbbox((0, 0), bottom, font=fb)
+    w0 = chars_width(d, bch, bf, bstyle, 0)
+    if w0 + 2 * sw < need and len(bch) > 1:
+        gap = (need - w0 - 2 * sw) / (len(bch) - 1)
+    tw = chars_width(d, bch, bf, bstyle, gap) + 2 * sw
+    asc, desc = bf["B"].getmetrics()
     bx = MARGIN_L + (bw - tw) / 2 + sw
-    by = SAFE_BOTTOM - 10 - b0 - sw
-    # 上段（細字・白）: 下段の0.36倍以下で明確にサイズ差をつける
-    ts = min(fit(top, FONT_MED, bw, 62), int(bs * 0.36))
-    ft = font(FONT_MED, ts)
-    tl, tt, tr, tb = d.textbbox((0, 0), top, font=ft, stroke_width=3)
-    tx = MARGIN_L - tl + (bw - (tr - tl)) // 2
-    ty = by + t0 - sw - 14 - tb
-    assert ty + tt >= H // 2, "上段が上半分（演者スペース）に食い込んでいる"
-    d.text((tx, ty), top, font=ft, fill=(255, 255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0, 200))
-    # 下段: 外側の暗い縁 → 赤縁取り＋黄文字
-    spaced(d, (bx, by), bottom, fb, gap, fill=(0, 0, 0, 0), stroke_width=sw + 5, stroke_fill=(20, 0, 0, 230))
-    spaced(d, (bx, by), bottom, fb, gap, fill=(255, 226, 0, 255), stroke_width=sw, stroke_fill=(214, 0, 18, 255))
+    base_b = SAFE_BOTTOM - 10 - sw - int(desc * 0.55)
+    _, gt, _, gb = d.textbbox((0, base_b), "定", font=bf["B"], anchor="ls")
+    # 上段: 白・Medium（強調は黄・Black）。下段の0.5倍・最低60px・高さ上限80px
+    tp = plain(top)
+    ts = min(fit(tp, FONT_BLACK, bw, 80), max(int(bs * 0.5), 60))
+    while True:   # 上半分（演者スペース）に入らないサイズまで下げる
+        tsw = max(3, int(ts * 0.06))
+        tf = {"M": font(FONT_MED, ts), "B": font(FONT_BLACK, ts)}
+        _, tt, _, tb = d.textbbox((0, 0), "定", font=tf["B"], anchor="ls")
+        base_t = gt - sw - 5 - 16 - tb             # 下段の上端（縁込み）から16px空ける
+        top_y = base_t + tt - tsw - 3
+        if top_y >= H // 2 + 4 or ts <= 40: break
+        ts -= 2
+    tstyle = {False: ("M", WHITE, 3, (0, 0, 0, 200), 0), True: ("B", YELLOW, tsw, RED, 3)}
+    tch = parse(top)
+    ttw = chars_width(d, tch, tf, tstyle, 0)
+    tx = MARGIN_L + (bw - ttw) / 2
+    assert top_y >= H // 2, f"上段が上半分（演者スペース）に食い込んでいる: {top_y}"
+    draw_chars(d, tx, base_t, tch, tf, 0, tstyle)
+    draw_chars(d, bx, base_b, bch, bf, gap, bstyle)
+    bb = lay.getbbox()
     box = {"top_size": ts, "bottom_size": bs, "letter_gap": round(gap, 1),
-           "bottom_bbox": [round(bx - sw), round(by + t0 - sw), round(bx - sw + tw), round(by + b0 + sw)],
-           "bottom_width_ratio": round(tw / W, 3), "top_bbox": [tx + tl, ty + tt, tx + tr, ty + tb]}
-    assert box["bottom_bbox"][2] <= SAFE_RIGHT and box["bottom_bbox"][3] <= SAFE_BOTTOM + 2
+           "bottom_width_ratio": round(tw / W, 3), "text_bbox": list(bb)}
+    assert bb[2] <= SAFE_RIGHT and bb[3] <= SAFE_BOTTOM and bb[1] >= H // 2, f"安全域はみ出し: {bb}"
     return lay, box
 
 def guide_layer():
@@ -114,7 +147,7 @@ def main():
     for i, im in enumerate(thumbs):
         x = pad + i * (sw + pad)
         sheet.paste(im.resize((sw, sh), Image.LANCZOS), (x, pad))
-        d.text((x, pad + sh + 12), f"案{i+1}  {cfg['cards'][i]['top']} ／ {cfg['cards'][i]['bottom']}", font=font(FONT_MED, 26), fill=(240, 240, 240))
+        d.text((x, pad + sh + 12), f"案{i+1}  {plain(cfg['cards'][i]['top'])} ／ {plain(cfg['cards'][i]['bottom'])}", font=font(FONT_MED, 26), fill=(240, 240, 240))
     sp = os.path.join(out, f"{pre}_contactsheet.png"); sheet.save(sp)
     print(json.dumps({"thumbs": info, "contactsheet": sp}, ensure_ascii=False, indent=1))
 
