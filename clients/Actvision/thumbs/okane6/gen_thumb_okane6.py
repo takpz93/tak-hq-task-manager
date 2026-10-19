@@ -163,14 +163,16 @@ def scene_C(bg):
 
 SPECS={"A":(scene_A,"節税で100万使う",[("税は",YEL,RED_S),("30万",EMP,BLK),("減るだけ",YEL,RED_S)]),
        "B":(scene_B,"交際費2000万",[("銀行は",YEL,RED_S),("放漫経営",EMP,BLK)]),
-       "C":(scene_C,"設備を現金一括",[("融資",EMP,BLK),("が通りにくい",YEL,RED_S)])}
+       "C":(scene_C,"設備を現金一括",[("融資",EMP,BLK),("が通りにくい",YEL,RED_S)]),
+       "D":(scene_A,"節税で100万",[("70万",EMP,BLK),("が消える",YEL,RED_S)])}
+LABEL={"A":"A","B":"B","C":"C","D":"D（第一候補）"}
 outs={}
 for k,(sc,l1,l2) in SPECS.items():
     bg=desk_base().convert("RGBA"); sc(bg); bg=finish(bg); bg.convert("RGB").save(f"bg_okane6_{k}.png")
     tl=text_layer(l1,l2); tl.save(f"text_okane6_{k}.png")
     comp=bg.copy(); comp.alpha_composite(tl); comp=comp.convert("RGB"); comp.save(f"thumb_okane6_{k}.png"); outs[k]=comp
-cs=Image.new("RGB",(3*640+4*30,480),(28,28,30)); dcs=ImageDraw.Draw(cs)
-for i,k in enumerate("ABC"):
+cs=Image.new("RGB",(4*640+5*30,480),(28,28,30)); dcs=ImageDraw.Draw(cs)
+for i,k in enumerate("ABCD"):
     x=30+i*670; cs.paste(outs[k].resize((640,360),Image.LANCZOS),(x,80))
-    dcs.text((x,24),f"{k}　{SPECS[k][1]}／{''.join(t for t,_,_ in SPECS[k][2])}",font=font(28,700),fill=(240,240,240))
+    dcs.text((x,24),f"{LABEL[k]}　{SPECS[k][1]}／{''.join(t for t,_,_ in SPECS[k][2])}",font=font(28,700),fill=(240,240,240))
 cs.save("contact_sheet_okane6.png"); print("done")
