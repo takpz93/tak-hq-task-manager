@@ -30,9 +30,13 @@ from bpp_thumb_comps import (H, LOWER_BOX, NAVY, ORANGE, RED, UPPER_BOX, W, add_
 # 上段は 2026-10-12 版の枠を 3px 上げる（縁取りのにじみが中段 y210 にかからないように）
 UPPER_BOX = (UPPER_BOX[0], UPPER_BOX[1] - 3, UPPER_BOX[2], UPPER_BOX[3] - 3)
 
+SHEET_ORDER = ("A", "B", "B2", "C")  # コンタクトシートに並べる順
+
 PATTERNS = [
     dict(label="A", upper="ディーラーコーティング", lower="1年後の黒ランクル", scene="swirl"),
-    dict(label="B", upper="黒い車の洗車傷", lower="磨いたらこうなる", scene="before_after"),
+    # B・B2（Tak案で差し替え）：Before/After なし。C と同じ 1 枚の黒ボディ＋洗車傷
+    dict(label="B", upper="パール無しの黒", lower="ごまかせない", scene="swirl_macro"),
+    dict(label="B2", upper="パール無しの黒", lower="傷はごまかせない", scene="swirl_macro"),
     dict(label="C", upper="どこまで取れる？", lower="黒の洗車傷", scene="swirl_macro"),
     # A の別案（コンタクトシートには入れない）：Before/After にして「磨けば戻る」に寄せる
     dict(label="A_alt", upper="ディーラーコーティング", lower="1年後の黒ランクル", scene="before_after"),
@@ -155,13 +159,14 @@ def main():
         zone = alpha.crop((int(W * 0.9), int(H * 0.9), W, H)).getextrema()
         mid = alpha.crop((0, 212, W, 512)).getbbox()
         print(p["label"], "badge_zone_alpha", zone, "text_in_mid_band_bbox", mid)
-        if p["label"] in ("A", "B", "C"):
+        if p["label"] in SHEET_ORDER:
             items.append((p, comp))
 
-    tw, th, gap, cap = 640, 360, 24, 44
-    sheet = Image.new("RGB", (gap + 3 * (tw + gap), 70 + th + cap + gap), (244, 244, 244))
+    items.sort(key=lambda it: SHEET_ORDER.index(it[0]["label"]))
+    tw, th, gap, cap = 560, 315, 24, 44
+    sheet = Image.new("RGB", (gap + len(items) * (tw + gap), 70 + th + cap + gap), (244, 244, 244))
     d = ImageDraw.Draw(sheet)
-    d.text((gap, 18), "BPP ランクル250（黒）洗車傷の回｜サムネ3案（仮背景）",
+    d.text((gap, 18), "BPP ランクル250（黒）洗車傷の回｜サムネ4案（仮背景）",
            font=ImageFont.truetype(a.font, 30), fill=(20, 20, 20))
     f = ImageFont.truetype(a.font, 22)
     for i, (p, img) in enumerate(items):
