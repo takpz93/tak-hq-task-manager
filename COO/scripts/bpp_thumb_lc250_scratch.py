@@ -31,8 +31,8 @@ from bpp_thumb_comps import (H, LOWER_BOX, NAVY, ORANGE, RED, UPPER_BOX, W, add_
 # 上段は 2026-10-12 版の枠を 3px 上げる（縁取りのにじみが中段 y210 にかからないように）
 UPPER_BOX = (UPPER_BOX[0], UPPER_BOX[1] - 3, UPPER_BOX[2], UPPER_BOX[3] - 3)
 
-# 最終 3 案（Tak 決定）：(提出名, 元の案)。C0・C2・B2・A_alt は不採用
-FINAL = [("A", "A"), ("B", "B"), ("C", "C1")]
+# 最終 3 案（Tak 決定）：(提出名, 元の案)。C0・C1・C2・B2・A_alt は不採用
+FINAL = [("A", "A"), ("B", "B"), ("C", "C_final")]
 SHEET_ORDER = ("A", "B", "C0", "C1", "C2")  # コンタクトシートに並べる順（B2・A_alt はファイルだけ残す）
 
 # 句読点（、。）は全角の箱の右半分が空いていて字間が間延びするので、字面の右端＋少しで次の字へ送る
@@ -77,6 +77,7 @@ PATTERNS = [
     dict(label="B2", upper="パール無しの黒", lower="傷はごまかせない", scene="swirl_macro"),
     dict(label="C0", upper="どこまで取れる？", lower="黒の洗車傷", scene="swirl_macro"),  # 旧 C
     dict(label="C1", upper="洗車傷のある黒を", lower="本気で磨いた結果", scene="swirl_macro"),
+    dict(label="C_final", upper="洗車傷まみれの黒", lower="本気で磨いた結果", scene="swirl_macro"),  # Tak 確定（C1 の上段を変更）
     dict(label="C2", upper="黒の洗車傷", lower="光を当てると…", scene="swirl_macro"),
     # A の別案（コンタクトシートには入れない）：Before/After にして「磨けば戻る」に寄せる
     dict(label="A_alt", upper="ディーラーコーティング", lower="1年後の黒ランクル", scene="before_after"),
@@ -215,7 +216,7 @@ def main():
     for name, src in FINAL:
         p, comp = by_label[src]
         comp.save(os.path.join(a.out, "final", f"{name}.png"))
-        final_items.append((name if name == src else f"{name}（{src}）", p, comp))
+        final_items.append((name, p, comp))
     contact_sheet(final_items, a.font, "BPP ランクル250（黒）洗車傷の回｜最終3案（仮背景）").save(
         os.path.join(a.out, "final_contact_sheet.png"))
 
