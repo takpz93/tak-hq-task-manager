@@ -190,7 +190,6 @@ def scene_A(bg):
     for i,lab in enumerate(["ネット銀行","メガバンク","地方銀行","信用金庫"]):
         yy=100+i*68; d.rectangle([40,yy+6,72,yy+38],outline=(90,90,90,255),width=3); d.text((90,yy),lab,font=font(28,600),fill=(60,60,60,255))
         d.text((360,yy),"融資　　　口座",font=f_s,fill=(120,120,120,255))
-    stamp(d,450,330,60,"1択",font(40,900))
     paste_rot(bg,p,(30,330),-4)
     for i,(lab,col,pos,ang) in enumerate([("総合口座",(70,110,160,255),(600,430),8),("普通預金",(120,70,70,255),(690,480),3),("通帳",(60,100,80,255),(780,450),-6)]):
         b=Image.new("RGBA",(200,320),(0,0,0,0)); db=ImageDraw.Draw(b)
@@ -211,11 +210,10 @@ def scene_B(bg):
     f_t=font(30,700); f_s=font(22,500)
     p=paper(480,460); d=ImageDraw.Draw(p)
     d.text((36,30),"融資申込書",font=f_t,fill=(40,40,40,255)); d.line([(36,78),(444,78)],fill=(60,60,60,255),width=3)
-    for i,(lab,val,red) in enumerate([("メインバンク","ネット銀行",False),("取引担当者","なし",True),("入出金の履歴","確認できず",True),("審査","対象外",True)]):
+    for i,(lab,val,red) in enumerate([("メインバンク","ネット銀行",False),("取引担当者","なし",True),("入出金の履歴","確認できず",True),("審査","保留",True)]):
         yy=100+i*64; d.text((36,yy),lab,font=f_s,fill=(70,70,70,255)); fv=font(28,900) if red else f_s
         d.text((444-d.textlength(val,font=fv),yy),val,font=fv,fill=(205,20,20,255) if red else (50,50,50,255))
         d.line([(36,yy+52),(444,yy+52)],fill=(200,195,185,255),width=1)
-    stamp(d,380,400,52,"対象外",font(26,900))
     paste_rot(bg,p,(400,250),5)
 
 def scene_C(bg):
@@ -233,18 +231,36 @@ def scene_C(bg):
         yy=100+i*58; d.text((36,yy),lab,font=f_s,fill=(70,70,70,255)); fv=font(28,900) if red else f_s
         d.text((464-d.textlength(val,font=fv),yy),val,font=fv,fill=(205,20,20,255) if red else (50,50,50,255))
         d.line([(36,yy+48),(464,yy+48)],fill=(200,195,185,255),width=1)
-    stamp(d,400,386,52,"不向き",font(26,900))
     paste_rot(bg,p,(400,260),5)
 
+
+def fit_segments(segs,tw,maxh,min_aspect,sw_outer,sw_inner,base=260):
+    """縦横比を保って幅 tw に収める。min_aspect まで横に詰めてよい（例 0.85＝最大15%圧縮）。高さは maxh を上限"""
+    f=font(base,900); d=ImageDraw.Draw(Image.new("RGBA",(10,10)))
+    adv=sum(d.textlength(t,font=f) for t,_,_ in segs)+sw_outer*2+40
+    bb=d.textbbox((0,0),"".join(t for t,_,_ in segs),font=f,stroke_width=sw_outer); nh=bb[3]-bb[1]+40
+    h=int(min(maxh, tw/(adv/nh)/min_aspect))
+    return stretched_segments(segs,tw,h,sw_outer=sw_outer,sw_inner=sw_inner,base=base),h
+
+def text_layer3(l1segs,l2segs,gap=16):
+    t=Image.new("RGBA",(W,H),(0,0,0,0)); tw=TEXT_X1-TEXT_X0
+    a,h1=fit_segments(l1segs,tw,L1_H,0.85,30,18); t.alpha_composite(a,(TEXT_X0,L1_Y))
+    b,h2=fit_segments(l2segs,tw,L2_H,0.62,34,24); t.alpha_composite(b,(TEXT_X0,L1_Y+h1+gap))
+    ov=Image.new("RGBA",(W,H),(0,0,0,0)); ImageDraw.Draw(ov).rounded_rectangle(BADGE,radius=8,fill=(0,0,0,175)); t.alpha_composite(ov)
+    d=ImageDraw.Draw(t); fb=font(32,800)
+    d.text((BADGE[0]+18,BADGE[1]+8),"年間相談500件超",font=fb,fill=WHT)
+    d.text((BADGE[0]+18,BADGE[1]+50),"大阪の税理士",font=fb,fill=WHT)
+    return t,h1,h2
+
 FINAL={
- "A":dict(scene=scene_A,l1=[("創業時メイン銀行",WHT,BLK)],l2=[("正解は1択",YEL,RED_S)],l1h=L1_H,l2h=L2_H),
- "B":dict(scene=scene_B,l1=[("ネット銀行メイン",WHT,BLK)],l2=[("融資遠のく",YEL,RED_S)],l1h=L1_H,l2h=L2_H),
- "C":dict(scene=scene_C,l1=[("メガバンクだけ",WHT,BLK)],l2=[("創業期は不向き",YEL,RED_S)],l1h=L1_H,l2h=L2_H),
+ "A":dict(scene=scene_A,l1=[("その銀行で大丈夫？",WHT,BLK)],l2=[("選び方で融資が変わる",YEL,RED_S)]),
+ "B":dict(scene=scene_B,l1=[("ネット銀行がメイン？",WHT,BLK)],l2=[("税理士の答えは？",YEL,RED_S)]),
+ "C":dict(scene=scene_C,l1=[("最初はメガバンク？",WHT,BLK)],l2=[("創業時に合う銀行は？",YEL,RED_S)]),
 }
 outs={}
 for k,sp in FINAL.items():
     bg=desk_base().convert("RGBA"); sp["scene"](bg); bg=finish(bg); bg.convert("RGB").save(f"bg_ginko5_{k}.png")
-    tl=text_layer2(sp["l1"],sp["l2"],sp["l1h"],sp["l2h"]); tl.save(f"text_ginko5_{k}.png")
+    tl,h1,h2=text_layer3(sp["l1"],sp["l2"]); tl.save(f"text_ginko5_{k}.png"); print(k,"line heights",h1,h2)
     comp=bg.copy(); comp.alpha_composite(tl); comp=comp.convert("RGB"); comp.save(f"thumb_ginko5_{k}.png"); outs[k]=comp
 cs=Image.new("RGB",(3*640+4*30,480),(28,28,30)); dcs=ImageDraw.Draw(cs)
 for i,k in enumerate(FINAL):
