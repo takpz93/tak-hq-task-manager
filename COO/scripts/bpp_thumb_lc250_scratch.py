@@ -24,18 +24,54 @@ import sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import bpp_thumb_comps  # noqa: E402
 from bpp_thumb_comps import (H, LOWER_BOX, NAVY, ORANGE, RED, UPPER_BOX, W, add_reflection, badge,  # noqa: E402
                              black_paint, car_name_layer, condensed_block, red_arrow)
 
 # 上段は 2026-10-12 版の枠を 3px 上げる（縁取りのにじみが中段 y210 にかからないように）
 UPPER_BOX = (UPPER_BOX[0], UPPER_BOX[1] - 3, UPPER_BOX[2], UPPER_BOX[3] - 3)
 
-SHEET_ORDER = ("A", "B", "B2", "C")  # コンタクトシートに並べる順
+SHEET_ORDER = ("A", "B", "C")  # コンタクトシートに並べる順（B2 はファイルだけ残す）
+
+# 句読点（、。）は全角の箱の右半分が空いていて字間が間延びするので、字面の右端＋少しで次の字へ送る
+TIGHT_PUNCT = "、。"
+TIGHT_GAP = 0.06  # 句読点の後ろに残す空き（文字サイズに対する比）
+_orig_text_mask = bpp_thumb_comps._text_mask
+
+
+def _ink_right(c, font):
+    """字面（インク）の右端。font.getbbox は送り幅いっぱいを返すので、実際に描いて測る。"""
+    w = int(font.getlength(c)) * 2
+    m = Image.new("L", (w, w), 0)
+    ImageDraw.Draw(m).text((0, 0), c, font=font, fill=255)
+    return m.getbbox()[2]
+
+
+def _tight_text_mask(text, font_path, size):
+    if not any(c in TIGHT_PUNCT for c in text):
+        return _orig_text_mask(text, font_path, size)  # 句読点なしは従来どおり（A・C は変わらない）
+    font = ImageFont.truetype(font_path, size)
+    pad = 4
+    x = 0.0
+    pos = []
+    for c in text:
+        pos.append(x)
+        x += _ink_right(c, font) + size * TIGHT_GAP if c in TIGHT_PUNCT else font.getlength(c)
+    l, t, _, b = font.getbbox(text)
+    m = Image.new("L", (int(x) + pad * 2 + size, b - t + pad * 2), 0)
+    d = ImageDraw.Draw(m)
+    for c, cx in zip(text, pos):
+        d.text((pad - l + cx, pad - t), c, font=font, fill=255)
+    bbox = m.getbbox()
+    return m.crop((0, 0, bbox[2] + pad, m.height))
+
+
+bpp_thumb_comps._text_mask = _tight_text_mask  # condensed_block がこの関数で字面を作る
 
 PATTERNS = [
     dict(label="A", upper="ディーラーコーティング", lower="1年後の黒ランクル", scene="swirl"),
     # B・B2（Tak案で差し替え）：Before/After なし。C と同じ 1 枚の黒ボディ＋洗車傷
-    dict(label="B", upper="パール無しの黒", lower="ごまかせない", scene="swirl_macro"),
+    dict(label="B", upper="パール無しの黒", lower="傷、ごまかし不可", scene="swirl_macro"),  # Tak 確定
     dict(label="B2", upper="パール無しの黒", lower="傷はごまかせない", scene="swirl_macro"),
     dict(label="C", upper="どこまで取れる？", lower="黒の洗車傷", scene="swirl_macro"),
     # A の別案（コンタクトシートには入れない）：Before/After にして「磨けば戻る」に寄せる
@@ -166,7 +202,7 @@ def main():
     tw, th, gap, cap = 560, 315, 24, 44
     sheet = Image.new("RGB", (gap + len(items) * (tw + gap), 70 + th + cap + gap), (244, 244, 244))
     d = ImageDraw.Draw(sheet)
-    d.text((gap, 18), "BPP ランクル250（黒）洗車傷の回｜サムネ4案（仮背景）",
+    d.text((gap, 18), "BPP ランクル250（黒）洗車傷の回｜サムネ3案（仮背景）",
            font=ImageFont.truetype(a.font, 30), fill=(20, 20, 20))
     f = ImageFont.truetype(a.font, 22)
     for i, (p, img) in enumerate(items):
