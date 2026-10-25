@@ -31,6 +31,8 @@ from bpp_thumb_comps import (H, LOWER_BOX, NAVY, ORANGE, RED, UPPER_BOX, W, add_
 # 上段は 2026-10-12 版の枠を 3px 上げる（縁取りのにじみが中段 y210 にかからないように）
 UPPER_BOX = (UPPER_BOX[0], UPPER_BOX[1] - 3, UPPER_BOX[2], UPPER_BOX[3] - 3)
 
+# 最終 3 案（Tak 決定）：(提出名, 元の案)。C0・C2・B2・A_alt は不採用
+FINAL = [("A", "A"), ("B", "B"), ("C", "C1")]
 SHEET_ORDER = ("A", "B", "C0", "C1", "C2")  # コンタクトシートに並べる順（B2・A_alt はファイルだけ残す）
 
 # 句読点（、。）は全角の箱の右半分が空いていて字間が間延びするので、字面の右端＋少しで次の字へ送る
@@ -183,7 +185,7 @@ def main():
     a = ap.parse_args()
     os.makedirs(os.path.join(a.out, "layers"), exist_ok=True)
 
-    items = []
+    items, all_items = [], []
     for p in PATTERNS:
         bg = scene(p["scene"])
         txt = text_layer(p, a.font)
@@ -197,22 +199,38 @@ def main():
         zone = alpha.crop((int(W * 0.9), int(H * 0.9), W, H)).getextrema()
         mid = alpha.crop((0, 212, W, 512)).getbbox()
         print(p["label"], "badge_zone_alpha", zone, "text_in_mid_band_bbox", mid)
+        all_items.append((p, comp))
         if p["label"] in SHEET_ORDER:
             items.append((p, comp))
 
     items.sort(key=lambda it: SHEET_ORDER.index(it[0]["label"]))
+    sheet = contact_sheet([(p["label"], p, img) for p, img in items], a.font,
+                          "BPP ランクル250（黒）洗車傷の回｜サムネ5案（仮背景）")
+    sheet.save(os.path.join(a.out, "contact_sheet.png"))
+
+    # 最終（Tak 決定）：提出名で final/ にコピーし、3 案だけのシートを作る
+    by_label = {p["label"]: (p, comp) for p, comp in all_items}
+    os.makedirs(os.path.join(a.out, "final"), exist_ok=True)
+    final_items = []
+    for name, src in FINAL:
+        p, comp = by_label[src]
+        comp.save(os.path.join(a.out, "final", f"{name}.png"))
+        final_items.append((name if name == src else f"{name}（{src}）", p, comp))
+    contact_sheet(final_items, a.font, "BPP ランクル250（黒）洗車傷の回｜最終3案（仮背景）").save(
+        os.path.join(a.out, "final_contact_sheet.png"))
+
+
+def contact_sheet(items, font_path, title):
     tw, th, gap, cap = 560, 315, 24, 44
     sheet = Image.new("RGB", (gap + len(items) * (tw + gap), 70 + th + cap + gap), (244, 244, 244))
     d = ImageDraw.Draw(sheet)
-    d.text((gap, 18), "BPP ランクル250（黒）洗車傷の回｜サムネ5案（仮背景）",
-           font=ImageFont.truetype(a.font, 30), fill=(20, 20, 20))
-    f = ImageFont.truetype(a.font, 22)
-    for i, (p, img) in enumerate(items):
+    d.text((gap, 18), title, font=ImageFont.truetype(font_path, 30), fill=(20, 20, 20))
+    f = ImageFont.truetype(font_path, 22)
+    for i, (label, p, img) in enumerate(items):
         cx = gap + i * (tw + gap)
-        d.text((cx, 70), f"{p['label']}  {p['upper']} ／ {p['lower']}", font=f, fill=(30, 30, 30))
+        d.text((cx, 70), f"{label}  {p['upper']} ／ {p['lower']}", font=f, fill=(30, 30, 30))
         sheet.paste(img.resize((tw, th), Image.LANCZOS), (cx, 70 + cap))
-    sheet.save(os.path.join(a.out, "contact_sheet.png"))
-
+    return sheet
 
 if __name__ == "__main__":
     main()
