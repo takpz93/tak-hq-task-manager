@@ -254,7 +254,7 @@ def text_layer3(l1segs,l2segs,gap=16):
 
 FINAL={
  "A":dict(scene=scene_A,l1=[("その銀行だから",WHT,BLK)],l2=[("融資が下りない",YEL,RED_S)]),
- "B":dict(scene=scene_B,l1=[("ネット銀行がメイン？",WHT,BLK)],l2=[("税理士の答えは？",YEL,RED_S)]),
+ "B":dict(scene=scene_B,l1=[("メインバンクがネット",WHT,BLK)],l2=[("税理士の答えは？",YEL,RED_S)]),
  "C":dict(scene=scene_C,l1=[("創業時、避けたい",WHT,BLK)],l2=[("あの〇〇銀行",YEL,RED_S)]),
 }
 outs={}
