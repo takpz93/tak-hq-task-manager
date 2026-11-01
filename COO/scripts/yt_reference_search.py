@@ -56,17 +56,24 @@ def main():
             for v in search_videos_thumb(kw, params, pages, cache):
                 hits.setdefault(v["videoId"], set()).add(kw); cands.setdefault(v["videoId"], v)
         log(f"[search] {kw}: +{len(cands)-n0} (total {len(cands)})")
-    pre = [v for v in cands.values() if v["durationSec_s"] and v["durationSec_s"] > 180
-           and (v["relDays_s"] is None or v["relDays_s"] <= MAX_AGE_DAYS) and (v["views_s"] is None or v["views_s"] >= min_views)]
+    must_re = re.compile("|".join(cfg["must_include"]), re.I) if cfg.get("must_include") else None
+    def forced(v): return bool(must_re and must_re.search(v["title"]))
+    pre = [v for v in cands.values() if forced(v) or (v["durationSec_s"] and v["durationSec_s"] > 180
+           and (v["relDays_s"] is None or v["relDays_s"] <= MAX_AGE_DAYS) and (v["views_s"] is None or v["views_s"] >= min_views))]
     log(f"[prefilter] {len(pre)}/{len(cands)}")
     rows, hidden, offtopic, foreign = [], [], [], []
     excl_ch = set(cfg.get("exclude_channel_ids", []))
     for i, v in enumerate(pre):
         if v.get("channelId") in excl_ch: continue
         v = enrich(v, cache, today)
-        if not v or v["ageDays"] > MAX_AGE_DAYS or v["viewCount"] is None or v["viewCount"] < min_views: continue
+        if not v: continue
+        v["forced"] = forced(v)
+        if not v["forced"] and (v["ageDays"] > MAX_AGE_DAYS or v["viewCount"] is None or v["viewCount"] < min_views): continue
         if v.get("channelId") in excl_ch: continue
-        v["keywordsHit"] = " / ".join(sorted(hits[v["videoId"]]))
+        v["keywordsHit"] = ("★指定 " if v["forced"] else "") + " / ".join(sorted(hits[v["videoId"]]))
+        if v["forced"]:
+            v["ratio"] = (v["viewCount"] or 0) / v["subs"] if v["subs"] else 0.0
+            rows.append(v); continue
         if (topic_re and not topic_re.search(v["title"]) and not topic_re.search(v.get("title_en") or "")) or (excl_re and excl_re.search(v["title"])):
             offtopic.append(v); continue
         ja = has_kana(v.get("title_en")) or has_kana(v["channel"]) or (has_kana(v["title"]) and re.search(r"[一-鿿]", v["channel"]))
@@ -80,6 +87,7 @@ def main():
     # 振り分け（config "buckets": [{"label","regex","unless_regex","min_duration_sec"}] を順に適用。どれにも当たらない行が本表）
     buckets = cfg.get("buckets") or []
     def bucket_of(r):
+        if r.get("forced"): return None
         t = r["title"]
         for b in buckets:
             if b.get("channel_ids"):
@@ -127,6 +135,7 @@ def main():
     L.append("- 動画長180秒超のみ（ショート専用枠は除外。180秒超の縦動画は検索データから判別不可）／日本語チャンネルのみ\n")
     L.append("- 倍率 = 再生数 ÷ 登録者数。大規模(10万人以上)1倍以上／中規模(1万〜10万人)2倍以上／小規模(1万人未満)3倍以上\n")
     L.append(f"- 追加の前提: 再生数{min_views:,}回未満は除外。タイトルにテーマ語（{cfg.get('topic_regex','')[:60]}…）を含まない検索ノイズ、および除外語（{cfg.get('exclude_regex','なし')}）を含むドラマ等は別掲。登録者非公開は判定不可として別掲\n")
+    if cfg.get("must_include"): L.append(f"- ★指定動画（{len(cfg['must_include'])}本）はタイトルで検索して本表に必ず掲載（尺・期間・再生数・倍率の条件は免除。ヒット検索語欄に「★指定」）\n")
     L.append("- サムネURL: 検索結果にHD版(hq720)がある動画は maxresdefault、無い動画は hqdefault(high) を記載。併記の hq720.jpg は同じ1280x720で、HD版がある動画なら確実に取得できる。実体の取得確認はこの環境からは不可\n\n")
     L.append(f"| 項目 | 件数 |\n|---|---|\n| 検索ヒットのユニーク動画 | {len(cands)} |\n| 事前フィルタ通過（尺・期間・再生数） | {len(pre)} |\n| 基準クリア・1年以内 | {len(r1)} |\n| 基準クリア・1〜2年 | {len(r2)} |\n| テーマ語なしで別掲 | {len(offtopic)} |\n| 日本語以外 | {len(foreign)} |\n| 登録者非公開 | {len(hidden)} |\n\n")
     if buckets:
@@ -169,8 +178,18 @@ def main():
                 rs = [r for r in main_rows if tg["label"] in r["tags"] and scale(r["subs"]).startswith(sc)]
                 L.append(_row(f"{tg['label']} あり | {sc}", rs))
         L.append("\n判定ルール:\n" + "".join(f"- {tg['label']}: `{tg['regex']}`\n" for tg in tags))
-    L.append(f"\n## タイトル出現ワード 頻度ランキング（上位20語、出現本数／本表{len(main_rows)}本）\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
-    for i, (w, c) in enumerate(freq.most_common(20), 1): L.append(f"| {i} | {w} | {c} |\n")
+    fs = cfg.get("freq_split")
+    if fs:
+        fs_re = re.compile(fs["regex"], re.I)
+        gen = [(w, c) for w, c in freq.most_common() if not fs_re.search(w)]; spl = [(w, c) for w, c in freq.most_common() if fs_re.search(w)]
+        L.append(f"\n## タイトル出現ワード 頻度ランキング（上位20語、出現本数／本表{len(main_rows)}本）※{fs['label']}の語は別枠\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
+        for i, (w, c) in enumerate(gen[:20], 1): L.append(f"| {i} | {w} | {c} |\n")
+        L.append(f"\n### 別枠: {fs['label']}の語（{fs.get('note','')}）\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
+        for i, (w, c) in enumerate(spl[:20], 1): L.append(f"| {i} | {w} | {c} |\n")
+        if not spl: L.append("| - | （該当なし） | - |\n")
+    else:
+        L.append(f"\n## タイトル出現ワード 頻度ランキング（上位20語、出現本数／本表{len(main_rows)}本）\n\n| 順位 | ワード | 出現本数 |\n|---|---|---|\n")
+        for i, (w, c) in enumerate(freq.most_common(20), 1): L.append(f"| {i} | {w} | {c} |\n")
     if offtopic:
         L.append(f"\n## 別掲: 基準クリアだがタイトルにテーマ語なし（検索ノイズ、{len(offtopic)}本）\n\n")
         ot = [v for v in offtopic if v["subs"]]
