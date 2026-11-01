@@ -56,13 +56,23 @@ def main():
             for v in search_videos_thumb(kw, params, pages, cache):
                 hits.setdefault(v["videoId"], set()).add(kw); cands.setdefault(v["videoId"], v)
         log(f"[search] {kw}: +{len(cands)-n0} (total {len(cands)})")
-    must_re = re.compile("|".join(cfg["must_include"]), re.I) if cfg.get("must_include") else None
-    def forced(v): return bool(must_re and must_re.search(v["title"]))
-    pre = [v for v in cands.values() if forced(v) or (v["durationSec_s"] and v["durationSec_s"] > 180
+    must_pats = [re.compile(x, re.I) for x in cfg.get("must_include", [])]
+    def must_match(v): return any(pt.search(v["title"]) for pt in must_pats)
+    pre = [v for v in cands.values() if must_match(v) or (v["durationSec_s"] and v["durationSec_s"] > 180
            and (v["relDays_s"] is None or v["relDays_s"] <= MAX_AGE_DAYS) and (v["views_s"] is None or v["views_s"] >= min_views))]
     log(f"[prefilter] {len(pre)}/{len(cands)}")
     rows, hidden, offtopic, foreign = [], [], [], []
     excl_ch = set(cfg.get("exclude_channel_ids", []))
+    # 指定動画: 同じタイトルを使い回す別チャンネル版が混ざるため、パターンごとに再生数最大の1本だけを強制掲載にする
+    winners = set()
+    for pt in must_pats:
+        best = None
+        for v in pre:
+            if pt.search(v["title"]):
+                e = enrich(dict(v), cache, today)
+                if e and (best is None or (e["viewCount"] or 0) > (best["viewCount"] or 0)): best = e
+        if best: winners.add(best["videoId"]); log(f"[must] {pt.pattern[:30]} -> {best['channel']} {best['viewCount']:,}")
+    def forced(v): return v["videoId"] in winners
     for i, v in enumerate(pre):
         if v.get("channelId") in excl_ch: continue
         v = enrich(v, cache, today)
