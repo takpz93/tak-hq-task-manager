@@ -61,6 +61,8 @@ bpp_thumb_20261023._glyph_mask = _tight_glyph_mask  # text_line がこの関数�
 PATTERNS = [
     ("T1", "車内の清掃", "光触媒、もう遅い"),
     ("T2", "車内に光触媒？", "暗いと反応しない…"),
+    ("T3", "車内は光触媒", "〇〇が反応しない…"),  # 〇〇 は伏せ字のまま描く
+    ("T4", "車内に光触媒？", "夜は反応しない…"),
     ("A", "西野さんのマスタング", "車内のニオイは…？"),
     ("B", "旧車の車内は水洗い？", "逆にニオイが増える…"),
     ("C", "芳香剤を置いた旧車", "香りが消えたら…？"),
@@ -100,7 +102,7 @@ def contact_sheet(items, font_path):
     rows = (len(items) + cols - 1) // cols
     sheet = Image.new("RGB", (gap + cols * (tw + gap), 70 + rows * (th + cap + gap)), (244, 244, 244))
     d = ImageDraw.Draw(sheet)
-    d.text((gap, 18), "BPP マスタング（PHOENIX BIO-GUARD・車内編）｜サムネ5案（仮背景）",
+    d.text((gap, 18), "BPP マスタング（PHOENIX BIO-GUARD・車内編）｜サムネ7案（仮背景）",
            font=ImageFont.truetype(font_path, 30), fill=(20, 20, 20))
     f = ImageFont.truetype(font_path, 24)
     fn = ImageFont.truetype(font_path, 18)
