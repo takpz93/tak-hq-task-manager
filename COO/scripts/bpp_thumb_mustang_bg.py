@@ -60,12 +60,12 @@ bpp_thumb_20261023._glyph_mask = _tight_glyph_mask  # text_line がこの関数�
 
 PATTERNS = [
     ("T1", "車内の清掃", "光触媒、もう遅い"),
-    ("T2", "車内に光触媒？", "暗い所では効かない…"),
+    ("T2", "車内に光触媒？", "暗いと反応しない…"),
     ("A", "西野さんのマスタング", "車内のニオイは…？"),
     ("B", "旧車の車内は水洗い？", "逆にニオイが増える…"),
     ("C", "芳香剤を置いた旧車", "香りが消えたら…？"),
 ]
-NOTES = {"A": "要確認：名前の使用許可"}
+NOTES = {"T1": "チェック✕：『もう遅い』が台本にない", "A": "要確認：名前の使用許可"}
 
 
 def red_interior_placeholder(seed=31):
@@ -78,6 +78,21 @@ def red_interior_placeholder(seed=31):
     base = np.array([118, 26, 30], dtype=float)
     arr = v[..., None] * base + rng.normal(0, 1.5, (H, W, 1))
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB")
+
+
+def draw_note(d, xy, note, font, fill):
+    """注記を描く。「✕」は Noto Sans CJK JP に字形が無い（豆腐になる）ので 2 本線で描く。"""
+    x, y = xy
+    for i, part in enumerate(note.split("✕")):
+        if i:
+            size = font.size
+            t, b = y + size * 0.34, y + size * 1.06
+            w = b - t
+            d.line((x + 2, t, x + 2 + w, b), fill=fill, width=3)
+            d.line((x + 2, b, x + 2 + w, t), fill=fill, width=3)
+            x += w + 6
+        d.text((x, y), part, font=font, fill=fill)
+        x += d.textlength(part, font=font)
 
 
 def contact_sheet(items, font_path):
@@ -95,7 +110,7 @@ def contact_sheet(items, font_path):
         d.text((cx, cy + 6), label, font=f, fill=(30, 30, 30))
         if label in NOTES:
             lw = d.textlength(label, font=f)
-            d.text((cx + lw + 14, cy + 12), NOTES[label], font=fn, fill=(200, 30, 30))
+            draw_note(d, (cx + lw + 14, cy + 12), NOTES[label], fn, (200, 30, 30))
         sheet.paste(img.resize((tw, th), Image.LANCZOS), (cx, cy + cap))
     return sheet
 
