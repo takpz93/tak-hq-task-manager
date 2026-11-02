@@ -13,7 +13,7 @@ from yt_reference_dental import search_videos_thumb, enrich, scale, fmt_subs, cl
 
 KEYWORDS = ["歯医者 セカンドオピニオン", "歯医者 変える タイミング", "歯医者 転院 治療途中", "歯医者 紹介状", "歯医者 選び方", "歯医者 治療費 高額", "歯医者 信用できない", "歯医者 治療後 しみる"]
 TOPIC_RE = re.compile(r"歯|セカンドオピニオン|口腔|インプラント|矯正|dental|dentist|tooth|teeth", re.I)
-B_RE = re.compile(r"歯医者|歯科医|選び|転院|紹介|セカンド|治療費|費用|説明|信頼|信用")
+B_RE = re.compile(r"選び|転院|紹介|セカンド|治療費|費用|説明|信頼|信用|行ってはいけない|言われたら|歯医者が怖い|歯医者に行")
 EXCL_RE = re.compile(r"ドラマ|ヤクザ|一目惚れ|社長", re.I)
 MIN_VIEWS = 1000
 C_CHANNELS = ["歯科医の暴露チャンネル【前岡遼馬】", "ザ・ホワイトデンタルクリニック", "稲葉院長のあのネェ", "君のための歯医者さん", "歯医者のさくら先生", "木村先生には歯が立たない!!"]
@@ -160,7 +160,7 @@ def main():
     L.append("| # | タイトル | 再生数 | 公開日 | 動画URL | サムネ画像URL（maxresdefault） |\n|---|---|---|---|---|---|\n")
     for i, v in enumerate(top5, 1):
         L.append(f"| {i} | {clean(v['title'])} | {v['viewCount']:,} | {v['publishDate']} | {v['url']} | https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg |\n")
-    L.append(f"\n### B-2 歯医者選び・転院・紹介・治療費・説明関連の既存動画（既出チェック用。本編{len(vids)}本のうちタイトルに 歯医者／歯科医／選び／転院／紹介／セカンド／治療費／費用／説明／信頼／信用 を含むもの、{len(brel)}本、再生数順）\n\n")
+    L.append(f"\n### B-2 歯医者選び・転院・紹介・治療費・説明関連の既存動画（既出チェック用。本編{len(vids)}本のうちタイトルに 選び／転院／紹介／セカンド／治療費／費用／説明／信頼／信用／行ってはいけない／言われたら／歯医者が怖い／歯医者に行 を含むもの。権威句の「歯医者」「歯科医」だけで当たる動画は除外、{len(brel)}本、再生数順）\n\n")
     L.append("| # | タイトル | 再生数 | 公開日 | 動画URL | サムネ画像URL（maxresdefault） |\n|---|---|---|---|---|---|\n")
     for i, v in enumerate(brel, 1):
         L.append(f"| {i} | {clean(v['title'])} | {v['viewCount']:,} | {v['publishDate']} | {v['url']} | https://i.ytimg.com/vi/{v['videoId']}/maxresdefault.jpg |\n")
