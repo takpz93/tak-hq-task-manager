@@ -65,13 +65,23 @@ def draw_line(layer, font_path, text, size, x, y, color, emph=None, emph_color=R
         cx += f.getlength(s)
     return f.getlength(text)
 
-def background(seed=0):
+def background(seed=0, target_lum=None):
+    """仮背景: 酒蔵風（暗い木目の壁 + 日本酒瓶の列）。target_lum を与えると平均明度（0〜1）をその値に合わせる"""
+    bg = _background_raw(seed)
+    if target_lum:
+        from PIL import ImageStat
+        lum = ImageStat.Stat(bg.convert("L")).mean[0] / 255
+        from PIL import ImageEnhance
+        bg = ImageEnhance.Brightness(bg.convert("RGB")).enhance(target_lum / lum).convert("RGBA")
+    return bg
+
+def _background_raw(seed=0):
     """仮背景: 濃紺→墨のグラデーション + 日本酒瓶のシルエット列（実写の瓶写真に差し替える前提）"""
     bg = Image.new("RGBA", (W, H), (0, 0, 0, 255))
     px = bg.load()
     for yy in range(H):
         t = yy / H
-        r, g, b = int(28 + 10 * t), int(30 + 12 * t), int(52 - 30 * t)
+        r, g, b = int(46 + 14 * t), int(34 + 8 * t), int(24 + 4 * t)
         for xx in range(W):
             px[xx, yy] = (r, g, b, 255)
     # 瓶のシルエット（下段に並ぶ）
@@ -108,8 +118,8 @@ def text_layer(font_path, case):
     s_bot = fit_size(font_path, bottom, MAX_TEXT_W, 200)
     y_top = 112
     y_bot = y_top + int(s_top * 1.25) + 46
-    draw_line(layer, font_path, top, s_top, MARGIN_L, y_top, WHITE, emph if emph in top else None)
-    draw_line(layer, font_path, bottom, s_bot, MARGIN_L, y_bot, YELLOW, emph if emph in bottom else None)
+    draw_line(layer, font_path, top, s_top, MARGIN_L, y_top, WHITE, emph if (emph and emph in top) else None)
+    draw_line(layer, font_path, bottom, s_bot, MARGIN_L, y_bot, YELLOW, emph if (emph and emph in bottom) else None)
     # 下段の下に黄色の下線（型の装飾）
     f = ImageFont.truetype(font_path, s_bot)
     uw = int(f.getlength(bottom))
@@ -118,10 +128,10 @@ def text_layer(font_path, case):
     ImageDraw.Draw(layer).rounded_rectangle([MARGIN_L, uy - 3, MARGIN_L + uw, uy + 17], radius=9, outline=INK, width=3)
     return layer, {"top_size": s_top, "bottom_size": s_bot, "text_bottom_y": uy + 17}
 
-def guides(img, font_path):
+def guides(img, font_path, person_label="加登社長 切り抜き"):
     g = img.copy(); d = ImageDraw.Draw(g); gf = ImageFont.truetype(font_path, 34)
     d.rectangle([PERSON_X, 0, W - 1, H - 1], outline=(0, 200, 255, 255), width=4)
-    d.text((PERSON_X + 16, 16), "加登社長 切り抜き", font=gf, fill=(0, 200, 255, 255))
+    d.text((PERSON_X + 16, 16), person_label, font=gf, fill=(0, 200, 255, 255))
     d.rectangle([NO_TEXT[0], NO_TEXT[1], W - 1, H - 1], outline=(255, 80, 80, 255), width=4)
     d.text((NO_TEXT[0] - 230, NO_TEXT[1] + 18), "右下10% 文字禁止", font=gf, fill=(255, 80, 80, 255))
     return g
@@ -129,18 +139,21 @@ def guides(img, font_path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--spec", required=True); ap.add_argument("--out", required=True); ap.add_argument("--font")
+    ap.add_argument("--layers", help="文字レイヤー/背景の保存先（既定: out 直下）"); ap.add_argument("--preview-width", type=int, default=0, help="確認用の縮小画像の幅（0 で作らない）")
+    ap.add_argument("--bg-lum", type=float, default=0, help="仮背景の平均明度 0〜1（0 で調整なし）")
     a = ap.parse_args()
     spec = json.load(open(a.spec, encoding="utf-8")); font_path = get_font(a.font)
     os.makedirs(a.out, exist_ok=True)
-    bg = background()
-    bg.save(os.path.join(a.out, "bg_placeholder.png"))
+    layers = a.layers or a.out; os.makedirs(layers, exist_ok=True)
+    bg = background(target_lum=a.bg_lum or None)
+    bg.save(os.path.join(layers, "bg_placeholder.png"))
     comps = []
     for c in spec["cases"]:
         layer, info = text_layer(font_path, c)
         assert info["text_bottom_y"] < NO_TEXT[1], "文字が右下10%帯に入っている"
         comp = bg.copy(); comp.alpha_composite(layer)
         base = f"{c['id']:02d}"
-        layer.save(os.path.join(a.out, f"{base}_text.png"))
+        layer.save(os.path.join(layers, f"{base}_text.png"))
         comp.convert("RGB").save(os.path.join(a.out, f"{base}_thumb.png"))
         comps.append((c, comp))
         print(f"[case {c['id']}] top={c['top']}({info['top_size']}px) bottom={c['bottom']}({info['bottom_size']}px) emph={c.get('emph')}", file=sys.stderr)
@@ -150,9 +163,15 @@ def main():
     sd = ImageDraw.Draw(sheet); lf = ImageFont.truetype(font_path, 22)
     for i, (c, comp) in enumerate(comps):
         y = pad + i * (ch + 40 + pad)
-        sd.text((pad, y), f"案{c['id']}  上: {c['top']} ／ 下: {c['bottom']} ／ 強調: {c.get('emph')}", font=lf, fill=(20, 20, 20))
-        sheet.paste(guides(comp, font_path).convert("RGB").resize((cw, ch), Image.LANCZOS), (pad, y + 36))
+        lab = f"{c.get('label', '案' + str(c['id']))}  上: {c['top']} ／ 下: {c['bottom']}" + (f" ／ 強調: {c['emph']}" if c.get("emph") else "") + (f"   → {c['pairs_with']}" if c.get("pairs_with") else "")
+        sd.text((pad, y), lab, font=lf, fill=(20, 20, 20))
+        sheet.paste(guides(comp, font_path, spec.get("person_label", "加登社長 切り抜き")).convert("RGB").resize((cw, ch), Image.LANCZOS), (pad, y + 36))
     sheet.save(os.path.join(a.out, "contact_sheet.png"))
+    if a.preview_width:
+        pw = a.preview_width; ph = int(H * pw / W); gap = 8
+        prev = Image.new("RGB", (pw, len(comps) * (ph + gap) - gap), (255, 255, 255))
+        for i, (c, comp) in enumerate(comps): prev.paste(comp.convert("RGB").resize((pw, ph), Image.LANCZOS), (0, i * (ph + gap)))
+        prev.save(os.path.join(a.out, f"preview_{pw}px.png"))
     print("[done]", a.out, file=sys.stderr)
 
 if __name__ == "__main__":
