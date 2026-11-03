@@ -1,0 +1,841 @@
+{
+ "generated": "2026-10-27",
+ "own_count": 51,
+ "avg_1y": 28652.38775510204,
+ "overlap": [
+  {
+   "candidate": "甘口ランキング",
+   "rule": "甘口・甘旨・甘酸 を含む",
+   "regex": "甘口|甘旨|甘酸",
+   "count": 4,
+   "count_1y": 4,
+   "latest": "2026-06-06",
+   "max_views": 79801,
+   "hits": [
+    {
+     "publishDate": "2026-06-06",
+     "title": "【蔵元が厳選】一口で旨いと感じる甘旨フルーティー日本酒5選を紹介！",
+     "views": 21412,
+     "ratio": 0.75
+    },
+    {
+     "publishDate": "2026-04-18",
+     "title": "【沼る甘口】最新トレンド！蔵元が絶賛する飲まなきゃ損な日本酒5選が面白かった",
+     "views": 25677,
+     "ratio": 0.9
+    },
+    {
+     "publishDate": "2026-02-07",
+     "title": "【最新トレンド】蔵元おすすめの甘酸っぱい日本酒を5本紹介します！",
+     "views": 12045,
+     "ratio": 0.42
+    },
+    {
+     "publishDate": "2025-11-29",
+     "title": "【もう迷わない】日本酒初心者におすすめ！蔵元が選ぶ甘口7選を徹底比較",
+     "views": 79801,
+     "ratio": 2.79
+    }
+   ]
+  },
+  {
+   "candidate": "辛口ランキング",
+   "rule": "辛口・ドライ・キレ を含む",
+   "regex": "辛口|ドライ|キレ",
+   "count": 4,
+   "count_1y": 4,
+   "latest": "2026-08-08",
+   "max_views": 44668,
+   "hits": [
+    {
+     "publishDate": "2026-08-08",
+     "title": "【新しい新潟淡麗】淡麗辛口はもう古いのか？雅楽代の蔵元が語る酒造り",
+     "views": 12578,
+     "ratio": 0.44
+    },
+    {
+     "publishDate": "2026-07-04",
+     "title": "【酸の日本酒】蔵元厳選の甘さを抑えたドライな味わいがクセになるおすすめ5選",
+     "views": 10701,
+     "ratio": 0.37
+    },
+    {
+     "publishDate": "2026-05-30",
+     "title": "【辛口コスパ5選】一升瓶が秒で空に！蔵元がおすすめする日本酒",
+     "views": 18472,
+     "ratio": 0.64
+    },
+    {
+     "publishDate": "2025-11-22",
+     "title": "【徹底比較】蔵元が選ぶ初心者におすすめの辛口日本酒7選",
+     "views": 44668,
+     "ratio": 1.56
+    }
+   ]
+  },
+  {
+   "candidate": "生産量ランキング",
+   "rule": "生産量・出荷・石高・蔵数 を含む",
+   "regex": "生産量|出荷|石高|蔵の数|蔵数",
+   "count": 0,
+   "count_1y": 0,
+   "latest": null,
+   "max_views": null,
+   "hits": []
+  },
+  {
+   "candidate": "燗",
+   "rule": "燗（熱燗・ぬる燗・燗酒）を含む",
+   "regex": "燗",
+   "count": 1,
+   "count_1y": 1,
+   "latest": "2026-09-26",
+   "max_views": 80205,
+   "hits": [
+    {
+     "publishDate": "2026-09-26",
+     "title": "【四国編】異例の燗酒上位と最強酵母で高知が無双する日本酒ランキング",
+     "views": 80205,
+     "ratio": 2.8
+    }
+   ]
+  },
+  {
+   "candidate": "保存NG",
+   "rule": "保存・保管・冷蔵・劣化・NG・やってはいけない・ダメ・開栓・賞味 を含む",
+   "regex": "保存|保管|冷蔵|劣化|NG|やってはいけない|ダメ|開栓|賞味",
+   "count": 0,
+   "count_1y": 0,
+   "latest": null,
+   "max_views": null,
+   "hits": []
+  },
+  {
+   "candidate": "東京の居酒屋",
+   "rule": "東京・居酒屋・角打ち・飲める店・酒場 を含む",
+   "regex": "東京|居酒屋|角打ち|飲める店|酒場",
+   "count": 2,
+   "count_1y": 2,
+   "latest": "2026-09-19",
+   "max_views": 36700,
+   "hits": [
+    {
+     "publishDate": "2026-09-19",
+     "title": "【東京の酒屋】絶対に外せない現役蔵元おすすめの日本酒6選",
+     "views": 36700,
+     "ratio": 1.28
+    },
+    {
+     "publishDate": "2026-03-07",
+     "title": "【新潟･東京･大阪･福島･茨城】日本酒好き必見！絶対行きたい特約店【第2弾】",
+     "views": 16588,
+     "ratio": 0.58
+    }
+   ]
+  },
+  {
+   "candidate": "値段の仕組み",
+   "rule": "値段・価格・円・高い・安い・コスパ・仕組み・原価・物価・高騰・利益 を含む",
+   "regex": "値段|価格|円|高い|安い|コスパ|仕組み|原価|物価|高騰|利益",
+   "count": 3,
+   "count_1y": 3,
+   "latest": "2026-05-30",
+   "max_views": 28790,
+   "hits": [
+    {
+     "publishDate": "2026-05-30",
+     "title": "【辛口コスパ5選】一升瓶が秒で空に！蔵元がおすすめする日本酒",
+     "views": 18472,
+     "ratio": 0.64
+    },
+    {
+     "publishDate": "2026-05-09",
+     "title": "【飲まなきゃ損】物価高騰でもこの価格？蔵元が嫉妬するコスパ最強日本酒5選",
+     "views": 26070,
+     "ratio": 0.91
+    },
+    {
+     "publishDate": "2026-02-14",
+     "title": "【最強コスパ】蔵元が本当におすすめする安くて旨い日本酒5選【紀土/あたごのまつ/雨後の月/一白水成/風の森】",
+     "views": 28790,
+     "ratio": 1.0
+    }
+   ]
+  },
+  {
+   "candidate": "総まとめ",
+   "rule": "総まとめ・まとめ・総集編・年間・振り返り・ベスト・今年・◯年版 を含む",
+   "regex": "総まとめ|まとめ|総集編|年間|振り返り|ベスト|今年|年版|年の",
+   "count": 4,
+   "count_1y": 4,
+   "latest": "2026-06-27",
+   "max_views": 31570,
+   "hits": [
+    {
+     "publishDate": "2026-06-27",
+     "title": "【今年の顔たち】サケコンペで入賞した絶対飲むべきおすすめ日本酒を蔵元が徹底解説！【SAKE COMPETITION】",
+     "views": 31570,
+     "ratio": 1.1
+    },
+    {
+     "publishDate": "2026-02-21",
+     "title": "【人気ランキング】2025年の雅楽代おすすめTOP5を天領盃蔵元が大公開！",
+     "views": 9193,
+     "ratio": 0.32
+    },
+    {
+     "publishDate": "2025-12-27",
+     "title": "【2025年版】500本以上飲んできた蔵元が選ぶ今年のおすすめ日本酒5選",
+     "views": 18310,
+     "ratio": 0.64
+    },
+    {
+     "publishDate": "2025-12-06",
+     "title": "【2025年版】蔵元が本気でおすすめする冬の日本酒5選が美味しすぎた",
+     "views": 28363,
+     "ratio": 0.99
+    }
+   ]
+  },
+  {
+   "candidate": "（参考）総まとめの対象: 地方別ランキング回",
+   "rule": "ランキング と 地方名・◯編・全国 を同時に含む（日本一周シリーズの回）",
+   "regex": "ランキング.*(編|地方|全国|関東|関西|東北|中部|四国|九州|中国|新潟)|(編|地方|全国|関東|関西|東北|中部|四国|九州|中国|新潟).*ランキング",
+   "count": 9,
+   "count_1y": 9,
+   "latest": "2026-10-24",
+   "max_views": 80205,
+   "hits": [
+    {
+     "publishDate": "2026-10-24",
+     "title": "【日本酒ランキング】SAKETIME九州編！蔵元が悔しがる激アツの新星たち",
+     "views": 18164,
+     "ratio": 0.63
+    },
+    {
+     "publishDate": "2026-09-26",
+     "title": "【四国編】異例の燗酒上位と最強酵母で高知が無双する日本酒ランキング",
+     "views": 80205,
+     "ratio": 2.8
+    },
+    {
+     "publishDate": "2026-08-29",
+     "title": "【日本酒ランキング】中国地方編・蔵元の予想が外れた本当の実力",
+     "views": 73768,
+     "ratio": 2.57
+    },
+    {
+     "publishDate": "2026-08-22",
+     "title": "【衝撃】而今・みむろ杉・播州一献・作…関西の日本酒ランキングを蔵元が本音レビュー",
+     "views": 62800,
+     "ratio": 2.19
+    },
+    {
+     "publishDate": "2026-07-11",
+     "title": "【大混戦】中部地方の日本酒ランキングを蔵元がガチレビュー",
+     "views": 44586,
+     "ratio": 1.56
+    },
+    {
+     "publishDate": "2026-06-13",
+     "title": "【日本酒ランキング】SAKETIME関東編！蔵元が唸る激旨トレンド酒が美味しかった！",
+     "views": 14598,
+     "ratio": 0.51
+    },
+    {
+     "publishDate": "2026-05-02",
+     "title": "【蔵元解説】東北の日本酒ランキングが全国でも有名で旨いおすすめ銘柄揃いでした！",
+     "views": 28412,
+     "ratio": 0.99
+    },
+    {
+     "publishDate": "2026-03-28",
+     "title": "【激戦区】新潟日本酒ランキングTOP5を蔵元が本音で徹底解説！",
+     "views": 25160,
+     "ratio": 0.88
+    },
+    {
+     "publishDate": "2026-03-14",
+     "title": "【日本酒全国ランキング】業界の最新トレンドと今を蔵元が読み解く！",
+     "views": 71035,
+     "ratio": 2.48
+    }
+   ]
+  }
+ ],
+ "other": [
+  {
+   "channel": "庵 -AN- | Japanese IRORI",
+   "title": "おでんと熱燗、秋の囲炉裏｜古民家で日本酒と過ごす静かな夜【4K ASMR】",
+   "views": 149302,
+   "subs": 3730,
+   "ratio": 40.03,
+   "publishDate": "2026-09-22",
+   "url": "https://www.youtube.com/watch?v=U_I_u0Ox3o8"
+  },
+  {
+   "channel": "歴史再現トラベラー",
+   "title": "江戸の居酒屋では何をつまみに何を飲んでいた？江戸っ子の酒事情をリアル再現",
+   "views": 804958,
+   "subs": 40800,
+   "ratio": 19.73,
+   "publishDate": "2026-09-28",
+   "url": "https://www.youtube.com/watch?v=v4XPcmWFIZQ"
+  },
+  {
+   "channel": "ゆっくり焼酎の宿【ゆっくり解説】",
+   "title": "【キンミヤ焼酎】なぜ三重県の酒が東京下町を支配できたのか？ 居酒屋文化を創った震災の歴史とシャリキンの真実【ゆっくり解説】",
+   "views": 38057,
+   "subs": 2070,
+   "ratio": 18.39,
+   "publishDate": "2026-08-10",
+   "url": "https://www.youtube.com/watch?v=8LnKPmkNFqY"
+  },
+  {
+   "channel": "黄金のジパング",
+   "title": "立ち飲みスタイルで飲む日本酒が世界から大ウケ！外国人観光客が日本流を初体験",
+   "views": 317886,
+   "subs": 17400,
+   "ratio": 18.27,
+   "publishDate": "2026-09-04",
+   "url": "https://www.youtube.com/watch?v=-5HXzkNWAIA"
+  },
+  {
+   "channel": "けにーずちゃんねる",
+   "title": "【次元が違う山形の日本酒】このレベルがまさかの2000円、買わない理由がない",
+   "views": 26393,
+   "subs": 1940,
+   "ratio": 13.6,
+   "publishDate": "2025-12-19",
+   "url": "https://www.youtube.com/watch?v=UPJd1BduQD4"
+  },
+  {
+   "channel": "andytrade 伊勢とハワイをつなぐ",
+   "title": "サケラボトーキョーで【日本酒23種】飲み比べ！十条に酒の聖地があった",
+   "views": 14241,
+   "subs": 1260,
+   "ratio": 11.3,
+   "publishDate": "2026-05-13",
+   "url": "https://www.youtube.com/watch?v=NcgaTyazY0U"
+  },
+  {
+   "channel": "ランキングで知る世界",
+   "title": "日本一の酒どころは？日本酒生産量ランキング【TOP20】",
+   "views": 51058,
+   "subs": 5470,
+   "ratio": 9.33,
+   "publishDate": "2026-06-19",
+   "url": "https://www.youtube.com/watch?v=4N_PoG10dvo"
+  },
+  {
+   "channel": "SOLO CAMP KAI ch",
+   "title": "ソロキャンプ│冬の始まり、静かな森で一人、日本酒を飲みながら焚き火、極上ソロキャンプ！",
+   "views": 13013,
+   "subs": 1660,
+   "ratio": 7.84,
+   "publishDate": "2025-11-22",
+   "url": "https://www.youtube.com/watch?v=CTAAcr1ZaGU"
+  },
+  {
+   "channel": "RUUと今日も",
+   "title": "【30分で日本酒16種類！？】京都観光そっちのけでお酒を楽しむ女がこちらです",
+   "views": 11754,
+   "subs": 1950,
+   "ratio": 6.03,
+   "publishDate": "2026-10-11",
+   "url": "https://www.youtube.com/watch?v=ZwV1t5qkeiQ"
+  },
+  {
+   "channel": "フードトラベル東京 FoodTravelTokyo",
+   "title": "【神回】カリブ海出身の陽気な3人組が居酒屋に大興奮！地球の裏側にもウケたのはまさかのあの料理⁉",
+   "views": 43944,
+   "subs": 7640,
+   "ratio": 5.75,
+   "publishDate": "2026-05-15",
+   "url": "https://www.youtube.com/watch?v=Vu8VI-aSB4s"
+  },
+  {
+   "channel": "瓶ビール班長の旅ログ",
+   "title": "【新潟ひとり旅】老舗酒場や角打ち10軒飲み歩き・日本酒26種と新潟グルメ",
+   "views": 156445,
+   "subs": 41600,
+   "ratio": 3.76,
+   "publishDate": "2026-03-20",
+   "url": "https://www.youtube.com/watch?v=79dsCMRTY7w"
+  },
+  {
+   "channel": "ずんだもん逆転スレ物語",
+   "title": "【職人】清酒製造業だけど質問ある？日本酒業界の知られざる世界",
+   "views": 5566,
+   "subs": 1520,
+   "ratio": 3.66,
+   "publishDate": "2026-04-14",
+   "url": "https://www.youtube.com/watch?v=4hqFFGa41pc"
+  },
+  {
+   "channel": "ニッポン解体新書",
+   "title": "【江戸体験】江戸と大坂、居酒屋の一杯と一皿は何が違う？",
+   "views": 34561,
+   "subs": 9990,
+   "ratio": 3.46,
+   "publishDate": "2026-10-24",
+   "url": "https://www.youtube.com/watch?v=biy4ZgMxofI"
+  },
+  {
+   "channel": "【公式】近鉄おでかけチャンネル",
+   "title": "今日は酔い日　半蔵　三重 伊賀を訪ねて。日本酒大好き、吉良奈菜子",
+   "views": 50374,
+   "subs": 18800,
+   "ratio": 2.68,
+   "publishDate": "2026-06-12",
+   "url": "https://www.youtube.com/watch?v=OjshEN1nMmw"
+  },
+  {
+   "channel": "通販の虎",
+   "title": "｢これは危ういね…。｣主宰・桑田が巨樹に喝。ひろゆきも呆れるほどの巨樹の想いとは…？【林 巨樹：日本酒\"コメノカジツ\"＆酒粕マカロン】",
+   "views": 356653,
+   "subs": 300000,
+   "ratio": 1.19,
+   "publishDate": "2026-03-25",
+   "url": "https://www.youtube.com/watch?v=dsSZ-wvktlw"
+  },
+  {
+   "channel": "ケニチkenichi",
+   "title": "真冬の無人居酒屋で1000円呑み【西成フタバ】#1人飲み  #無人居酒屋  ＃西成",
+   "views": 461860,
+   "subs": 429000,
+   "ratio": 1.08,
+   "publishDate": "2026-02-23",
+   "url": "https://www.youtube.com/watch?v=IluN08a-5Ws"
+  }
+ ],
+ "pool_all": [
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】なぜ江戸時代以降、蕎麦屋で酒を飲むようになったのか？【ゆっくり解説】",
+   "views": 166380,
+   "subs": 9990,
+   "ratio": 16.65,
+   "publishDate": "2026-07-17",
+   "url": "https://www.youtube.com/watch?v=eTokcLLNUp0"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】なぜ酒飲みは「塩」だけで日本酒を飲むのか？味覚の科学と江戸の酒場史【ゆっくり解説】",
+   "views": 130557,
+   "subs": 9990,
+   "ratio": 13.07,
+   "publishDate": "2026-08-21",
+   "url": "https://www.youtube.com/watch?v=OTDGfd6D8rc"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "江戸の酒飲みは何を食べていた？蕎麦・寿司・酒器から見る日本人の飲み方の歴史【ゆっくり解説】【日本酒】",
+   "views": 101379,
+   "subs": 9990,
+   "ratio": 10.15,
+   "publishDate": "2026-08-22",
+   "url": "https://www.youtube.com/watch?v=gSzmw9Ln8zM"
+  },
+  {
+   "channel": "酒学道場 日本酒の基礎と酒ディプロマ対策",
+   "title": "2026年_酒ディプロマ講座 第1回 日本酒の8種類：原料と精米の完全ガイド",
+   "views": 8379,
+   "subs": 1160,
+   "ratio": 7.22,
+   "publishDate": "2026-01-23",
+   "url": "https://www.youtube.com/watch?v=HV3YD6OicYs"
+  },
+  {
+   "channel": "酒泉洞チャンネル【日本酒・地酒専門酒屋】",
+   "title": "【酒屋厳選】年間1,000本以上飲むプロが選ぶ！「入手困難じゃない」本当に美味しい日本酒10選",
+   "views": 114498,
+   "subs": 17700,
+   "ratio": 6.47,
+   "publishDate": "2026-09-11",
+   "url": "https://www.youtube.com/watch?v=nyjW-tARJfE"
+  },
+  {
+   "channel": "日本名門酒会 公式YouTubeチャンネル",
+   "title": "世界に認められた2銘柄",
+   "views": 15314,
+   "subs": 2490,
+   "ratio": 6.15,
+   "publishDate": "2026-09-28",
+   "url": "https://www.youtube.com/watch?v=0Hgn5YOVBNk"
+  },
+  {
+   "channel": "旨酒チャンネル",
+   "title": "【47都道府県】日本酒の人気ランキングTOP10～青森県～（By SAKETIME) 唎酒師/利酒師/晩酌/田酒/陸奥八仙/豊盃/鳩正宗/喜久泉/善知鳥/陸奥男山/どぶろっく/杜來/六根",
+   "views": 18115,
+   "subs": 3060,
+   "ratio": 5.92,
+   "publishDate": "2026-03-14",
+   "url": "https://www.youtube.com/watch?v=6k6EXqiVQME"
+  },
+  {
+   "channel": "旨酒チャンネル",
+   "title": "【完全保存版】全国47都道府県「日本酒ランキング1位」の銘柄だけを完全網羅！～前編～（By SAKETIME)",
+   "views": 17645,
+   "subs": 3060,
+   "ratio": 5.77,
+   "publishDate": "2026-10-03",
+   "url": "https://www.youtube.com/watch?v=luMnSIKM7Xg"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "「安い日本酒」は本当にダメなのか？コンビニで見かける3つの酒を調べたら、日本酒史がひっくり返った【ゆっくり解説】【日本酒】",
+   "views": 55430,
+   "subs": 9990,
+   "ratio": 5.55,
+   "publishDate": "2026-08-19",
+   "url": "https://www.youtube.com/watch?v=v7-dfME-e2w"
+  },
+  {
+   "channel": "旨酒チャンネル",
+   "title": "【47都道府県】日本酒の人気ランキングTOP10～富山県～（By SAKETIME) 唎酒師/利酒師/勝駒/羽根屋/林/満寿泉/三笑楽/千代鶴/幻の瀧/苗加屋/立山/富美菊",
+   "views": 15448,
+   "subs": 3060,
+   "ratio": 5.05,
+   "publishDate": "2026-05-16",
+   "url": "https://www.youtube.com/watch?v=fQM3D_3kFKw"
+  },
+  {
+   "channel": "日本酒王子 近藤 悠一【マイナス5℃の酒屋「零下 -REIKA-」】",
+   "title": "純米酒と本醸造の違いとは？どっちを買うべきか酒屋が解説【日本酒】",
+   "views": 53863,
+   "subs": 11200,
+   "ratio": 4.81,
+   "publishDate": "2026-10-18",
+   "url": "https://www.youtube.com/watch?v=LLzrn96DvGw"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】大吟醸で削った残り半分の米は、一体どこへ行くのか？【ゆっくり解説】",
+   "views": 45641,
+   "subs": 9990,
+   "ratio": 4.57,
+   "publishDate": "2026-08-26",
+   "url": "https://www.youtube.com/watch?v=4BYWFuGaxCM"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒の歴史】純米酒至上主義者が知らないアル添酒の正体と、並行複発酵の奇跡【ゆっくり解説】",
+   "views": 45241,
+   "subs": 9990,
+   "ratio": 4.53,
+   "publishDate": "2026-05-04",
+   "url": "https://www.youtube.com/watch?v=3PRjZBh-DIA"
+  },
+  {
+   "channel": "日本名門酒会 公式YouTubeチャンネル",
+   "title": "【ドラフト会議】プロがおすすめするしぼりたての日本酒は？【前編】",
+   "views": 11133,
+   "subs": 2490,
+   "ratio": 4.47,
+   "publishDate": "2026-01-20",
+   "url": "https://www.youtube.com/watch?v=h3dV36vF1GE"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】江戸時代の寿司屋で日本酒を頼むと追い出された理由【ゆっくり解説】",
+   "views": 44522,
+   "subs": 9990,
+   "ratio": 4.46,
+   "publishDate": "2026-07-28",
+   "url": "https://www.youtube.com/watch?v=VqLoPzetHek"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】コンビニのパック酒を馬鹿にしてはいけない理由【ゆっくり解説】",
+   "views": 42368,
+   "subs": 9990,
+   "ratio": 4.24,
+   "publishDate": "2026-07-09",
+   "url": "https://www.youtube.com/watch?v=Rv03cjQe6VI"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【菊水】コンビニで買える缶酒に隠された驚きの真実。絶望の水害から生まれた奇跡の日本酒【ゆっくり解説】【日本酒】#新潟 #地酒",
+   "views": 33219,
+   "subs": 9990,
+   "ratio": 3.33,
+   "publishDate": "2026-07-27",
+   "url": "https://www.youtube.com/watch?v=jolVyvrC1AU"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "スーパーの安いパック酒を、100年前の天才科学者が本気で作った理由【ゆっくり解説】【日本酒】",
+   "views": 31064,
+   "subs": 9990,
+   "ratio": 3.11,
+   "publishDate": "2026-09-05",
+   "url": "https://www.youtube.com/watch?v=euod9x5Ge8o"
+  },
+  {
+   "channel": "酒と神と私 なかちの一人旅",
+   "title": "【女ひとり旅】鰻に牡蠣に日本酒 朝酒飲んで新宿思い出横丁で〆る旅",
+   "views": 192101,
+   "subs": 69700,
+   "ratio": 2.76,
+   "publishDate": "2026-06-15",
+   "url": "https://www.youtube.com/watch?v=4Tuq56AbD9o"
+  },
+  {
+   "channel": "サケラボちゃんねる",
+   "title": "買える日本酒で一番おいしい銘柄は？SAKE COMPETITION 2026のTOP10をプロが徹底解説",
+   "views": 263797,
+   "subs": 99600,
+   "ratio": 2.65,
+   "publishDate": "2026-10-16",
+   "url": "https://www.youtube.com/watch?v=dsrlkSo8MOc"
+  },
+  {
+   "channel": "酒泉洞チャンネル【日本酒・地酒専門酒屋】",
+   "title": "【酒屋社長】日本酒専門のプロが選ぶ！「コレが旨い」をお届け！",
+   "views": 42763,
+   "subs": 17700,
+   "ratio": 2.42,
+   "publishDate": "2026-01-23",
+   "url": "https://www.youtube.com/watch?v=mYdzMl-cXmA"
+  },
+  {
+   "channel": "酒泉洞チャンネル【日本酒・地酒専門酒屋】",
+   "title": "【予想外の結果】東海3県の日本酒ランキング！地元で愛される銘柄の実力とは",
+   "views": 39035,
+   "subs": 17700,
+   "ratio": 2.21,
+   "publishDate": "2026-10-16",
+   "url": "https://www.youtube.com/watch?v=kk-XqllZn-Q"
+  }
+ ],
+ "types": [
+  {
+   "type": "歴史・「なぜ」解説型",
+   "genre_in": 9,
+   "genre_out": 4,
+   "max_ratio": 19.73,
+   "own_count": 1,
+   "own_latest": "2026-10-17",
+   "mark": "△少ない（1〜2本）"
+  },
+  {
+   "type": "基礎知識・違い解説型",
+   "genre_in": 4,
+   "genre_out": 2,
+   "max_ratio": 7.22,
+   "own_count": 1,
+   "own_latest": "2026-06-20",
+   "mark": "△少ない（1〜2本）"
+  },
+  {
+   "type": "安い酒・コンビニ・パック酒の再評価型",
+   "genre_in": 4,
+   "genre_out": 2,
+   "max_ratio": 13.6,
+   "own_count": 0,
+   "own_latest": null,
+   "mark": "★未実施"
+  },
+  {
+   "type": "都道府県・地域別ランキング型",
+   "genre_in": 6,
+   "genre_out": 2,
+   "max_ratio": 18.39,
+   "own_count": 13,
+   "own_latest": "2026-10-24",
+   "mark": "実施済み"
+  },
+  {
+   "type": "飲み歩き・居酒屋・旅ロケ型",
+   "genre_in": 2,
+   "genre_out": 7,
+   "max_ratio": 19.73,
+   "own_count": 0,
+   "own_latest": null,
+   "mark": "★未実施"
+  }
+ ],
+ "top20": [
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】なぜ江戸時代以降、蕎麦屋で酒を飲むようになったのか？【ゆっくり解説】",
+   "views": 166380,
+   "subs": 9990,
+   "ratio": 16.65,
+   "publishDate": "2026-07-17",
+   "url": "https://www.youtube.com/watch?v=eTokcLLNUp0"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】なぜ酒飲みは「塩」だけで日本酒を飲むのか？味覚の科学と江戸の酒場史【ゆっくり解説】",
+   "views": 130557,
+   "subs": 9990,
+   "ratio": 13.07,
+   "publishDate": "2026-08-21",
+   "url": "https://www.youtube.com/watch?v=OTDGfd6D8rc"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "江戸の酒飲みは何を食べていた？蕎麦・寿司・酒器から見る日本人の飲み方の歴史【ゆっくり解説】【日本酒】",
+   "views": 101379,
+   "subs": 9990,
+   "ratio": 10.15,
+   "publishDate": "2026-08-22",
+   "url": "https://www.youtube.com/watch?v=gSzmw9Ln8zM"
+  },
+  {
+   "channel": "酒学道場 日本酒の基礎と酒ディプロマ対策",
+   "title": "2026年_酒ディプロマ講座 第1回 日本酒の8種類：原料と精米の完全ガイド",
+   "views": 8379,
+   "subs": 1160,
+   "ratio": 7.22,
+   "publishDate": "2026-01-23",
+   "url": "https://www.youtube.com/watch?v=HV3YD6OicYs"
+  },
+  {
+   "channel": "酒泉洞チャンネル【日本酒・地酒専門酒屋】",
+   "title": "【酒屋厳選】年間1,000本以上飲むプロが選ぶ！「入手困難じゃない」本当に美味しい日本酒10選",
+   "views": 114498,
+   "subs": 17700,
+   "ratio": 6.47,
+   "publishDate": "2026-09-11",
+   "url": "https://www.youtube.com/watch?v=nyjW-tARJfE"
+  },
+  {
+   "channel": "日本名門酒会 公式YouTubeチャンネル",
+   "title": "世界に認められた2銘柄",
+   "views": 15314,
+   "subs": 2490,
+   "ratio": 6.15,
+   "publishDate": "2026-09-28",
+   "url": "https://www.youtube.com/watch?v=0Hgn5YOVBNk"
+  },
+  {
+   "channel": "旨酒チャンネル",
+   "title": "【47都道府県】日本酒の人気ランキングTOP10～青森県～（By SAKETIME) 唎酒師/利酒師/晩酌/田酒/陸奥八仙/豊盃/鳩正宗/喜久泉/善知鳥/陸奥男山/どぶろっく/杜來/六根",
+   "views": 18115,
+   "subs": 3060,
+   "ratio": 5.92,
+   "publishDate": "2026-03-14",
+   "url": "https://www.youtube.com/watch?v=6k6EXqiVQME"
+  },
+  {
+   "channel": "旨酒チャンネル",
+   "title": "【完全保存版】全国47都道府県「日本酒ランキング1位」の銘柄だけを完全網羅！～前編～（By SAKETIME)",
+   "views": 17645,
+   "subs": 3060,
+   "ratio": 5.77,
+   "publishDate": "2026-10-03",
+   "url": "https://www.youtube.com/watch?v=luMnSIKM7Xg"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "「安い日本酒」は本当にダメなのか？コンビニで見かける3つの酒を調べたら、日本酒史がひっくり返った【ゆっくり解説】【日本酒】",
+   "views": 55430,
+   "subs": 9990,
+   "ratio": 5.55,
+   "publishDate": "2026-08-19",
+   "url": "https://www.youtube.com/watch?v=v7-dfME-e2w"
+  },
+  {
+   "channel": "旨酒チャンネル",
+   "title": "【47都道府県】日本酒の人気ランキングTOP10～富山県～（By SAKETIME) 唎酒師/利酒師/勝駒/羽根屋/林/満寿泉/三笑楽/千代鶴/幻の瀧/苗加屋/立山/富美菊",
+   "views": 15448,
+   "subs": 3060,
+   "ratio": 5.05,
+   "publishDate": "2026-05-16",
+   "url": "https://www.youtube.com/watch?v=fQM3D_3kFKw"
+  },
+  {
+   "channel": "日本酒王子 近藤 悠一【マイナス5℃の酒屋「零下 -REIKA-」】",
+   "title": "純米酒と本醸造の違いとは？どっちを買うべきか酒屋が解説【日本酒】",
+   "views": 53863,
+   "subs": 11200,
+   "ratio": 4.81,
+   "publishDate": "2026-10-18",
+   "url": "https://www.youtube.com/watch?v=LLzrn96DvGw"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】大吟醸で削った残り半分の米は、一体どこへ行くのか？【ゆっくり解説】",
+   "views": 45641,
+   "subs": 9990,
+   "ratio": 4.57,
+   "publishDate": "2026-08-26",
+   "url": "https://www.youtube.com/watch?v=4BYWFuGaxCM"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒の歴史】純米酒至上主義者が知らないアル添酒の正体と、並行複発酵の奇跡【ゆっくり解説】",
+   "views": 45241,
+   "subs": 9990,
+   "ratio": 4.53,
+   "publishDate": "2026-05-04",
+   "url": "https://www.youtube.com/watch?v=3PRjZBh-DIA"
+  },
+  {
+   "channel": "日本名門酒会 公式YouTubeチャンネル",
+   "title": "【ドラフト会議】プロがおすすめするしぼりたての日本酒は？【前編】",
+   "views": 11133,
+   "subs": 2490,
+   "ratio": 4.47,
+   "publishDate": "2026-01-20",
+   "url": "https://www.youtube.com/watch?v=h3dV36vF1GE"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】江戸時代の寿司屋で日本酒を頼むと追い出された理由【ゆっくり解説】",
+   "views": 44522,
+   "subs": 9990,
+   "ratio": 4.46,
+   "publishDate": "2026-07-28",
+   "url": "https://www.youtube.com/watch?v=VqLoPzetHek"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【日本酒ミステリー】コンビニのパック酒を馬鹿にしてはいけない理由【ゆっくり解説】",
+   "views": 42368,
+   "subs": 9990,
+   "ratio": 4.24,
+   "publishDate": "2026-07-09",
+   "url": "https://www.youtube.com/watch?v=Rv03cjQe6VI"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "【菊水】コンビニで買える缶酒に隠された驚きの真実。絶望の水害から生まれた奇跡の日本酒【ゆっくり解説】【日本酒】#新潟 #地酒",
+   "views": 33219,
+   "subs": 9990,
+   "ratio": 3.33,
+   "publishDate": "2026-07-27",
+   "url": "https://www.youtube.com/watch?v=jolVyvrC1AU"
+  },
+  {
+   "channel": "ゆっくり純米大吟醸【ゆっくり解説】~日本酒解説~",
+   "title": "スーパーの安いパック酒を、100年前の天才科学者が本気で作った理由【ゆっくり解説】【日本酒】",
+   "views": 31064,
+   "subs": 9990,
+   "ratio": 3.11,
+   "publishDate": "2026-09-05",
+   "url": "https://www.youtube.com/watch?v=euod9x5Ge8o"
+  },
+  {
+   "channel": "酒と神と私 なかちの一人旅",
+   "title": "【女ひとり旅】鰻に牡蠣に日本酒 朝酒飲んで新宿思い出横丁で〆る旅",
+   "views": 192101,
+   "subs": 69700,
+   "ratio": 2.76,
+   "publishDate": "2026-06-15",
+   "url": "https://www.youtube.com/watch?v=4Tuq56AbD9o"
+  },
+  {
+   "channel": "サケラボちゃんねる",
+   "title": "買える日本酒で一番おいしい銘柄は？SAKE COMPETITION 2026のTOP10をプロが徹底解説",
+   "views": 263797,
+   "subs": 99600,
+   "ratio": 2.65,
+   "publishDate": "2026-10-16",
+   "url": "https://www.youtube.com/watch?v=dsrlkSo8MOc"
+  }
+ ]
+}

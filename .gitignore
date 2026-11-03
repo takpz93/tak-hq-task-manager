@@ -14,3 +14,4 @@ fix_duplicate_tasks.py
 
 # YouTube InnerTube レスポンスキャッシュ（yt_trend_collector.py 等が生成。再実行で再生成可）
 COO/.cache_yt/
+yt_token.json
